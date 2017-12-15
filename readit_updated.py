@@ -54,8 +54,10 @@ def add(add,deadline,priority):
 	print("Opened database successfully")
 	cur = conn.cursor()
 	data=str(add)
+	#error showing here
 	date1=str(deadline)
 	lastdate=datetime.datetime.strptime( date1, '%Y-%m-%d')
+	#Up to this
 	prio=str(priority)
 	cur.execute('''CREATE TABLE IF NOT EXISTS COMPANY(ID BIGSERIAL PRIMARY KEY,TAGNAME TEXT NOT NULL, DEADLINE date, PRIORITY CHAR(50);''')
 	print("Table created successfully")
@@ -64,7 +66,7 @@ def add(add,deadline,priority):
 	conn.close()
 	showlist()
 
-
+#display list
 def showlist():
     conn = psycopg2.connect(database="test", user = "postgres1", password = "postgres1", host = "localhost", port = "5432")
     print("Opened database successfully")
@@ -79,7 +81,7 @@ def showlist():
         print("Operation done successfully")
         conn.close()
 
-
+#Delete operation
 def remove(num):
     num1=int(num)
     conn = psycopg2.connect(database="test", user = "postgres1", password = "postgres1", host = "localhost", port = "5432")
