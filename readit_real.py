@@ -18,13 +18,13 @@ class DatabaseConnection(object):
             print("cannot connect to database")
     
     def create_table(self):
-        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(50), Date date not null default CURRENT_DATE)"
+        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
         self.cursor.execute(create_table_command)
         print("table created successfully")
 
     def insert_new_record(self, url):
-        
-        insert_command = "INSERT INTO bookmarks(ID , URL , DATE) VALUES(DEFAULT, '"+ url +"' , DEFAULT)"
+        self.url = url
+        insert_command = "INSERT INTO bookmarks(ID , URL , DATE) VALUES(DEFAULT, '"+ self.url +"' , DEFAULT)"
         print(insert_command)
         self.cursor.execute(insert_command)
         print("successfully inserted")
@@ -58,8 +58,8 @@ if __name__== '__main__':
     database_connection = DatabaseConnection('','')
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-create','-ct',   help="create table to insert data")
-    parser.add_argument('-drop','-dt',   help="drop table to delete all bookmarks")
+    parser.add_argument('-create','-ct',required=False,   help="create table to insert data" ,action="store_true")
+    parser.add_argument('-drop','-dt',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
     parser.add_argument('-add','-a',   help="add url")
     parser.add_argument('-view','-v',required=False,help="view url",action="store_true")
    
@@ -85,12 +85,10 @@ if __name__== '__main__':
 
         database_connection.drop_table()
 
-    elif args.create:
-
-	database_connection.create_table()
+    elif args.create:                                                                                                                                        database_connection.create_table()
 
     else:
-
+	
         database_connection.insert_new_record(args.add)
 
 
