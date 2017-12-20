@@ -51,9 +51,9 @@ class DatabaseConnection(object):
 
     def delete_record(self, num):
         # deletion of data from table
-        self.num = int(num)
-        print("selfnum:",self.num,type(num))
-        delete_command = "DELETE FROM bookmarks WHERE id=num"
+        self.num = str(num)
+        
+        delete_command = "DELETE FROM bookmarks WHERE bookmarks.id=" + self.num
         self.cursor.execute(delete_command)
         print("successful deletion")
 
@@ -73,8 +73,8 @@ if __name__== '__main__':
     parser.add_argument('-drop','-dt',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
     parser.add_argument('-add','-a',   help="add url")
     parser.add_argument('-view','-v',required=False,help="view url",action="store_true")
-    parser.add_argument('-update','-u', help="Update url by it's id")
-    parser.add_argument('-delete','-d', help="delete url by it's id")
+    parser.add_argument('-update','-u', help="Update url by id")
+    parser.add_argument('-delete','-d', help="delete url by id")
     parser.add_argument('-quiet', '-q', help="quiet", action="store_true")
 
     args = parser.parse_args()
