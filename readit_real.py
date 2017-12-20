@@ -69,7 +69,7 @@ if __name__== '__main__':
     database_connection = DatabaseConnection('','')
     # argparse use
     parser = argparse.ArgumentParser()
-    parser.add_argument('defy', nargs='*')
+    parser.add_argument('default', nargs='*')
     parser.add_argument('-ct','-create',required=False,   help="create table to insert data" ,action="store_true")
     parser.add_argument('-dt','-drop',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
     parser.add_argument('-a','-add', nargs='+', help="add url")
@@ -117,9 +117,11 @@ if __name__== '__main__':
 
         database_connection.query_all()
 
-    elif args.defy:
+    elif args.default:
+        # url inserting in database
         j = 0
         y = len(args.defy)
+        
         while j < y:
             urldata = str(args.defy[j])
             url = requests.get(urldata)
