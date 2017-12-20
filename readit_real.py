@@ -37,7 +37,7 @@ class DatabaseConnection(object):
             print("{0}".format(cat))
 
     def update_record(self):
-        update_command = "UPDATE bookmarks SET URL='google.com' WHERE id=1"
+        update_command = "UPDATE bookmarks SET URL='https://www.google.com' WHERE id=1"
         self.cursor.execute(update_command)
         print("successfully updated")
 
