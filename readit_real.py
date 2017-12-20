@@ -3,6 +3,7 @@ import psycopg2
 import sys
 import datetime
 import os
+import requests
 
 class DatabaseConnection(object):
 
@@ -68,7 +69,12 @@ if __name__== '__main__':
     args = parser.parse_args()
     
     if args.add:
-        database_connection.insert_new_record(args.add)
+        urldata = str(args.add)
+        url = requests.get(urldata)
+        if (404==url.status_code):
+            print("Invalid URL...")
+        else:
+            database_connection.insert_new_record(args.add)
     
     elif args.view:
         database_connection.query_all()
@@ -85,11 +91,14 @@ if __name__== '__main__':
 
         database_connection.drop_table()
 
-    elif args.create:                                                                                                                                        database_connection.create_table()
+    elif args.create:
+        
+        database_connection.create_table()
 
     else:
-	
-        database_connection.insert_new_record(args.add)
 
+        print("HELP -ct")
+	
+    
 
 
