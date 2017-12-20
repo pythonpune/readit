@@ -21,7 +21,7 @@ class DatabaseConnection(object):
     
     def create_table(self):
         # Created table to store urls
-        create_table_command = "CREATE TABLE bookmarks(ID smallserial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
+        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
         self.cursor.execute(create_table_command)
         print("table created successfully")
 
