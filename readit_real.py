@@ -73,7 +73,7 @@ if __name__== '__main__':
         urldata=requests.get(url)
         if(404==urldata.status_code):
                 print("Invalid URL, please check Url..!!")
-        else:
+        elif:
                 database_connection.insert_new_record(args.add)
     
     elif args.view:
