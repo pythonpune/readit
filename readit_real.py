@@ -21,7 +21,7 @@ class DatabaseConnection(object):
     
     def create_table(self):
         # Created table to store urls
-        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
+        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(500), Date date not null default CURRENT_DATE)"
         self.cursor.execute(create_table_command)
         print("table created successfully")
 
@@ -43,9 +43,9 @@ class DatabaseConnection(object):
         for row in rows:
             print("%2s | %15s |  %12s" % (row[0], row[2], row[1]))
 
-    def update_record(self):
+    def update_record(self, ID, URL):
         # Updating data of table
-        update_command = "UPDATE bookmarks SET URL='google.com' WHERE id=1"
+        update_command = "UPDATE bookmarks SET URL='"+URL+"' WHERE id="+str(ID)
         self.cursor.execute(update_command)
         print("successfully updated")
 
@@ -69,47 +69,66 @@ if __name__== '__main__':
     database_connection = DatabaseConnection('','')
     # argparse use
     parser = argparse.ArgumentParser()
-    parser.add_argument('-create','-ct',required=False,   help="create table to insert data" ,action="store_true")
-    parser.add_argument('-drop','-dt',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
-    parser.add_argument('-add','-a',   help="add url")
-    parser.add_argument('-view','-v',required=False,help="view url",action="store_true")
-    parser.add_argument('-update','-u', help="Update url by id")
-    parser.add_argument('-delete','-d', help="delete url by id")
-    parser.add_argument('-quiet', '-q', help="quiet", action="store_true")
-
+    parser.add_argument('defy', nargs='*')
+    parser.add_argument('-ct','-create',required=False,   help="create table to insert data" ,action="store_true")
+    parser.add_argument('-dt','-drop',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
+    parser.add_argument('-a','-add', nargs='+', help="add url")
+    parser.add_argument('-v','-view',required=False,help="view url",action="store_true")
+    parser.add_argument('-u','-update', nargs=2, help="Update url by id")
+    parser.add_argument('-d','-delete', help="delete url by id")
+    parser.add_argument('-q', '-quiet', help="quiet", action="store_true")
     args = parser.parse_args()
-    
-    if args.add:
+   
+
+    if args.a:
         # request used to check validation of urls
-        urldata = str(args.add)
-        url = requests.get(urldata)
-        if (404==url.status_code):
-            print("Invalid URL...")
-        else:
-            database_connection.insert_new_record(args.add)
+        x = len(args.a)
+        i = 0
+        while i < x:
+            urldata = str(args.a[i])
+            url = requests.get(urldata)
+            if (404==url.status_code):
+                print("Invalid URL...")
+            else:
+                database_connection.insert_new_record(args.a[i])
+            i = i + 1
     
-    elif args.view:
+    elif args.v:
+
         database_connection.query_all()
     
-    elif args.update:
-
-        database_connection.update_record(args.update)
+    elif args.u:
     
-    elif args.delete:
+        database_connection.update_record(args.u[0], args.u[1])
+    
+    elif args.d:
 
         database_connection.delete_record(args.delete)
 
-    elif args.drop:
+    elif args.dt:
 
         database_connection.drop_table()
 
-    elif args.create:
+    elif args.ct:
         
         database_connection.create_table()
 
-    elif args.quiet:
+    elif args.q:
 
         database_connection.query_all()
+
+    elif args.defy:
+        j = 0
+        y = len(args.defy)
+        while j < y:
+            urldata = str(args.defy[j])
+            url = requests.get(urldata)
+            if(404==url.status_code):
+                print("invalid URL...")
+            else:
+                database_connection.insert_new_record(args.defy[j])
+            j = j + 1
+            
 
     else:
 
