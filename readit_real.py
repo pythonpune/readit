@@ -21,7 +21,7 @@ class DatabaseConnection(object):
     
     def create_table(self):
         # Created table to store urls
-        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
+        create_table_command = "CREATE TABLE bookmarks(ID smallserial PRIMARY KEY, URL varchar(100), Date date not null default CURRENT_DATE)"
         self.cursor.execute(create_table_command)
         print("table created successfully")
 
@@ -52,9 +52,9 @@ class DatabaseConnection(object):
     def delete_record(self, num):
         # deletion of data from table
         self.num = int(num)
-        print("selfnum:",self.num)
-        delete_command = "DELETE FROM bookmarks WHERE id=?"
-        self.cursor.execute(delete_command, num)
+        print("selfnum:",self.num,type(num))
+        delete_command = "DELETE FROM bookmarks WHERE id=num"
+        self.cursor.execute(delete_command)
         print("successful deletion")
 
     def drop_table(self):
@@ -67,7 +67,7 @@ if __name__== '__main__':
 
 
     database_connection = DatabaseConnection('','')
-# argparse use
+    # argparse use
     parser = argparse.ArgumentParser()
     parser.add_argument('-create','-ct',required=False,   help="create table to insert data" ,action="store_true")
     parser.add_argument('-drop','-dt',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
@@ -75,7 +75,7 @@ if __name__== '__main__':
     parser.add_argument('-view','-v',required=False,help="view url",action="store_true")
     parser.add_argument('-update','-u', help="Update url by it's id")
     parser.add_argument('-delete','-d', help="delete url by it's id")
-    parser.add_argument('-quiet', '-', help="quiet", action="store_true")
+    parser.add_argument('-quiet', '-q', help="quiet", action="store_true")
 
     args = parser.parse_args()
     
@@ -97,7 +97,7 @@ if __name__== '__main__':
     
     elif args.delete:
 
-        database_connection.delete_record(args.delete, num)
+        database_connection.delete_record(args.delete)
 
     elif args.drop:
 
