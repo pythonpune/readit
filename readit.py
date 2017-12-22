@@ -1,79 +1,145 @@
+"""
+Modules imported:
+
+argparse module -- for options and arguments
+requests module --- for checking url is valid or not.
+database module --- it is user defined module and havind code of database queries.
+
+"""
+
 import argparse
-import psycopg2
-import sys
-import datetime
-import os
-
-def add_url(add):
-    print("add function:"+add)
-    conn = psycopg2.connect(database= "mydb", user = "testuser", password = "test", host = "localhost", port = "5432")
-    print("Opened database successfully")
-    cur = conn.cursor()
-    data=str(add)
-   # lastdate=datetime.datetime.strptime( date1, '%Y-%m-%d')
-
-    cur.execute('''CREATE TABLE IF NOT EXISTS COMPANY4(id SERIAL PRIMARY KEY, lastdate  date not null default CURRENT_DATE, URL VARCHAR(100))''');
-    print("Table created successfully")
-    cur.execute("INSERT INTO COMPANY4(id, lastdate, URL) VALUES(DEFAULT, DEFAULT,'"+ data+"')")
-    conn.commit()
-    print("data inserted")
-
-    conn.close()
-    print("data inserted")
-    view_url()
+import requests
+import database  
 
 
-def view_url():
-    conn = psycopg2.connect(database="mydb", user = "testuser", password = "test", host = "localhost", port = "5432")
-    print("Opened database successfully")
-    cur=conn.cursor()
-    cur.execute("SELECT * from COMPANY4")
-    rows = cur.fetchall()
-    for row in rows:
-        print("ID = ",type(row[0]))
-        print("lastdate = ",row[1])
-        print("url = ",row[2])
-  #      print("Operation done successfully")
-        t
-        conn.close()
+if __name__== '__main__':
+    """
+    This is main funcction.
+    It includes atrgparse coding.
+    It calls the functions available in database module.
 
+    """
 
-def modify_url(modify):
-    print("Modify function:"+modify)
-
-def delete_url(num):
-  #  print("delete url:"+delete)
-    num1=int(num)
-    conn = psycopg2.connect(database="mydb", user = "testuser", password = "test", host = "localhost", port = "5432")
-    print("Opened database successfully")
-    cur = conn.cursor()
-    cur.execute("DELETE FROM COMPANY4 WHERE id = %s",(num1,))
-    conn.commit 
-    print("Total number of rows deleted :", cur.rowcount)
-   # view_url()
-
-def Main():
+    database_connection = database.DatabaseConnection('','')
+   
+    # use of argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-add','-a',   help="add url")
-    parser.add_argument('-view','-v',required=False,help="view url",action="store_true")
-   # parser.add_argument('',required=True,help="view url",action="store_true")
-    parser.add_argument('-modify','-m', help="modify url")
-    parser.add_argument('-delete','-d', help="delete url")
+    parser.add_argument('default', nargs='*')
+    parser.add_argument('-ct','-create',required=False,   help="create table to insert data" ,action="store_true")
+    parser.add_argument('-dt','-drop',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
+    parser.add_argument('-a','-add', nargs='+', help="add url")
+    parser.add_argument('-v','-view',required=False,help="view url",action="store_true")
+    parser.add_argument('-u','-update', nargs=2, help="Update url by id")
+    parser.add_argument('-d','-delete', help="delete url by id")
+    parser.add_argument('-q', '-quiet', help="quiet", action="store_true")
     args = parser.parse_args()
-    
-    if args.add: 
-        add_url(args.add)
-    
-    elif args.view:
-        view_url()
-    
-    elif args.modify:
-        modify_url(args.modify)
-    
-    elif args.delete:
-        delete_url(args.delete)
-    else:
-        add_url(args.add)
+   
 
-if __name__ == '__main__':
-    Main()
+    if args.a:
+        """
+
+        if This condition is true then it checks whether url is valid or not
+        and calls a function - insert_new_record of database module to add url.
+
+        """
+        x = len(args.a)
+        i = 0
+        while i < x:
+            urldata = str(args.a[i])
+            url = requests.get(urldata)
+            if (404==url.status_code):
+                print("Invalid URL...")
+            else:
+                database_connection.insert_new_record(args.a[i])
+            i = i + 1
+    
+    elif args.v:
+        """
+        If this condition is true then it will call function - query_all  of 
+        database module and shows the data.
+
+        """
+        database_connection.query_all()
+    
+    elif args.u:
+	"""
+
+	If this condition is true then it will call function - delete_record of 
+        database module and update the data.
+	
+	"""
+        
+    
+        database_connection.update_record(args.u[0], args.u[1])
+    
+    elif args.d:
+	"""
+
+	If this condition is true then it will call function - delete_record  of 
+        database module and delete the data.
+	
+	"""
+
+        database_connection.delete_record(args.d)
+
+    elif args.dt:
+	"""
+
+	If this condition is true then it will call function - drop_table  of 
+        database module and drop the table.
+	
+	"""
+
+        database_connection.drop_table()
+
+    elif args.ct:
+	"""
+
+	If this condition is true then it will call function - create_table  of 
+        database module and create the table.
+	
+	"""
+        
+        database_connection.create_table()
+
+    elif args.q:
+	"""
+
+	If this condition is true then it will call function - query_all  of 
+        database module and shows the all data.
+	
+	"""
+
+        database_connection.query_all()
+
+    elif args.default:
+        """
+
+	If this condition is true then it will call function - insert_new_record  of 
+        database module to add urls by default.
+	
+	"""
+        j = 0
+        y = len(args.default)
+        
+        while j < y:
+            urldata = str(args.default[j])
+            url = requests.get(urldata)
+            if(404==url.status_code):
+                print("invalid URL...")
+            else:
+                database_connection.insert_new_record(args.default[j])
+            j = j + 1
+            
+
+    else:
+	"""
+	It helps to novice user.
+
+	"""
+
+        print("-h, --help   show this help message and exit\n",args)
+	
+    
+
+
