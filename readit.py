@@ -17,12 +17,11 @@ if __name__== '__main__':
     # use of argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('default', nargs='*')
-    parser.add_argument('-ct','-create',required=False,   help="create table to insert data" ,action="store_true")
-    parser.add_argument('-dt','-drop',required=False,  help="drop table to delete all bookmarks" ,action="store_true")
-    parser.add_argument('-a','-add', nargs='+', help="add url")
-    parser.add_argument('-v','-view',required=False,help="view url",action="store_true")
-    parser.add_argument('-u','-update', nargs=2, help="Update url by id")
-    parser.add_argument('-d','-delete', help="delete url by id")
+    parser.add_argument('-dt','-drop',required=False,  help="delete all bookmarks" ,action="store_true")
+    parser.add_argument('-a','-add', nargs='+', help="add bookmarks")
+    parser.add_argument('-v','-view',required=False,help="view bookmarks",action="store_true")
+    parser.add_argument('-u','-update', nargs=2, help="Update bookmarks by id")
+    parser.add_argument('-d','-delete', help="delete bookmarks by id")
     parser.add_argument('-q', '-quiet', help="quiet", action="store_true")
     args = parser.parse_args()
    
@@ -92,17 +91,6 @@ if __name__== '__main__':
 	"""
 
         database_connection.drop_table()
-
-    elif args.ct:
-        """
-
-	If this condition is true 
-        then it will call function - create_table  of 
-        database module and create the table.
-	
-	"""
-        
-        database_connection.create_table()
 
     elif args.q:
         """
