@@ -1,15 +1,13 @@
 
+#    Modules imported:
 
-"""
-Modules imported:
+# psycopg2 module --- This is postgresql database module.
+# sys module      --- This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
+# os module 	--- This module helps to access environmental variable.
+# datetime module	--- This module helps to get current date from system.
+# requests module --- This module helps to check whether url is valid or not
 
-psycopg2 module --- This is postgresql database module.
-sys module      --- This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with 			    the interpreter.
-os module 	--- This module helps to access environmental variable.
-datetime module	--- This module helps to get current date from system.
-requests module --- This module helps to check whether url is valid or not.
 
-"""
 
 import psycopg2
 import sys
@@ -18,15 +16,13 @@ import os
 import requests
 
 class DatabaseConnection(object):
-	"""
-	This class include functions which are used to apply database queries.
-
-	"""
     def __init__(self, connection, cursor):
-	"""
-	This is initialised function. Which creates connection to database.
- 
-	"""	
+    
+        """
+        This is initialised function. 
+        Which creates connection to database.
+
+        """	
         try: 
             # database connection
 
@@ -39,14 +35,8 @@ class DatabaseConnection(object):
         except:
             print("cannot connect to database")
     
-    def create_table(self):
-        """
-	This function creates database table.
-	
-	"""
-        create_table_command = "CREATE TABLE bookmarks(ID serial PRIMARY KEY, URL varchar(500), Date date not null default CURRENT_DATE)"
+        create_table_command = "CREATE TABLE IF NOT EXISTS bookmarks(ID serial PRIMARY KEY, URL varchar(500), Date date not null default CURRENT_DATE)"
         self.cursor.execute(create_table_command)
-        print("table created successfully")
 
     def insert_new_record(self, url):
         """
@@ -94,7 +84,8 @@ class DatabaseConnection(object):
 
     def drop_table(self):
         """
-	This function will delete all records by droping table from database.
+	This function will delete all records 
+        by droping table from database.
 
 	"""
         drop_table = "DROP TABLE bookmarks"
