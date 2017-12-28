@@ -1,9 +1,9 @@
-## Readit - Command line tool
+# Readit - Command line tool
 
-# Introduction
+## Introduction
 Readit is command line bookmark manager. It is a command line utility to add, delete, update the bookmarks. It is a powerful bookmark manager written in Python3 and PostgreSQL.
 
-# Features
+## Features
 
   - Add multiple links at a time
   - Delete a link
@@ -52,7 +52,7 @@ optional arguments:
   -q, -quiet            quiet
 ```
 
-### Examples
+#### Examples
 
 1. **Add**  bookmarks:
 
@@ -93,13 +93,13 @@ optional arguments:
        $ readit -quiet
     
      
-### Todos
+#### Todos
 
  - Write Unit Tests
  - Create command - readit
  - Continuous integration service - Travis CI
  
-License
+#### License
 ----
 
 MIT
