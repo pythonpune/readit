@@ -9,6 +9,7 @@ Readit is command line bookmark manager. It is a command line utility to add, de
   - Delete a link
   - Update a link
   - Checks whether link is valid or not while adding
+
 #### Dependencies
 
 | Feature | Dependency |
@@ -24,9 +25,12 @@ To install package dependencies using pip, run:
     $ sudo pip install argparse
     
 To install database PostgreSQL on Ubuntu:
+
     $ sudo apt-get install postgresql postgresql-contrib
+
 To install database PostgreSQL on Fedora:
-    $ sudo apt-get install postgresql postgresql-contrib
+
+    $ sudo dnf install postgresql postgresql-contrib
 
 #### Command line options
 
@@ -82,7 +86,7 @@ optional arguments:
        or 
        $ readit -view
        
-2. **To Quiet** from readit tool:
+6. **To Quiet** from readit tool:
 
        $ readit -q
        or
@@ -93,6 +97,7 @@ optional arguments:
 
  - Write Unit Tests
  - Create command - readit
+ - Continuous integration service - Travis CI
  
 License
 ----
