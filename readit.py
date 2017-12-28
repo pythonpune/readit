@@ -1,11 +1,3 @@
-"""
-Modules imported:
-
-argparse module -- for options and arguments
-requests module --- for checking url is valid or not.
-database module --- it is user defined module and havind code of database queries.
-
-"""
 
 import argparse
 import requests
@@ -38,8 +30,10 @@ if __name__== '__main__':
     if args.a:
         """
 
-        if This condition is true then it checks whether url is valid or not
-        and calls a function - insert_new_record of database module to add url.
+        if This condition is true 
+        then it checks whether url is valid or not
+        and calls a function - insert_new_record 
+        of database module to add url.
 
         """
         x = len(args.a)
@@ -55,16 +49,20 @@ if __name__== '__main__':
     
     elif args.v:
         """
-        If this condition is true then it will call function - query_all  of 
+        If this condition is true then it will call 
+        function - query_all  
+        of 
         database module and shows the data.
 
         """
         database_connection.query_all()
     
     elif args.u:
-	"""
+        """
 
-	If this condition is true then it will call function - delete_record of 
+	If this condition is true then it will call 
+        function - delete_record 
+        of 
         database module and update the data.
 	
 	"""
@@ -73,9 +71,11 @@ if __name__== '__main__':
         database_connection.update_record(args.u[0], args.u[1])
     
     elif args.d:
-	"""
+        """
 
-	If this condition is true then it will call function - delete_record  of 
+	If this condition is true then it will call 
+        function - delete_record  
+        of 
         database module and delete the data.
 	
 	"""
@@ -83,9 +83,10 @@ if __name__== '__main__':
         database_connection.delete_record(args.d)
 
     elif args.dt:
-	"""
+        """
 
-	If this condition is true then it will call function - drop_table  of 
+	If this condition is true 
+        then it will call function - drop_table  of 
         database module and drop the table.
 	
 	"""
@@ -93,9 +94,10 @@ if __name__== '__main__':
         database_connection.drop_table()
 
     elif args.ct:
-	"""
+        """
 
-	If this condition is true then it will call function - create_table  of 
+	If this condition is true 
+        then it will call function - create_table  of 
         database module and create the table.
 	
 	"""
@@ -103,9 +105,10 @@ if __name__== '__main__':
         database_connection.create_table()
 
     elif args.q:
-	"""
+        """
 
-	If this condition is true then it will call function - query_all  of 
+	If this condition is true 
+        then it will call function - query_all  of 
         database module and shows the all data.
 	
 	"""
@@ -115,7 +118,8 @@ if __name__== '__main__':
     elif args.default:
         """
 
-	If this condition is true then it will call function - insert_new_record  of 
+	If this condition is true 
+        then it will call function - insert_new_record  of 
         database module to add urls by default.
 	
 	"""
@@ -133,7 +137,7 @@ if __name__== '__main__':
             
 
     else:
-	"""
+        """
 	It helps to novice user.
 
 	"""
