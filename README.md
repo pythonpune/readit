@@ -95,22 +95,25 @@ optional arguments:
 #### Developer Install
 -----------------
 
-`fork on github`::
+* fork on github:
 
   $ https://github.com/ganeshhubale/readit.git
 
-We recommend to create and activate a virtualenv_ first::
+* We recommend to create and activate a virtualenv first:
 
-  $ cd readit/
-  $ virtualenv -p /usr/bin/python virt
-  $ source virt/bin/activate
-  (virt) $
+	$ cd readit/
 
-We support Python versions  2.7, 3.3 to 3.6.
+  	$ virtualenv -p /usr/bin/python virt
 
-Now you can create the devel environment::
+  	$ source virt/bin/activate
 
-  (virt) $ python setup.py dev
+  	(virt) $
+
+* We support Python versions  2.7, 3.3 to 3.6:
+
+* Now you can create the devel environment::
+	
+	(virt) $ python setup.py dev
 
 This will fetch  packages.
 
