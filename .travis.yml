@@ -1,11 +1,17 @@
+
 language: python
-
 python:
-        - "3.5"
-        - "3.6"
-cache: pip
-install: "pip install -r requirements.txt"
-script: python __init__.py
-                
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+sudo: required
+services:
+  - postgreSQL
 
+before_install:
+  - "pip install --upgrade setuptools"
+  - "pip install --upgrade pip"
+
+install: "pip install -r requirements.txt"
 
