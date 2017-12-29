@@ -54,13 +54,17 @@ class DatabaseConnection(object):
 	This function shows all databse.
 
 	"""
-        self.cursor.execute("SELECT * FROM bookmarks")
+        self.cursor.execute("SELECT * FROM bookmarks ORDER BY ID ASC")
         rows = self.cursor.fetchall()
         print('-------'*10)
         print("%2s |  %15s|  %12s" % ('ID', 'DATE', 'URL'))
         print('-------'*10)
         for row in rows:
             print("%2s | %15s |  %12s" % (row[0], row[2], row[1]))
+        
+        self.cursor.close() # cursor closed
+        self.connection.close() # database connection closed
+
 
     def update_record(self, ID, URL):
         """
@@ -90,5 +94,8 @@ class DatabaseConnection(object):
 	"""
         drop_table = "DROP TABLE bookmarks"
         self.cursor.execute(drop_table)
-        print("table dropped")
-
+        print("Successfully deleted all data")
+        
+        self.cursor.close() # cursor closed
+        self.connection.close() # database connection closed
+        
