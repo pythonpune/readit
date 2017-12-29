@@ -2,17 +2,37 @@
 import argparse
 import requests
 import database  
+import readit
 
+def main():
 
-if __name__== '__main__':
     """
-    This is main funcction.
-    It includes atrgparse coding.
-    It calls the functions available in database module.
-
+    This is main function.
+    It includes argparse command line options coding.
+    It is responsible to call database function with respect to command line options.
     """
 
     database_connection = database.DatabaseConnection('','')
+    
+    def fun_is_bad_url(l, m):
+        """
+        This is function for chacking whether url is valid or invalid.
+        
+        """
+    
+        al = l
+        am = m
+        i = 0
+        while i < al:
+            urldata = str(am[i])
+            url = requests.get(urldata)
+            if (404==url.status_code):
+                print("Invalid URL...")
+            else:
+                database_connection.insert_new_record(urldata)
+            i = i + 1
+
+
    
     # use of argparse
     parser = argparse.ArgumentParser()
@@ -36,15 +56,9 @@ if __name__== '__main__':
 
         """
         x = len(args.a)
-        i = 0
-        while i < x:
-            urldata = str(args.a[i])
-            url = requests.get(urldata)
-            if (404==url.status_code):
-                print("Invalid URL...")
-            else:
-                database_connection.insert_new_record(args.a[i])
-            i = i + 1
+        y = args.a
+        fun_is_bad_url(x, y)
+
     
     elif args.v:
         """
@@ -111,18 +125,9 @@ if __name__== '__main__':
         database module to add urls by default.
 	
 	"""
-        j = 0
-        y = len(args.default)
-        
-        while j < y:
-            urldata = str(args.default[j])
-            url = requests.get(urldata)
-            if(404==url.status_code):
-                print("invalid URL...")
-            else:
-                database_connection.insert_new_record(args.default[j])
-            j = j + 1
-            
+        default_args_length = len(args.default)
+        default_urls = args.default
+        fun_is_bad_url(default_args_length, default_urls)
 
     else:
         """
@@ -131,7 +136,4 @@ if __name__== '__main__':
 	"""
 
         print("-h, --help   show this help message and exit\n",args)
-	
-    
-
 
