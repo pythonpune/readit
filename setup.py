@@ -7,6 +7,7 @@ install_requires = [
     'setuptools',
     'requests',
     'argparse',
+    
     ]
 
 #tests_require = [
@@ -63,4 +64,8 @@ setup(
      #   ),
       # add more sources of randomness here...
  #  },
+    entry_points='''
+        [console_scripts]
+        manager.readit=readit:main()
+        ''',
 )
