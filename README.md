@@ -91,8 +91,30 @@ optional arguments:
        $ readit -q
        or
        $ readit -quiet
+
+#### Developer Install
+-----------------
+
+`fork on github`::
+
+  $ https://github.com/ganeshhubale/readit.git
+
+We recommend to create and activate a virtualenv_ first::
+
+  $ cd readit/
+  $ virtualenv -p /usr/bin/python virt
+  $ source virt/bin/activate
+  (virt) $
+
+We support Python versions  2.7, 3.3 to 3.6.
+
+Now you can create the devel environment::
+
+  (virt) $ python setup.py dev
+
+This will fetch  packages.
+
     
-     
 #### Todos
 
  - Write Unit Tests
