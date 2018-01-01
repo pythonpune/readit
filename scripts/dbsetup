@@ -37,7 +37,7 @@ if [ -f /etc/os-release ]; then
                      systemctl enable firewalld.service
 
 	     elif [ $VER == 27 ]; then
-                     echo "Version 27"
+                     echo "$OS $VER"
 		     dnf install https://download.postgresql.org/pub/repos/yum/10/fedora/fedora-27-x86_64/pgdg-fedora10-10-3.noarch.rpm  -y
 		     dnf install postgresql10 postgresql10-server -y
 		     dnf install pgadmin3 phpPgAdmin -y
