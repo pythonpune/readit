@@ -21,13 +21,16 @@ setup(
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
     py_modules=[],
-    packages=['manager', ],
+    packages=find_packages(),
     namespace_packages=[],
             
     include_package_data=True,
     zip_safe=False,
  
     install_requires=install_requires,
+    scripts=[
+        'scripts/dbsetup'
+    ],
     )
  
 
