@@ -9,9 +9,9 @@ python:
   - "pypy"
   - "pypy3"
 
-virtualenv:
-  system_site_packages: true
-
+    #virtualenv:
+    #system_site_packages: true
+group: deprecated-2017Q4
 sudo: enabled
 
 services:
