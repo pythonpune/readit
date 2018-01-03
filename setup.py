@@ -12,7 +12,7 @@ install_requires = [
 
 setup(
     name="readit",
-    version="0.1.0",
+    version="0.1",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description=(
