@@ -1,7 +1,7 @@
 
 from setuptools import setup, find_packages
 
-with open("README") as f:
+with open("README.md") as f:
     long_description = f.read()
 
 install_requires = [
@@ -13,9 +13,10 @@ install_requires = [
 
 setup(
     name="readit",
+    packages = find_packages(),
     entry_points = {
         'console_scripts': [
-            'readit = __init__.py:main',
+            'readit = manager.__init__.py:main',
             ],
         },
     version="0.1",
@@ -27,7 +28,6 @@ setup(
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
     py_modules=[],
-    packages=['manager', ],
     namespace_packages=[],
             
     include_package_data=True,
