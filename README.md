@@ -92,12 +92,12 @@ optional arguments:
        or
        $ readit -quiet
 
-#### Developer Install
+#### How to Install
 -----------------
 
-* fork on github:
+* Clone project from github:
 
-  $ https://github.com/ganeshhubale/readit.git
+  $ git clone https://github.com/ganeshhubale/readit.git
 
 * We recommend to create and activate a virtualenv first:
 
@@ -109,13 +109,15 @@ optional arguments:
 
   	(virt) $
 
-* We support Python versions  2.7, 3.3 to 3.6:
+* To install using setup.py file:
 
-* Now you can create the devel environment::
 	
-	(virt) $ python setup.py dev
+	(virt) $ python setup.py install
 
-This will fetch  packages.
+* To make build of project:
+
+	(virt) $ python setup.py build
+	
 
     
 #### Todos
