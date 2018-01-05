@@ -96,11 +96,11 @@ optional arguments:
 -----------------
 
 * Clone project from github:
-
+```
   $ git clone https://github.com/ganeshhubale/readit.git
-
+```
 * We recommend to create and activate a virtualenv first:
-
+```
 	$ cd readit/
 
   	$ virtualenv -p /usr/bin/python virt
@@ -108,23 +108,17 @@ optional arguments:
   	$ source virt/bin/activate
 
   	(virt) $
-
+```
 * To install using setup.py file:
-
-	
+```	
 	(virt) $ python setup.py install
-
+```
 * To make build of project:
-
+```
 	(virt) $ python setup.py build
-	
+```	
 
     
-#### Todos
-
- - Write Unit Tests
- - Create command - readit
- - Continuous integration service - Travis CI
  
 #### License
 ----
