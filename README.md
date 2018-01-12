@@ -120,9 +120,9 @@ optional arguments:
 
     
  
-#### License
+#### [License](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
 ----
 
-[MIT](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
+MIT
 
 
