@@ -123,6 +123,6 @@ optional arguments:
 #### License
 ----
 
-MIT
+[MIT](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
 
 
