@@ -19,18 +19,6 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 | Command-Line Option and Argument Parsing  | argparse |
 | Database used  | PostgreSQL |
 
-To install package dependencies using pip, run:
-
-    $ pip install requests 
-    $ pip install argparse
-    
-To install database PostgreSQL on Ubuntu:
-
-    $ sudo apt-get install postgresql postgresql-contrib
-
-To install database PostgreSQL on Fedora:
-
-    $ sudo dnf install postgresql postgresql-contrib
 
 #### Command line options
 
@@ -98,6 +86,15 @@ optional arguments:
 * Clone project from github:
 ```
   $ git clone https://github.com/ganeshhubale/readit.git
+```
+* To install database PostgreSQL on fedora:
+```
+    $ pip install psycopg2
+```
+* To install package dependencies using pip, run:
+```
+    $ pip install requests
+    $ pip install argparse
 ```
 * We recommend to create and activate a virtualenv first:
 ```
