@@ -21,8 +21,8 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 
 To install package dependencies using pip, run:
 
-    $ sudo pip install requests 
-    $ sudo pip install argparse
+    $ pip install requests 
+    $ pip install argparse
     
 To install database PostgreSQL on Ubuntu:
 
