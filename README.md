@@ -123,7 +123,7 @@ optional arguments:
 #### [License](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
 ----
 
-readit is licensed under [MIT](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
+readit is licensed under [MIT](https://github.com/ganeshhubale/readit/blob/master/LICENSE).
 
 
 
