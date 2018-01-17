@@ -27,7 +27,7 @@ setup(
     license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
-    py_modules=[],
+    py_modules=[manager,],
     namespace_packages=[],
             
     include_package_data=True,
