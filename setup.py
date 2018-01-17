@@ -7,7 +7,7 @@ with open("README.md") as f:
 install_requires = [
     'setuptools',
     'requests',
-    'argparse',
+    'click',
     
     ]
 
@@ -24,7 +24,7 @@ setup(
     author_email="ganeshhubale03@gmail.com",
     description="It is bookmark manager.",
     long_description = long_description,
-    license="MIT",
+    license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
     py_modules=[],
@@ -34,9 +34,9 @@ setup(
     zip_safe=False,
  
     install_requires=install_requires,
-    scripts = [
-        'scripts/dbsetup',
-        ],
+   # scripts = [
+    #    'scripts/dbsetup',
+     #   ],
     )
  
 
