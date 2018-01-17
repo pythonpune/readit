@@ -6,7 +6,7 @@ with open("README.md") as f:
 
 install_requires = [
     'setuptools',
-    'requests',
+   # 'requests',
     'click',
     
     ]
@@ -27,7 +27,7 @@ setup(
     license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
-    py_modules=[manager,],
+    py_modules=['readit'],
     namespace_packages=[],
             
     include_package_data=True,
