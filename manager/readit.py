@@ -1,16 +1,23 @@
-import click
-import database
+import click # used for command line interface.
+import database # used to perform database operations.
 
 @click.command()
 @click.option('--add','-a', multiple=True, help="add")
 @click.option('--delete','-d', multiple=True, default='', help='delete')
 @click.option('--update','-u', multiple=True, nargs=2, default='', help='update')
-@click.option('--show','-s', multiple=True, nargs=0,  help='show')
+@click.option('--view','-v', multiple=True, nargs=0,  help='show')
 
 @click.argument('insert', nargs=-1, required=False)
 
 
 def main(insert, add, delete, update, show):
+    """
+    It creates the database object to access functions from database module.
+    It call the various functions of database package to perform database operations.
+    It performs operations as per arguments passed by user.
+    """
+
+    
     
     d = db.DatabaseConnection('', '')
     
@@ -25,7 +32,7 @@ def main(insert, add, delete, update, show):
         for i in delete:
             urlid = i
             d.delete_url(urlid)
-            print(urlid)
+        #    print(urlid)
    
     elif update:
         mylist = []
@@ -33,11 +40,11 @@ def main(insert, add, delete, update, show):
         for i in update:
             mylist.append(i)
            # d.update_url(i)
-        print(mylist)
+       # print(mylist)
     
-    elif show:
+    elif view:
         
-        click.echo("show: hello")
+       # click.echo("show: hello")
         d.show_url()
     
     else:
