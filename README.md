@@ -87,14 +87,10 @@ optional arguments:
 ```
   $ git clone https://github.com/ganeshhubale/readit.git
 ```
-* To install database PostgreSQL on fedora:
-```
-    $ pip install psycopg2
-```
 * To install package dependencies using pip, run:
 ```
     $ pip install requests
-    $ pip install argparse
+    $ pip install click
 ```
 * We recommend to create and activate a virtualenv first:
 ```
