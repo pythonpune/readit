@@ -1,36 +1,43 @@
 
 from setuptools import setup, find_packages
 
-
+with open("README.md") as f:
+    long_description = f.read()
 
 install_requires = [
     'setuptools',
-    'requests',
-    'argparse',
+   # 'requests',
+    'click',
     
     ]
 
 setup(
     name="readit",
-    version="0.1.0",
+    packages = find_packages(),
+    entry_points = {
+        'console_scripts': [
+            'readit = manager.__init__.py:main',
+            ],
+        },
+    version="0.1",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
-    description=(
-        "It is bookmark manager."),
-    license="MIT",
+    description="It is bookmark manager.",
+    long_description = long_description,
+    license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
-    py_modules=[],
-    packages=find_packages(),
+    py_modules=['readit'],
     namespace_packages=[],
             
     include_package_data=True,
     zip_safe=False,
  
     install_requires=install_requires,
-    scripts=[
-        'scripts/dbsetup'
-    ],
+   # scripts = [
+    #    'scripts/dbsetup',
+     #   ],
+
     )
  
 

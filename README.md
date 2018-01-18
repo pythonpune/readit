@@ -1,7 +1,7 @@
 # Readit - Command line tool
 
 ## Introduction
-Readit is command line bookmark manager. It is a command line utility to add, delete, update the bookmarks. It is a powerful bookmark manager written in Python3 and PostgreSQL.
+Readit is command line bookmark manager. It is a command line utility to add, delete, update the bookmarks. It is a powerful bookmark manager written in Python3 and SQLite3.
 
 ## Features
 
@@ -16,21 +16,9 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 | --- | --- |
 | Scripting language | Python 3.4+ |
 | HTTP(S) | Requests |
-| Command-Line Option and Argument Parsing  | argparse |
-| Database used  | PostgreSQL |
+| Command-Line Option and Argument Parsing  | Click |
+| Database used  | SQLite |
 
-To install package dependencies using pip, run:
-
-    $ sudo pip install requests 
-    $ sudo pip install argparse
-    
-To install database PostgreSQL on Ubuntu:
-
-    $ sudo apt-get install postgresql postgresql-contrib
-
-To install database PostgreSQL on Fedora:
-
-    $ sudo dnf install postgresql postgresql-contrib
 
 #### Command line options
 
@@ -48,7 +36,7 @@ optional arguments:
                         add bookmarks
   -v, -view             view bookmarks
   -u U U, -update U U   Update bookmarks by id
-  -d D, -delete D       delete bookmarks by id
+  -d D, -delete D       delete bookmarks by id	
   -q, -quiet            quiet
 ```
 
@@ -92,15 +80,20 @@ optional arguments:
        or
        $ readit -quiet
 
-#### Developer Install
+#### How to Install
 -----------------
 
-* fork on github:
-
-  $ https://github.com/ganeshhubale/readit.git
-
+* Clone project from github:
+```
+  $ git clone https://github.com/ganeshhubale/readit.git
+```
+* To install package dependencies using pip, run:
+```
+    $ pip install requests
+    $ pip install click
+```
 * We recommend to create and activate a virtualenv first:
-
+```
 	$ cd readit/
 
   	$ virtualenv -p /usr/bin/python virt
@@ -108,25 +101,22 @@ optional arguments:
   	$ source virt/bin/activate
 
   	(virt) $
-
-* We support Python versions  2.7, 3.3 to 3.6:
-
-* Now you can create the devel environment::
-	
-	(virt) $ python setup.py dev
-
-This will fetch  packages.
+```
+* To install using setup.py file:
+```	
+	(virt) $ python setup.py install
+```
+* To make build of project:
+```
+	(virt) $ python setup.py build
+```	
 
     
-#### Todos
-
- - Write Unit Tests
- - Create command - readit
- - Continuous integration service - Travis CI
  
-#### License
+#### [License](https://github.com/ganeshhubale/readit/blob/master/LICENSE)
 ----
 
-MIT
+Readit - Command line tool is licensed under [GNU General Public License v3.0](https://github.com/ganeshhubale/readit/blob/master/LICENSE).
+
 
 

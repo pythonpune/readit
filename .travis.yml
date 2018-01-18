@@ -5,14 +5,28 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-sudo: required
+    #  Pypy versions
+  - "pypy"
+  - "pypy3"
+
+    #virtualenv:
+    #system_site_packages: true
+group: deprecated-2017Q4
+sudo: enabled
+
 services:
-  - postgreSQL
+  - postgresql
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 before_install:
   - "pip install --upgrade setuptools"
   - "pip install --upgrade pip"
 
-install: "pip install -r requirements.txt"
-script: python __init__.py
+install:
+        - pip install .
+        - pip install -r requirements.txt
+script: 
+        - py.test
 

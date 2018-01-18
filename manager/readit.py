@@ -1,139 +1,56 @@
+import click # used for command line interface.
+import database # used to perform database operations.
 
-import argparse
-import requests
-import database  
-import readit
+@click.command()
+@click.option('--add','-a', multiple=True, help="add")
+@click.option('--delete','-d', multiple=True, default='', help='delete')
+@click.option('--update','-u', multiple=True, nargs=2, default='', help='update')
+@click.option('--view','-v', multiple=True, nargs=0,  help='show')
 
-def main():
+@click.argument('insert', nargs=-1, required=False)
 
+
+def main(insert, add, delete, update, show):
     """
-    This is main function.
-    It includes argparse command line options coding.
-    It is responsible to call database function with respect to command line options.
+    It creates the database object to access functions from database module.
+    It call the various functions of database package to perform database operations.
+    It performs operations as per arguments passed by user.
     """
 
-    database_connection = database.DatabaseConnection('','')
     
-    def fun_is_bad_url(l, m):
-        """
-        This is function for chacking whether url is valid or invalid.
-        
-        """
     
-        al = l
-        am = m
-        i = 0
-        while i < al:
-            urldata = str(am[i])
-            url = requests.get(urldata)
-            if (404==url.status_code):
-                print("Invalid URL...")
-            else:
-                database_connection.insert_new_record(urldata)
-            i = i + 1
-
-
+    d = db.DatabaseConnection('', '')
+    
+    if add:
+        for i in add:
+            url = i
+            d.add_url(url)
    
-    # use of argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('default', nargs='*')
-    parser.add_argument('-dt','-drop',required=False,  help="delete all bookmarks" ,action="store_true")
-    parser.add_argument('-a','-add', nargs='+', help="add bookmarks")
-    parser.add_argument('-v','-view',required=False,help="view bookmarks",action="store_true")
-    parser.add_argument('-u','-update', nargs=2, help="Update bookmarks by id")
-    parser.add_argument('-d','-delete', help="delete bookmarks by id")
-    parser.add_argument('-q', '-quiet', help="quiet", action="store_true")
-    args = parser.parse_args()
+    elif delete:
+
+        click.echo("delete: {0}".format(delete))
+        for i in delete:
+            urlid = i
+            d.delete_url(urlid)
+        #    print(urlid)
    
-
-    if args.a:
-        """
-
-        if This condition is true 
-        then it checks whether url is valid or not
-        and calls a function - insert_new_record 
-        of database module to add url.
-
-        """
-        x = len(args.a)
-        y = args.a
-        fun_is_bad_url(x, y)
-
+    elif update:
+        mylist = []
+        click.echo("update {0}".format(update))
+        for i in update:
+            mylist.append(i)
+           # d.update_url(i)
+       # print(mylist)
     
-    elif args.v:
-        """
-        If this condition is true then it will call 
-        function - query_all  
-        of 
-        database module and shows the data.
-
-        """
-        database_connection.query_all()
-    
-    elif args.u:
-        """
-
-	If this condition is true then it will call 
-        function - delete_record 
-        of 
-        database module and update the data.
-	
-	"""
+    elif view:
         
+       # click.echo("show: hello")
+        d.show_url()
     
-        database_connection.update_record(args.u[0], args.u[1])
-    
-    elif args.d:
-        """
-
-	If this condition is true then it will call 
-        function - delete_record  
-        of 
-        database module and delete the data.
-	
-	"""
-
-        database_connection.delete_record(args.d)
-
-    elif args.dt:
-        """
-
-	If this condition is true 
-        then it will call function - drop_table  of 
-        database module and drop the table.
-	
-	"""
-
-        database_connection.drop_table()
-
-    elif args.q:
-        """
-
-	If this condition is true 
-        then it will call function - query_all  of 
-        database module and shows the all data.
-	
-	"""
-
-        database_connection.query_all()
-
-    elif args.default:
-        """
-
-	If this condition is true 
-        then it will call function - insert_new_record  of 
-        database module to add urls by default.
-	
-	"""
-        default_args_length = len(args.default)
-        default_urls = args.default
-        fun_is_bad_url(default_args_length, default_urls)
-
     else:
-        """
-	It helps to novice user.
+        
+        for n in insert:
+            click.echo("hello: %s" %(n))
+            d.add_url(n)
 
-	"""
-
-        print("-h, --help   show this help message and exit\n",args)
-
+    
