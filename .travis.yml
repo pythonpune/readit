@@ -15,10 +15,7 @@ group: deprecated-2017Q4
 sudo: enabled
 
 services:
-  - postgresql
-
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - SQLite3
 
 before_install:
   - "pip install pep8" 
