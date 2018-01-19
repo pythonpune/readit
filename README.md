@@ -89,18 +89,26 @@ optional arguments:
 ```
 * To install package dependencies using pip, run:
 ```
+    * If you logged in as root user *
     $ pip install requests
     $ pip install click
+
+    * If you logged in as normal user *
+    $ pip install --user requests
+    $ pip install --user click
+
 ```
 * We recommend to create and activate a virtualenv first:
 ```
-	$ cd readit/
 
   	$ virtualenv -p /usr/bin/python virt
 
   	$ source virt/bin/activate
 
   	(virt) $
+
+        $ cd readit/
+
 ```
 * To install using setup.py file:
 ```	
