@@ -90,8 +90,8 @@ optional arguments:
 * To install package dependencies using pip, run:
 ```
     * If it is root then it should be: *
-    $ pip install requests
-    $ pip install click
+    # pip install requests
+    # pip install click
 
     * If you are logged in as normal user then it should be: *
     $ pip install --user requests
