@@ -1,31 +1,12 @@
-
 language: python
 python:
   - "2.7"
   - "3.4"
   - "3.5"
   - "3.6"
-    #  Pypy versions
-  - "pypy"
-  - "pypy3"
-
-group: deprecated-2017Q4
-sudo: enabled
-
-services: 
-  - SQLite3
-  
-
-before_install: 
-  - "pip install pep8" 
-  - "pip install --upgrade setuptools"
-  - "pip install --upgrade pip"
-  
+before_install:  
+  - pip install --upgrade pip
 install:
-        - pip install -r requirements.txt
-        
-
+  - pip install -r requirements.txt
 script: 
-        - py.test
-    
-
+  - flake8 manager/ setup.py 
