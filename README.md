@@ -89,11 +89,11 @@ optional arguments:
 ```
 * To install package dependencies using pip, run:
 ```
-    * If you logged in as root user *
+    * If it is root then it should be: *
     $ pip install requests
     $ pip install click
 
-    * If you logged in as normal user *
+    * If you are logged in as normal user then it should be: *
     $ pip install --user requests
     $ pip install --user click
 
