@@ -88,18 +88,24 @@ optional arguments:
   $ git clone https://github.com/ganeshhubale/readit.git
 ```
 * To install package dependencies using pip, run:
+
 ```
-    * If it is root then it should be: *
+    If you are logged in as root: 
+    
     # pip install requests
     # pip install click
-
-    * If you are logged in as normal user then it should be: *
+    
+    If you are logged in as normal user
+    
     $ pip install --user requests
     $ pip install --user click
 
 ```
+
 * We recommend to create and activate a virtualenv first:
 ```
+  
+  $ cd readit/
 
   	$ virtualenv -p /usr/bin/python virt
 
@@ -107,7 +113,7 @@ optional arguments:
 
   	(virt) $
 
-        $ cd readit/
+        
 
 ```
 * To install using setup.py file:
