@@ -1,5 +1,5 @@
 import click # used for command line interface.
-import database # used to perform database operations.
+import database as db # used to perform database operations.
 
 @click.command()
 @click.option('--add','-a', multiple=True, help="add")
