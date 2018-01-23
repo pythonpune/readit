@@ -10,7 +10,7 @@ import database as db # used to perform database operations.
 @click.argument('insert', nargs=-1, required=False)
 
 
-def main(insert, add, delete, update, show):
+def main(insert, add, delete, update, view):
     """
     It creates the database object to access functions from database module.
     It call the various functions of database package to perform database operations.
