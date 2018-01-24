@@ -49,8 +49,8 @@ class DatabaseConnection(object):
         """
         self.uid = uid
         self.url = url
-        self.cursor.execute(
-            ''' UPDATE bookmarks SET url=? WHERE id=?''', (self.url, self.uid,))
+        self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
+                            (self.url, self.uid,))
         self.db.commit()
 
     def show_url(self):
