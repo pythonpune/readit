@@ -45,7 +45,7 @@ Options:
 
        $ readit -a https://www.google.co.in/
        or
-       readit --add https://www.github.com
+       $ readit --add https://www.github.com
        or
        $ readit https://www.google.co.in/ https://github.com/
 
@@ -96,11 +96,11 @@ Options:
 ```
 * To install using setup.py file:
 ```	
-	(virt) $ python setup.py install
+	(venv) $ python setup.py install
 ```
 * To make build of project:
 ```
-	(virt) $ python setup.py build
+	(venv) $ python setup.py build
 ```	
 
     
