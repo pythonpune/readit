@@ -48,6 +48,10 @@ Options:
        $ readit --add https://www.github.com
        or
        $ readit https://www.google.co.in/ https://github.com/
+       or
+       readit -a https://www.google.co.in/ -a https://github.com/
+       or
+       readit --add https://www.google.co.in/ --add https://github.com/
 
        
 2. **View** all available bookmarks:
@@ -61,7 +65,7 @@ Options:
 
        $ readit -u 1 https://www.google.co.in/
        or
-       $ readit -update 1 https://www.google.co.in/ 
+       $ readit --update 1 https://www.google.co.in/ 
 
      
 3. **Delete** a bookmarked links using it's ID:
