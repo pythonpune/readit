@@ -9,7 +9,7 @@ Readit is command line bookmark manager. It is a command line utility to add, de
   - Add multiple links at a time
   - Delete a link
   - Update a link
-  - Link validation while adding 
+  - Link validation while adding
 
 #### Dependencies
 
@@ -41,6 +41,7 @@ Options:
 
 #### Examples
 
+
 1. **Add**  bookmarks:
 
        $ readit -a https://www.google.co.in/
@@ -68,13 +69,21 @@ Options:
        $ readit --update 1 --update https://www.google.co.in/
 
      
-3. **Delete** a bookmarked links using it's ID:
+4. **Delete** a bookmarked link using it's ID:
 
-       $ readit --delete 1 
+       $ readit -d 1
        or
-       $ readit -d 1  
-
+       $ readit --delete 1 
        
+       
+5. **Clear** all the bookmarks:
+
+       $ readit -c
+       or
+       $ readit --clear
+
+
+
 #### How to Install
 -----------------
 
