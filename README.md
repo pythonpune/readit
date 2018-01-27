@@ -26,13 +26,12 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 ```
 Usage: readit [OPTIONS] [INSERT]...
 
-  It creates the database object to access functions from database module.
-  Calls the various functions of database. It performs database operations
-  as per arguments passed by user.
+  It performs database operations as per arguments passed by user.
 
 Options:
   -a, --add TEXT        add url
   -d, --delete TEXT    delete url
+  -c, --clear TEXT...   Clear database
   -u, --update TEXT   update url
   -v, --view TEXT...    show url
   --help                     Show this message and exit.
