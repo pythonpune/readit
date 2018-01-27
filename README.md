@@ -65,7 +65,7 @@ Options:
 
        $ readit -u 1 -u https://www.google.co.in/
        or
-       $ readit readit --update 1 --update https://www.google.co.in/
+       $ readit --update 1 --update https://www.google.co.in/
 
      
 3. **Delete** a bookmarked links using it's ID:
