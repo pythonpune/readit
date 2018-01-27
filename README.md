@@ -15,7 +15,7 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 
 | Feature | Dependency |
 | --- | --- |
-| Scripting language | Python 3.4+ |
+| Scripting language | Python 2.7+ |
 | HTTP(S) | Requests |
 | Command-Line Option and Argument Parsing  | Click |
 | Database used  | SQLite |
