@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 
 class DatabaseConnection(object):
@@ -12,11 +13,11 @@ class DatabaseConnection(object):
         """
 
         try:
-            self.db = sqlite3.connect('test.db')
+            self.db = sqlite3.connect('test1.db')
             self.cursor = self.db.cursor()
             self.cursor.execute('''CREATE TABLE IF NOT EXISTS bookmarks
-            (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, url TEXT)
-            ''')
+            (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            url TEXT UNIQUE NOT NULL, date TEXT, time TEXT)''')
             self.db.commit()
 
         except sqlite3.OperationalError:
@@ -27,39 +28,75 @@ class DatabaseConnection(object):
         """
         url will be adding to database.
         """
-        self.url = url
-
-        self.cursor.execute('''
-        INSERT INTO bookmarks(url) VALUES (?)
-        ''', (self.url,))
-        self.db.commit()
+        try:
+            self.url = url
+            date = datetime.date.today()
+            start = datetime.datetime.now()
+            time = start.strftime("%H:%M:%S")
+            self.cursor.execute('''
+            INSERT INTO bookmarks(url, date, time) VALUES (?, ?, ?)
+            ''', (self.url, date, time))
+            self.db.commit()
+        except Exception as e1:
+            print("URL is already present in database.", e1)
 
     def delete_url(self, urlid):
         """
-        url can deleted as per id number provided.
+        URLs can deleted as per id number provided.
         """
-        self.urlid = urlid
-        self.cursor.execute(
-            ''' DELETE FROM bookmarks WHERE id=? ''', (self.urlid,))
-        self.db.commit()
+        try:
+            self.urlid = urlid
+            self.cursor.execute(
+                ''' SELECT url FROM bookmarks where id=? ''', (self.urlid))
+            rows = self.cursor.fetchone()
+            for r in rows:
+                print("Deleted url:--> ", r)
+            self.cursor.execute(
+                ''' DELETE FROM bookmarks WHERE id=? ''', (self.urlid,))
+            self.db.commit()
+        except Exception as e2:
+            print("URL of this id is present not in database.", e2)
 
     def update_url(self, uid, url):
         """
-        url can be updated with respect to id.
+        URLs can be updated with respect to id.
         """
-        self.uid = uid
-        self.url = url
-        self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
-                            (self.url, self.uid,))
-        self.db.commit()
+
+        try:
+
+            self.uid = uid
+            self.url = url
+            self.cursor.execute(
+                ''' SELECT url FROM bookmarks WHERE id=?''', (self.uid))
+            r = self.cursor.fetchone()
+            for i in r:
+                print("Replaced URL:--> ", i)
+            self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
+                                (self.url, self.uid,))
+            self.db.commit()
+        except Exception as e3:
+            print("Provided id is not present in database.", e3)
 
     def show_url(self):
         """
-        all urls from database shown to user on screen.
+        All URLs from database displayed to user on screen.
         """
+        try:
+            self.cursor.execute(
+                ''' SELECT id, url, date, time FROM bookmarks ''')
+            all_row = self.cursor.fetchall()
+            for row in all_row:
+                print(row)
+            self.db.commit()
+        except Exception as e4:
+            print("Databse is empty.", e4)
 
-        self.cursor.execute(''' SELECT id, url FROM bookmarks ''')
-        all_row = self.cursor.fetchall()
-        for row in all_row:
-            print(row)
-        self.db.commit()
+    def delete_all_url(self):
+        """
+        All URLs from database will be deleted.
+        """
+        try:
+            self.cursor.execute(''' DELETE FROM bookmarks ''')
+            self.db.commit()
+        except Exception as e5:
+            print("Database does not have any data.", e5)
