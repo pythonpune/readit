@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 
 class DatabaseConnection(object):
@@ -16,7 +17,7 @@ class DatabaseConnection(object):
             self.cursor = self.db.cursor()
             self.cursor.execute('''CREATE TABLE IF NOT EXISTS bookmarks
             (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            url TEXT UNIQUE NOT NULL)''')
+            url TEXT UNIQUE NOT NULL, date TEXT, time TEXT)''')
             self.db.commit()
 
         except sqlite3.OperationalError:
@@ -29,17 +30,19 @@ class DatabaseConnection(object):
         """
         try:
             self.url = url
-
+            date = datetime.date.today()
+            start = datetime.datetime.now()
+            time = start.strftime("%H:%M:%S")
             self.cursor.execute('''
-            INSERT INTO bookmarks(url) VALUES (?)
-            ''', (self.url,))
+            INSERT INTO bookmarks(url, date, time) VALUES (?, ?, ?)
+            ''', (self.url, date, time))
             self.db.commit()
         except Exception as e1:
             print("URL is already present in database.", e1)
 
     def delete_url(self, urlid):
         """
-        url can deleted as per id number provided.
+        URLs can deleted as per id number provided.
         """
         try:
             self.urlid = urlid
@@ -56,7 +59,7 @@ class DatabaseConnection(object):
 
     def update_url(self, uid, url):
         """
-        url can be updated with respect to id.
+        URLs can be updated with respect to id.
         """
 
         try:
@@ -76,10 +79,11 @@ class DatabaseConnection(object):
 
     def show_url(self):
         """
-        all urls from database shown to user on screen.
+        All URLs from database displayed to user on screen.
         """
         try:
-            self.cursor.execute(''' SELECT id, url FROM bookmarks ''')
+            self.cursor.execute(
+                ''' SELECT id, url, date, time FROM bookmarks ''')
             all_row = self.cursor.fetchall()
             for row in all_row:
                 print(row)
@@ -89,7 +93,7 @@ class DatabaseConnection(object):
 
     def delete_all_url(self):
         """
-        all URLs from database will be deleted.
+        All URLs from database will be deleted.
         """
         try:
             self.cursor.execute(''' DELETE FROM bookmarks ''')
