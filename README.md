@@ -91,25 +91,22 @@ Options:
   $ git clone https://github.com/ganeshhubale/readit.git
 ```
 
-* Create and activate a virtualenv:
-
+* We recommend to create and activate a virtualenv first:
 ```
   $ cd readit/
   
   $ virtualenv venv 
 
-  or
-  	$ virtualenv -p /usr/bin/python venv
+  $ source venv/bin/activate
   	
-  	$ source venv/bin/activate
-  	
-  	(venv) $
-  	
+  (venv) $
 ```
+
 * To install using setup.py file:
 ```	
 	(venv) $ python setup.py install
 ```
+
 * To make build of project:
 ```
 	(venv) $ python setup.py build

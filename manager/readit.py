@@ -1,3 +1,4 @@
+
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
 import database as db  # used to perform database operations.
