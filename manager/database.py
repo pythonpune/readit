@@ -58,7 +58,7 @@ class DatabaseConnection(object):
                 VALUES(?, ?, ?, ?)''', (self.url, self.tag, date, time))
             self.db.commit()
         except Exception as t:
-            print("Exception Caught:--> ", t)
+            print("Invalid input:--> ", t)
 
     def delete_url(self, urlid):
         """
@@ -67,7 +67,7 @@ class DatabaseConnection(object):
         try:
             self.urlid = urlid
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks where id=? ''', (self.urlid))
+                ''' SELECT url FROM bookmarks where id=? ''', (self.urlid,))
             rows = self.cursor.fetchone()
             for r in rows:
                 print("Deleted url:--> ", r)
@@ -106,11 +106,14 @@ class DatabaseConnection(object):
             self.cursor.execute(
                 ''' SELECT id, url, tags, date, time FROM bookmarks ''')
             all_row = self.cursor.fetchall()
-            print("ID | URL | TAG | DATE | TIME")
-            for row in all_row:
-                print('{0} | {1} | {2} | {3} | {4}'.format(
-                    row[0], row[1], row[2], row[3], row[4]))
-            self.db.commit()
+            if all_row == []:
+                print("Database is empty.")
+            else:
+                print("ID | URL | TAG | DATE | TIME")
+                for row in all_row:
+                    print('{0} | {1} | {2} | {3} | {4}'.format(
+                        row[0], row[1], row[2], row[3], row[4]))
+                self.db.commit()
         except Exception as e4:
             print("Databse is empty.", e4)
 
@@ -124,11 +127,14 @@ class DatabaseConnection(object):
                 ''' SELECT id, url, tags, date, time
                                 FROM bookmarks WHERE tags=?''', (self.tags,))
             all_row = self.cursor.fetchall()
-            print("ID | URL | TAG | DATE | TIME")
-            for row in all_row:
-                print('{0} | {1} | {2} | {3} | {4}'.format(
-                    row[0], row[1], row[2], row[3], row[4]))
-            self.db.commit()
+            if all_row == []:
+                print("Tag is not present in database.")
+            else:
+                print("ID | URL | TAG | DATE | TIME")
+                for row in all_row:
+                    print('{0} | {1} | {2} | {3} | {4}'.format(
+                        row[0], row[1], row[2], row[3], row[4]))
+                self.db.commit()
         except Exception as t1:
             print("Specified Tag is invalid:--> ", t1)
 
