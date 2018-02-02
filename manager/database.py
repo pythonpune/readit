@@ -1,9 +1,7 @@
 import sqlite3
-import datetime
+import datetime as dt
 
-date = datetime.date.today()
-start = datetime.datetime.now()
-time = start.strftime("%H:%M:%S")
+date = dt.date.today()
 
 
 class DatabaseConnection(object):
@@ -36,7 +34,8 @@ class DatabaseConnection(object):
         try:
             self.url = url
             global date
-            global time
+            start = dt.datetime.now()
+            time = start.strftime("%H:%M:%S")
             self.cursor.execute('''
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
             ''', (self.url, None, date, time))
@@ -52,7 +51,8 @@ class DatabaseConnection(object):
         self.url = tagged_url
         try:
             global date
-            global time
+            start = dt.datetime.now()
+            time = start.strftime("%H:%M:%S")
             self.cursor.execute(
                 '''INSERT INTO bookmarks(url, tags, date, time)
                 VALUES(?, ?, ?, ?)''', (self.url, self.tag, date, time))
