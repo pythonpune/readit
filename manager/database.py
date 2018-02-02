@@ -11,13 +11,15 @@ table.top_border_char = '='
 table.header_seperator_char = '='
 table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
 
+
 class DatabaseConnection(object):
 
     def __init__(self, cursor, db):
         """
         Calls the function init_db().
         """
-        self.init_db("","")
+        self.init_db("", "")
+
     def init_db(self, cursor, db):
         """
         Create database connection.
@@ -165,13 +167,12 @@ class DatabaseConnection(object):
 
         except Exception as e5:
             print("Database does not have any data:--> ", e5)
+
     def check_db(self):
         self.cursor.execute(
-                ''' SELECT id, url, tags, date, time FROM bookmarks ''')
+            ''' SELECT id, url, tags, date, time FROM bookmarks ''')
         all_row = self.cursor.fetchall()
         if all_row == []:
             return True
         else:
             return False
-
-
