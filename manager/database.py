@@ -169,6 +169,9 @@ class DatabaseConnection(object):
             print("Database does not have any data:--> ", e5)
 
     def check_db(self):
+        """
+        Checks Whether URL is present in database or not.
+        """
         self.cursor.execute(
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
         all_row = self.cursor.fetchall()
