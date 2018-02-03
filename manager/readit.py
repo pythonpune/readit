@@ -18,19 +18,18 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
     """
     Readit - Command-line bookmark manager tool.
     """
-    d = db.DatabaseConnection('', '')
+    d = db.DatabaseConnection()
 
     if add:
         for i in add:
             url = i
-            print(url)
             try:
                 u = requests.get(url)
                 r = u.status_code
                 if r == 200:
                     d.add_url(url)
                 else:
-                    print("invalid url:--> ", url)
+                    print("Invalid URL:--> ", url)
             except Exception as e:
                 print("Invalid input:--> ", e)
 
@@ -49,9 +48,9 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
             if r == 200:
                 d.update_url(uid, url)
             else:
-                print("invalid url:--> ", url)
+                print("Invalid URL:--> ", url)
         except Exception as e:
-            print("exception caught:-->  ", e)
+            print("Invalid input:-->  ", e)
 
     elif view:
         d.show_url()
@@ -73,7 +72,7 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
             else:
                 print("Invalid URL:-->", tagged_url)
         except Exception as t:
-            print("Exception Caught:--> ", t)
+            print("Invalid input:--> ", t)
     elif version:
         print("readit 1.0")
     else:
@@ -85,6 +84,6 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
                 if r == 200:
                     d.add_url(url)
                 else:
-                    print("invalid url:--> ", url)
+                    print("Invalid URL:--> ", url)
             except Exception as e:
                 print("Invalid input:-->  ", e)

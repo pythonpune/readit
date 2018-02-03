@@ -14,7 +14,7 @@ table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
 
 class DatabaseConnection(object):
 
-    def __init__(self, cursor, db):
+    def __init__(self):
         """
         Calls the function init_db().
         """
@@ -86,7 +86,7 @@ class DatabaseConnection(object):
                 ''' SELECT url FROM bookmarks where id=? ''', (self.urlid,))
             rows = self.cursor.fetchone()
             for r in rows:
-                print("Deleted url:--> ", r)
+                print("Deleted URL:--> ", r)
             self.cursor.execute(
                 ''' DELETE FROM bookmarks WHERE id=? ''', (self.urlid,))
             self.db.commit()
@@ -103,7 +103,7 @@ class DatabaseConnection(object):
             self.uid = uid
             self.url = url
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks WHERE id=?''', (self.uid))
+                ''' SELECT url FROM bookmarks WHERE id=?''', (self.uid,))
             r = self.cursor.fetchone()
             for i in r:
                 print("Replaced URL:--> ", i)
@@ -169,6 +169,9 @@ class DatabaseConnection(object):
             print("Database does not have any data:--> ", e5)
 
     def check_db(self):
+        """
+        Checks Whether URL is present in database or not.
+        """
         self.cursor.execute(
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
         all_row = self.cursor.fetchall()
