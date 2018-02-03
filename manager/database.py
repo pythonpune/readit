@@ -1,12 +1,26 @@
 import sqlite3
 import datetime as dt
+from beautifultable import BeautifulTable
 
 date = dt.date.today()
+
+table = BeautifulTable()
+table.left_border_char = '|'
+table.right_border_char = '|'
+table.top_border_char = '='
+table.header_seperator_char = '='
+table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
 
 
 class DatabaseConnection(object):
 
     def __init__(self, cursor, db):
+        """
+        Calls the function init_db().
+        """
+        self.init_db("", "")
+
+    def init_db(self, cursor, db):
         """
         Create database connection.
         creates or opens file mydatabase with sqlite3 DataBase.
@@ -28,7 +42,7 @@ class DatabaseConnection(object):
 
     def add_url(self, url):
         """
-        url will be adding to database.
+        URL will be adding to database.
         """
 
         try:
@@ -40,6 +54,7 @@ class DatabaseConnection(object):
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
             ''', (self.url, None, date, time))
             self.db.commit()
+            print("Bookmarked.")
         except Exception as e1:
             print("URL is already present in database.", e1)
 
@@ -57,6 +72,7 @@ class DatabaseConnection(object):
                 '''INSERT INTO bookmarks(url, tags, date, time)
                 VALUES(?, ?, ?, ?)''', (self.url, self.tag, date, time))
             self.db.commit()
+            print("Bookmarked.")
         except Exception as t:
             print("Invalid input:--> ", t)
 
@@ -109,11 +125,11 @@ class DatabaseConnection(object):
             if all_row == []:
                 print("Database is empty.")
             else:
-                print("ID | URL | TAG | DATE | TIME")
                 for row in all_row:
-                    print('{0} | {1} | {2} | {3} | {4}'.format(
-                        row[0], row[1], row[2], row[3], row[4]))
+                    table.append_row([row[0], row[1], row[2], row[3], row[4]])
+                print(table)
                 self.db.commit()
+
         except Exception as e4:
             print("Databse is empty.", e4)
 
@@ -130,10 +146,9 @@ class DatabaseConnection(object):
             if all_row == []:
                 print("Tag is not present in database.")
             else:
-                print("ID | URL | TAG | DATE | TIME")
                 for row in all_row:
-                    print('{0} | {1} | {2} | {3} | {4}'.format(
-                        row[0], row[1], row[2], row[3], row[4]))
+                    table.append_row([row[0], row[1], row[2], row[3], row[4]])
+                print(table)
                 self.db.commit()
         except Exception as t1:
             print("Specified Tag is invalid:--> ", t1)
@@ -143,7 +158,21 @@ class DatabaseConnection(object):
         All URLs from database will be deleted.
         """
         try:
-            self.cursor.execute(''' DELETE FROM bookmarks ''')
+            if self.check_db():
+                print("Database is empty.")
+            else:
+                self.cursor.execute(''' DELETE FROM bookmarks ''')
+                print("All bookmarks deleted.")
             self.db.commit()
+
         except Exception as e5:
             print("Database does not have any data:--> ", e5)
+
+    def check_db(self):
+        self.cursor.execute(
+            ''' SELECT id, url, tags, date, time FROM bookmarks ''')
+        all_row = self.cursor.fetchall()
+        if all_row == []:
+            return True
+        else:
+            return False
