@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
-with open("README.md") as f:
-    long_description = f.read()
+with open("README.md") as readme_file:
+    long_description = readme_file.read()
 
 install_requires = [
     'setuptools',
@@ -18,7 +18,7 @@ setup(
             'readit = manager.__init__:main',
         ],
     },
-    version="0.1",
+    version="1.0",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description="It is bookmark manager.",
