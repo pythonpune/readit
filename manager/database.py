@@ -1,8 +1,8 @@
 import sqlite3
-import datetime as dt
+import datetime
 from beautifultable import BeautifulTable
 
-date = dt.date.today()
+date = datetime.date.today()
 
 table = BeautifulTable()
 table.left_border_char = '|'
@@ -48,7 +48,7 @@ class DatabaseConnection(object):
         try:
             self.url = url
             global date
-            start = dt.datetime.now()
+            start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
             self.cursor.execute('''
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
@@ -66,7 +66,7 @@ class DatabaseConnection(object):
         self.url = tagged_url
         try:
             global date
-            start = dt.datetime.now()
+            start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
             self.cursor.execute(
                 '''INSERT INTO bookmarks(url, tags, date, time)
@@ -76,39 +76,39 @@ class DatabaseConnection(object):
         except Exception as t:
             print("Invalid input:--> ", t)
 
-    def delete_url(self, urlid):
+    def delete_url(self, url_id):
         """
         URLs can deleted as per id number provided.
         """
         try:
-            self.urlid = urlid
+            self.url_id = url_id
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks where id=? ''', (self.urlid,))
-            rows = self.cursor.fetchone()
-            for r in rows:
-                print("Deleted URL:--> ", r)
+                ''' SELECT url FROM bookmarks where id=? ''', (self.url_id,))
+            url_to_delete = self.cursor.fetchone()
+            for deleted_url in url_to_delete:
+                print("Deleted URL:--> ", deleted_url)
             self.cursor.execute(
-                ''' DELETE FROM bookmarks WHERE id=? ''', (self.urlid,))
+                ''' DELETE FROM bookmarks WHERE id=? ''', (self.url_id,))
             self.db.commit()
         except Exception as e2:
             print("URL of this id is present not in database.", e2)
 
-    def update_url(self, uid, url):
+    def update_url(self, url_id, url):
         """
         URLs can be updated with respect to id.
         """
 
         try:
 
-            self.uid = uid
+            self.url_id = url_id
             self.url = url
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks WHERE id=?''', (self.uid,))
-            r = self.cursor.fetchone()
-            for i in r:
-                print("Replaced URL:--> ", i)
+                ''' SELECT url FROM bookmarks WHERE id=?''', (self.url_id,))
+            url_to_replace = self.cursor.fetchone()
+            for url_replaced in url_to_replace:
+                print("Replaced URL:--> ", url_replaced)
             self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
-                                (self.url, self.uid,))
+                                (self.url, self.url_id,))
             self.db.commit()
         except Exception as e3:
             print("Provided id is not present or URL is already in database")
@@ -121,12 +121,14 @@ class DatabaseConnection(object):
         try:
             self.cursor.execute(
                 ''' SELECT id, url, tags, date, time FROM bookmarks ''')
-            all_row = self.cursor.fetchall()
-            if all_row == []:
+            all_bookmarks = self.cursor.fetchall()
+            if all_bookmarks == []:
                 print("Database is empty.")
             else:
-                for row in all_row:
-                    table.append_row([row[0], row[1], row[2], row[3], row[4]])
+                for bookmark in all_bookmarks:
+                    table.append_row(
+                        [bookmark[0], bookmark[1], bookmark[2],
+                         bookmark[3], bookmark[4]])
                 print(table)
                 self.db.commit()
 
@@ -138,16 +140,18 @@ class DatabaseConnection(object):
         Group of URLs displayed with respect to Tag.
         """
         try:
-            self.tags = tag
+            self.tag = tag
             self.cursor.execute(
                 ''' SELECT id, url, tags, date, time
-                                FROM bookmarks WHERE tags=?''', (self.tags,))
-            all_row = self.cursor.fetchall()
-            if all_row == []:
+                                FROM bookmarks WHERE tags=?''', (self.tag,))
+            all_bookmarks = self.cursor.fetchall()
+            if all_bookmarks == []:
                 print("Tag is not present in database.")
             else:
-                for row in all_row:
-                    table.append_row([row[0], row[1], row[2], row[3], row[4]])
+                for bookmark in all_bookmarks:
+                    table.append_row(
+                        [bookmark[0], bookmark[1], bookmark[2],
+                         bookmark[3], bookmark[4]])
                 print(table)
                 self.db.commit()
         except Exception as t1:
@@ -158,7 +162,7 @@ class DatabaseConnection(object):
         All URLs from database will be deleted.
         """
         try:
-            if self.check_db():
+            if self.check_url_db():
                 print("Database is empty.")
             else:
                 self.cursor.execute(''' DELETE FROM bookmarks ''')
@@ -168,14 +172,14 @@ class DatabaseConnection(object):
         except Exception as e5:
             print("Database does not have any data:--> ", e5)
 
-    def check_db(self):
+    def check_url_db(self):
         """
         Checks Whether URL is present in database or not.
         """
         self.cursor.execute(
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
-        all_row = self.cursor.fetchall()
-        if all_row == []:
+        all_bookmarks = self.cursor.fetchall()
+        if all_bookmarks == []:
             return True
         else:
             return False
