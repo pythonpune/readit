@@ -18,7 +18,7 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
     """
     Readit - Command-line bookmark manager tool.
     """
-    object_database = database.DatabaseConnection()
+    database_connection = database.DatabaseConnection()
 
     if add:
         for url_to_add in add:
@@ -27,14 +27,14 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
-                    object_database.add_url(url)
+                    database_connection.add_url(url)
                 else:
                     print("Invalid URL:--> ", url)
             except Exception as e:
                 print("Invalid input:--> ", e)
 
     elif delete:
-        object_database.delete_url(delete)
+        database_connection.delete_url(delete)
 
     elif update:
         url_list = []
@@ -46,18 +46,18 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
             validate_url = requests.get(url)
             validate_code = validate_url.status_code
             if validate_code == 200:
-                object_database.update_url(url_id, url)
+                database_connection.update_url(url_id, url)
             else:
                 print("Invalid URL:--> ", url)
         except Exception as e:
             print("Invalid input:-->  ", e)
 
     elif view:
-        object_database.show_url()
+        database_connection.show_url()
     elif search:
-        object_database.search_by_tag(search)
+        database_connection.search_by_tag(search)
     elif clear:
-        object_database.delete_all_url()
+        database_connection.delete_all_url()
     elif tag:
         tag_list = []
         for tag_to_url in tag:
@@ -68,7 +68,7 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
             validate_url = requests.get(tagged_url)
             validate_code = validate_url.status_code
             if validate_code == 200:
-                object_database.tag_url(tag_name, tagged_url)
+                database_connection.tag_url(tag_name, tagged_url)
             else:
                 print("Invalid URL:-->", tagged_url)
         except Exception as t:
@@ -82,7 +82,7 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
-                    object_database.add_url(url)
+                    database_connection.add_url(url)
                 else:
                     print("Invalid URL:--> ", url)
             except Exception as e:
