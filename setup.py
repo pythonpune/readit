@@ -7,6 +7,7 @@ install_requires = [
     'setuptools',
     'requests',
     'click',
+    'beautifultable',
 ]
 
 setup(
