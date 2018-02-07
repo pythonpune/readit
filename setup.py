@@ -18,7 +18,7 @@ setup(
             'readit = manager.__init__:main',
         ],
     },
-    version="1.0",
+    version="v0.1",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description="It is bookmark manager.",
