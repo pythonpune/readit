@@ -2,7 +2,8 @@
 
 
 ## Introduction
-It is a powerful bookmark manager written in Python. It uses SQLite3 to store the bookmarks.
+
+Readit is command line bookmark manager. It is a command line utility to add, delete, update and display the bookmarks. It is a powerful bookmark manager written in Python. It uses SQLite3 to store the bookmarks.
 
 ## Features
 
