@@ -53,7 +53,7 @@ class DatabaseConnection(object):
             time = start.strftime("%H:%M:%S")
             self.cursor.execute('''
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
-            ''', (self.url, None, date, time))
+            ''', (self.url, "None", date, time))
             self.db.commit()
             print("Bookmarked.")
         except Exception as e1:

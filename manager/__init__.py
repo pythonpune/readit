@@ -1,4 +1,4 @@
-from readit import main
+from manager.readit import main
 
 if __name__ == '__main__':
 
