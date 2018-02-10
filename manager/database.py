@@ -1,6 +1,7 @@
 import sqlite3
 import datetime
 from beautifultable import BeautifulTable
+import webbrowser as wb
 
 date = datetime.date.today()
 
@@ -183,3 +184,18 @@ class DatabaseConnection(object):
             return True
         else:
             return False
+
+    def open_url(self, urlid):
+        """
+        Opens the URL in default browser.
+        """
+        try:
+            self.urlid = urlid
+            self.cursor.execute(
+                ''' SELECT url FROM bookmarks WHERE id=?''', (self.urlid,))
+            all_row = self.cursor.fetchone()
+            for url in all_row:
+                wb.open_new(url)
+            self.db.commit()
+        except Exception as i:
+            print("Specified ID is invalid:--> ", i)

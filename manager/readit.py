@@ -12,9 +12,11 @@ import database  # used to perform database operations.
 @click.option('--update', '-u', nargs=2, help="Update a URL for specific ID")
 @click.option('--search', '-s', nargs=1, help="Search all bookmarks by Tag")
 @click.option('--view', '-v', multiple=True, nargs=0, help="Show bookmarks")
+@click.option('--openurl', '-o', nargs=1, help="Open URL in Browser")
 @click.option('--version', '-V', is_flag=True, help="Check latest version")
 @click.argument('insert', nargs=-1, required=False)
-def main(insert, add, tag, delete, clear, update, search, view, version):
+def main(insert, add, tag, delete, clear,
+         update, search, view, openurl, version):
     """
     Readit - Command-line bookmark manager tool.
     """
@@ -54,6 +56,8 @@ def main(insert, add, tag, delete, clear, update, search, view, version):
 
     elif view:
         database_connection.show_url()
+    elif openurl:
+        database_connection.open_url(openurl)
     elif search:
         database_connection.search_by_tag(search)
     elif clear:
