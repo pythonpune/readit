@@ -1,5 +1,6 @@
 # Readit - Command Line Tool
 
+[![Python](https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg)]() [![LICENSE](https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000)]() [![Build Status](https://travis-ci.org/freeCodeCamp/how-to-contribute-to-open-source.svg?branch=master)](https://travis-ci.org/freeCodeCamp/how-to-contribute-to-open-source)
 
 ## Introduction
 
