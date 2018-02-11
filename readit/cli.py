@@ -1,6 +1,6 @@
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
-from manager import database  # used to perform database operations.
+from readit import database  # used to perform database operations.
 
 
 @click.command()
@@ -77,7 +77,7 @@ def main(insert, add, tag, delete, clear,
         except Exception as t:
             print("Invalid input:--> ", t)
     elif version:
-        print("readit v1.0")
+        print("readit v0.1")
     else:
         for url_to_add in insert:
             url = url_to_add
