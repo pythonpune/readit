@@ -1,7 +1,6 @@
-
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
-import database  # used to perform database operations.
+from manager import database  # used to perform database operations.
 
 
 @click.command()
