@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - Bookmark URL with respective Tags
 - Search and display Bookmarks by TAG
 - Display all Bookmarks in table format
-- Remove a Bookmarked URL
+- Remove a Bookmarked URL using specific ID
 - Remove all Bookmarked URLs
 - Update a Bookmarked URL with specific ID
 - URL validation
