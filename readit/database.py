@@ -134,7 +134,7 @@ class DatabaseConnection(object):
                 self.db.commit()
 
         except Exception as e4:
-            print("Databse is empty.", e4)
+            print("Database is empty.", e4)
 
     def search_by_tag(self, tag):
         """
