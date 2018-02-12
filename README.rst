@@ -163,8 +163,5 @@ How to Install
 =======
 Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
 
 
