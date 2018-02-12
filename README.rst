@@ -26,7 +26,7 @@ Features
 
 
 Dependencies
-============
+************
 =============================================      ==================
      Features                                       Dependancy
 =============================================      ==================
@@ -38,7 +38,7 @@ Dependencies
 =============================================      ==================
 
 Command line options
-====================
+********************
 .. code-block:: bash
 
 	Usage: readit [OPTIONS] [INSERT]...
@@ -59,7 +59,7 @@ Command line options
 
 
 Examples
-========
+********
 1. **Bookmark** multiple URLs:
 
 .. code-block:: bash
@@ -128,7 +128,7 @@ Examples
 
 
 How to Install
-==============
+**************
 * Clone project from github:
 
 .. code-block:: bash
@@ -160,7 +160,7 @@ How to Install
 		(venv) $ python setup.py build
 
 `Licence <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
-=======
+***********************************************************************
 Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
 
 
