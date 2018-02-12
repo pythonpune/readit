@@ -7,6 +7,10 @@
 Readit - Command Line Tool
 **************************
 
+.. class:: no-web no-pdf
+
+|Python| |LICENCE| |Build Status| 
+
 Introduction
 ************
 Readit is command line bookmark manager. It is a command line utility to add, delete, update and display the bookmarks. It is a powerful bookmark manager written in Python. It uses SQLite3 to store the bookmarks.
@@ -163,5 +167,9 @@ How to Install
 ***********************************************************************
 Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
 
+.. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg
 
+.. |LICENSE| image:: https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000
 
+.. |Build Status| image:: https://travis-ci.org/ganeshhubale/readit.svg?branch=master
+:target: https://travis-ci.org/ganeshhubale/readit
