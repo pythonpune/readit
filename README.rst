@@ -41,6 +41,14 @@ Dependencies
 ``Display Bookmarks in Table``                      beautifultable
 =============================================      ==================
 
+Installation
+************
+readit is available on PyPi and can be installed with pip:
+
+.. code-block:: bash
+	
+	pip3 install --user readit
+
 Command line options
 ********************
 .. code-block:: bash
@@ -131,8 +139,8 @@ Examples
 	$ readit --openurl urlid
 
 
-How to Install
-**************
+How to install source code for web development 
+**********************************************
 * Clone project from github:
 
 .. code-block:: bash
