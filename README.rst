@@ -180,4 +180,4 @@ Readit - Command line tool is licensed under `GNU General Public License v3.0. <
 .. |Licence| image:: https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000
 
 .. |Build Status| image:: https://travis-ci.org/ganeshhubale/readit.svg?branch=master
-:target: https://travis-ci.org/ganeshhubale/readit
+
