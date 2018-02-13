@@ -1,7 +1,7 @@
-import sqlite3
-import datetime
-from beautifultable import BeautifulTable
-import webbrowser as wb
+import sqlite3  # library of database used for project
+import datetime  # used for getting current time and date
+from beautifultable import BeautifulTable  # display output in table format
+import webbrowser  # used to open url in browser
 
 date = datetime.date.today()
 
@@ -195,7 +195,7 @@ class DatabaseConnection(object):
                 ''' SELECT url FROM bookmarks WHERE id=?''', (self.urlid,))
             all_row = self.cursor.fetchone()
             for url in all_row:
-                wb.open_new(url)
+                webbrowser.open_new(url)
             self.db.commit()
         except Exception as i:
             print("Specified ID is invalid:--> ", i)
