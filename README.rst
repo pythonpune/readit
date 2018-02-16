@@ -43,7 +43,7 @@ Dependencies
 
 Installation
 ************
-readit is available on PyPi and can be installed with pip:
+readit is available on PyPi and can be installed with pip3:
 
 .. code-block:: bash
 	
@@ -145,7 +145,7 @@ How to install source code for web development
 
 .. code-block:: bash
 
-	$ git clone https://github.com/ganeshhubale/readit.git
+	$ git clone https://github.com/projectreadit/readit.git
 
 * We recommend to create and activate a virtualenv first:
 
@@ -171,13 +171,13 @@ How to install source code for web development
 	
 		(venv) $ python setup.py build
 
-`Licence <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
+`Licence <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
 ***********************************************************************
-Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/ganeshhubale/readit/blob/master/LICENSE>`_
+Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
 
 .. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg
 
 .. |Licence| image:: https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000
 
-.. |Build Status| image:: https://travis-ci.org/ganeshhubale/readit.svg?branch=master
+.. |Build Status| image:: https://travis-ci.org/readit/readit.svg?branch=master
 
