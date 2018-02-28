@@ -6,8 +6,8 @@ Readit - Command Line Tool
 
 |Python| |Licence| |Build Status| 
 
-.. image:: bookmark.png
-   :target: https://asciinema.org/a/EjGY5UXXM7znQWCiAjGfhcD9u
+.. image:: readitdemo.png
+   :target: https://asciinema.org/a/UcO8Ast5X94F3kNtCuew7yZb2
 
 Introduction
 ************
@@ -33,7 +33,7 @@ Dependencies
      Features                                       Dependancy
 =============================================      ==================
 ``Scripting Language``                              Python 2.7+
-``HPPT(S)``                                         requests
+``HTTP(S)``                                         requests
 ``Command-Line Option and argument parsing``        click
 ``Databse Used``                                    SQLite3
 ``Display Bookmarks in Table``                      beautifultable
@@ -137,7 +137,7 @@ Examples
 	$ readit --openurl urlid
 
 
-How to install source code for web development 
+How to install source code for development 
 **********************************************
 * Clone project from github:
 
