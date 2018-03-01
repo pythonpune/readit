@@ -31,13 +31,14 @@ class DatabaseConnection(object):
         """
 
         try:
-            path = os.path.expanduser('~') + "/.config/readit"
-            if not os.path.exists(path):
-                os.mkdir(path)
+            config_path = os.path.join(
+                os.path.expanduser('~'), ".config/readit")
+            if not os.path.exists(config_path):
+                os.mkdir(config_path)
         except OSError:
-            print('Error: Creating directory.' + path)
+            print('Error: Creating directory.' + config_path)
 
-        databasefile = path + "/bookmarks.db"
+        databasefile = os.path.join(config_path, "bookmarks.db")
         try:
             self.db = sqlite3.connect(databasefile)
             self.cursor = self.db.cursor()
