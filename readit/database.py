@@ -2,6 +2,7 @@ import sqlite3  # library of database used for project
 import datetime  # used for getting current time and date
 from beautifultable import BeautifulTable  # display output in table format
 import webbrowser  # used to open url in browser
+import os  # used to find home directory of user
 
 date = datetime.date.today()
 
@@ -30,7 +31,16 @@ class DatabaseConnection(object):
         """
 
         try:
-            self.db = sqlite3.connect('test.db')
+            config_path = os.path.join(
+                os.path.expanduser('~'), ".config/readit")
+            if not os.path.exists(config_path):
+                os.mkdir(config_path)
+        except OSError:
+            print('Error: Creating directory.' + config_path)
+
+        databasefile = os.path.join(config_path, "bookmarks.db")
+        try:
+            self.db = sqlite3.connect(databasefile)
             self.cursor = self.db.cursor()
             self.cursor.execute('''CREATE TABLE IF NOT EXISTS bookmarks
             (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
