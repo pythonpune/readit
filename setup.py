@@ -1,7 +1,10 @@
+import os
 from setuptools import setup, find_packages
 
-with open("README.rst") as readme_file:
-    long_description = readme_file.read()
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 
 install_requires = [
     'setuptools',
@@ -22,7 +25,7 @@ setup(
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description="It is bookmark manager.",
-    long_description=long_description,
+    long_description=read('README.rst'),
     license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
     url="https://github.com/ganeshhubale/readit",
