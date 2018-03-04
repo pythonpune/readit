@@ -1,4 +1,5 @@
 beautifultable
-requests
+requests>=2.18.4
 flake8==3.5.0
 click>=6.7
+pytest>=3.4.1
