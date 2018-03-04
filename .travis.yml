@@ -12,3 +12,4 @@ script:
   - flake8 readit setup.py
   - python setup.py install
   - readit --version
+  - pytest
