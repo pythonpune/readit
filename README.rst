@@ -6,9 +6,9 @@ Readit - Command Line Tool
 
 |Python| |Licence| |Build Status| 
 
-.. image:: https://asciinema.org/a/UcO8Ast5X94F3kNtCuew7yZb2.png
+.. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
    :alt: asciicast
-   :target: https://asciinema.org/a/UcO8Ast5X94F3kNtCuew7yZb2?t=1
+   :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
 
 Introduction
 ************
