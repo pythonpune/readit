@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## readit v0.1.1 - 2018-03-04
+- Supports Python 2.7 and Python 3.6
+### Solved
+- 'test.db' is created in current directory [(#60)](https://github.com/projectreadit/readit/issues/60)
+- Convert README.md to ReStructuredText [(#58)](https://github.com/projectreadit/readit/issues/58)
+- Improve readability of code in 'database.py' file [(#61)](https://github.com/projectreadit/readit/issues/61)	
+- Add copyright header to files from readit [(#47)](https://github.com/projectreadit/readit/issues/47)
+
 ## readit v0.1 - 2018-02-11
 - Initial release supports Python 2.7 and Python 3.6
 ### Added
