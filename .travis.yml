@@ -9,4 +9,6 @@ before_install:
 install:
   - pip install -r requirements.txt
 script: 
-  - flake8 manager/ setup.py 
+  - flake8 readit setup.py
+  - python setup.py install
+  - readit --version
