@@ -25,7 +25,7 @@ setup(
     long_description=long_description,
     license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",
-    url="https://github.com/ganeshhubale/readit",
+    url="https://github.com/projectreadit/readit",
     py_modules=['readit.__init__'],
     namespace_packages=[],
     include_package_data=True,
