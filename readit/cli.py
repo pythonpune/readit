@@ -95,7 +95,7 @@ def main(insert, add, tag, delete, clear,
         except Exception as t:
             print("Invalid input:--> ", t)
     elif version:
-        print("readit v0.1")
+        print("readit v0.1.1")
     else:
         for url_to_add in insert:
             url = url_to_add
