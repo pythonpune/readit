@@ -15,6 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with readit.  If not, see <http://www.gnu.org/licenses/>.
 '''
+
 import sqlite3  # library of database used for project
 import datetime  # used for getting current time and date
 from beautifultable import BeautifulTable  # display output in table format

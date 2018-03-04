@@ -15,6 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with readit.  If not, see <http://www.gnu.org/licenses/>.
 '''
+
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
 from readit import database  # used to perform database operations.

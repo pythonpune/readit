@@ -15,6 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with readit.  If not, see <http://www.gnu.org/licenses/>.
 '''
+
 from readit.cli import main
 
 if __name__ == '__main__':
