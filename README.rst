@@ -171,7 +171,7 @@ How to install source code for development
 		(venv) $ python setup.py build
 
 `Licence <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
-***********************************************************************
+************************************************************************
 Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
 
 .. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg
