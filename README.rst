@@ -6,10 +6,12 @@ Readit - Command Line Tool
 
 |Python| |Licence| |Build Status| 
 
-<embed>
-   <a href= "https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1"><img src="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png" width="50px" height="50px"></a>
-</embed>
 
+<embed>
+
+   <a href= "https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1"><img src="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png" width="50px" height="50px"></a>
+
+</embed>
 
 
 Introduction
