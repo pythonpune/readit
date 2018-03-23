@@ -1,7 +1,6 @@
 import pytest
-from readit import cli as c
 from click.testing import CliRunner
-
+from readit import cli as c
 
 @pytest.fixture(scope="module")
 def runner():
@@ -24,4 +23,5 @@ def test_by_version(runner):
     assert result.exit_code == 0
     expected = "readit v0.1.1\n"
     assert result.output == expected
+
 
