@@ -1,7 +1,5 @@
 import pytest
-import click
 from readit import cli as c
-import readit.database
 from click.testing import CliRunner
 
 
@@ -27,6 +25,3 @@ def test_by_version(runner):
     expected = "readit v0.1.1\n"
     assert result.output == expected
 
-
-if __name__ == '__main__':
-    c.main()
