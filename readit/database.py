@@ -21,7 +21,7 @@ import datetime  # used for getting current time and date
 from beautifultable import BeautifulTable  # display output in table format
 import webbrowser  # used to open url in browser
 import os  # used to find home directory of user
-import csv # exporting file
+import csv  # exporting file
 from glob import glob
 from os.path import expanduser
 
@@ -231,6 +231,7 @@ class DatabaseConnection(object):
             self.db.commit()
         except Exception as i:
             print("Specified ID is invalid:--> ", i)
+
     def export_urls(self):
         """
         Exporting urls to csv file
@@ -241,18 +242,19 @@ class DatabaseConnection(object):
                 print("File does not exist.")
         except OSError:
             print('Error: Finding directory.' + config_path)
-
         databasefile = os.path.join(config_path, "bookmarks.db")
         try:
             self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
             self.cursor = self.conn.cursor()
             self.cursor.execute("select * from bookmarks")
-            with open("exported_bookmarks.csv", "w", newline='') as csv_file:# Python 3 version
-            #with open("re.csv", "wb") as csv_file: # Python 2 version
+            with open("exported_bookmarks.csv", "w", newline='') as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter='\t')
-                csv_writer.writerow([i[0] for i in self.cursor.description]) 
+                csv_writer.writerow([i[0] for i in self.cursor.description])
                 csv_writer.writerows(self.cursor)
                 dirpath = os.getcwd()
-                print("File containing exported bookmarks available at " + dirpath + "/exported_bookmarks.csv")
+                print(
+                    "File containing exported bookmarks available at " +
+                    dirpath +
+                    "/exported_bookmarks.csv")
         except Exception as ex:
-            print("Bookmarks are not exported to csv file." + ex)
+            print("Bookmarks are not exported in csv file." + ex)

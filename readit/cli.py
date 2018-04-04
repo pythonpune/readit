@@ -31,7 +31,8 @@ from readit import database  # used to perform database operations.
 @click.option('--view', '-v', multiple=True, nargs=0, help="Show bookmarks")
 @click.option('--openurl', '-o', nargs=1, help="Open URL in Browser")
 @click.option('--version', '-V', is_flag=True, help="Check latest version")
-@click.option('--export', '-e', multiple=True, nargs=0, help="Export URLs in csv file")
+@click.option('--export', '-e', multiple=True,
+              nargs=0, help="Export URLs in csv file")
 @click.argument('insert', nargs=-1, required=False)
 def main(insert, add, tag, delete, clear,
          update, search, view, openurl, version, export):
