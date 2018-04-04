@@ -1,29 +1,29 @@
+
 Readit
 ======
 
-.. class::
+.. class:: no-web no-pdf
 
-|Python| |Licence| |Build Status|
+|Python| |Licence| |Build Status| 
 
-.. image:: https://asciinema.org/a/UcO8Ast5X94F3kNtCuew7yZb2.png
+
+.. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
    :alt: asciicast
-   :target: https://asciinema.org/a/UcO8Ast5X94F3kNtCuew7yZb2?t=1
+   :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
 
-   
 
 
 Introduction
-************
-Readit is command line bookmark manager. It is a command line utility to add, delete, update and display the bookmarks. It is a powerful bookmark manager written in Python. It uses SQLite3 to store the bookmarks.
+============
+Readit is command line bookmark manager. It is a command line utility to add, delete, update and display the bookmarks. It is a powerful bookmark manager written in Python. It uses SQLite3 database to store the bookmarks.
 
 
 
 .. contents:: 
 
 
-
 Features
-********
+========
 * Bookmark multiple URLs at a time
 * Bookmark URL with respective Tags
 * Search and display Bookmarks by TAG
@@ -35,7 +35,7 @@ Features
 * Open URL in browser
 
 Installation
-************
+============
 
 Dependencies
 ************
@@ -60,7 +60,7 @@ Packages for Fedora are availabe with the `latest release <https://github.com/pr
 
 
 Usage
-*****
+=====
 
 Cmdline options
 ***************
@@ -88,7 +88,7 @@ Cmdline options
 
 
 Examples
-********
+========
 1. **Bookmark** multiple URLs:
 
 .. code-block:: bash
@@ -157,7 +157,7 @@ Examples
         $ readit --openurl urlid
 
 How to Contribute
-*****************
+=================
 * Clone project from github:
 
 .. code-block:: bash
@@ -191,12 +191,12 @@ How to Contribute
 
 
 Project Structure
-*****************
+=================
 * Flowchart
 * Modules
 
 Collaborators
-*************
+=============
 * `Daivshala Vighne <https://github.com/daivshala>`_
 * `Ganesh Hubale <https://github.com/ganeshhubale>`_
 * `Shital Mule <https://github.com/shitalmule04>`_
