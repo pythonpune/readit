@@ -243,11 +243,16 @@ class DatabaseConnection(object):
             print('Error: Finding directory.' + config_path)
 
         databasefile = os.path.join(config_path, "bookmarks.db")
-        self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("select * from bookmarks")
-        with open("mybookmarks.csv", "w", newline='') as csv_file:# Python 3 version
-        #with open("re.csv", "wb") as csv_file: # Python 2 version
-            csv_writer = csv.writer(csv_file, delimiter='\t')
-            csv_writer.writerow([i[0] for i in self.cursor.description]) 
-            csv_writer.writerows(self.cursor)
+        try:
+            self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
+            self.cursor = self.conn.cursor()
+            self.cursor.execute("select * from bookmarks")
+            with open("exported_bookmarks.csv", "w", newline='') as csv_file:# Python 3 version
+            #with open("re.csv", "wb") as csv_file: # Python 2 version
+                csv_writer = csv.writer(csv_file, delimiter='\t')
+                csv_writer.writerow([i[0] for i in self.cursor.description]) 
+                csv_writer.writerows(self.cursor)
+                dirpath = os.getcwd()
+                print("File containing exported bookmarks available at " + dirpath + "/exported_bookmarks.csv")
+        except Exception as ex:
+            print("Bookmarks are not exported to csv file." + ex)
