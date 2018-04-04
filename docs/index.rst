@@ -6,7 +6,8 @@
 Readit 
 ======
 
-Command Line Bookmark manager,
+Command Line Bookmark manager.
+
 
 .. toctree::
    :maxdepth: 2
@@ -37,4 +38,19 @@ Modules and Methods
    database.rst
 
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Documentation
+
+   Readit <readit>
+
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
