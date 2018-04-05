@@ -21,6 +21,10 @@ import datetime  # used for getting current time and date
 from beautifultable import BeautifulTable  # display output in table format
 import webbrowser  # used to open url in browser
 import os  # used to find home directory of user
+import csv  # used to store bookmarks in CSV file
+from glob import glob  # used to find path name
+from os.path import expanduser  # used to perform operations on pathnames
+
 
 date = datetime.date.today()
 
@@ -227,3 +231,30 @@ class DatabaseConnection(object):
             self.db.commit()
         except Exception as i:
             print("Specified ID is invalid:--> ", i)
+
+    def export_urls(self):
+        """
+        Exporting urls to csv file from database.
+        """
+        try:
+            config_path = os.path.expanduser("~/.config/readit")
+            if not os.path.exists(config_path):
+                print("File path does not exist: " + config_path)
+        except OSError:
+            print("Error: Finding directory: " + config_path)
+        databasefile = os.path.join(config_path, "bookmarks.db")
+        try:
+            self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
+            self.cursor = self.conn.cursor()
+            self.cursor.execute("select * from bookmarks")
+            with open("exported_bookmarks.csv", "w", newline='') as csv_file:
+                csv_writer = csv.writer(csv_file, delimiter='\t')
+                csv_writer.writerow([i[0] for i in self.cursor.description])
+                csv_writer.writerows(self.cursor)
+                dirpath = os.getcwd()
+                print(
+                    "File containing exported bookmarks available at " +
+                    dirpath +
+                    "/exported_bookmarks.csv")
+        except Exception as ex:
+            print("Bookmarks are not exported in csv file-->" + ex)
