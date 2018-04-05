@@ -4,7 +4,7 @@ Readit - Command Line Tool
 
 .. class:: no-web no-pdf
 
-|Python| |Licence| |Build Status| 
+|Python| |Licence| |Build Status| |docs passing|
 
 
 .. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
@@ -193,3 +193,7 @@ Readit - Command line tool is licensed under `GNU General Public License v3.0. <
 
 .. |Build Status| image:: https://travis-ci.org/projectreadit/readit.svg?branch=master
     :target: https://travis-ci.org/projectreadit/readit
+
+.. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
+    :target: http://readit.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
