@@ -78,7 +78,7 @@ Cmdline options
         -s, --search TEXT     Search all bookmarks by Tag
         -v, --view TEXT...    Show bookmarks
         -o, --openurl TEXT    Open URL in Browser
-	-e, --export TEXT...  Export URLs in csv file
+	-e, --export TEXT...  Export URLs to csv file
         -V, --version         Check latest version
         --help                Show this message and exit.
 
