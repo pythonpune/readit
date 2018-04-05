@@ -28,6 +28,7 @@ Features
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
+* Export bookmarks into the CSV file
 
 
 Dependencies
@@ -68,6 +69,7 @@ Command line options
     -v, --view TEXT...    Show bookmarks
     -o, --openurl TEXT    Open URL in Browser
     -V, --version         Check latest version
+    -e, --export TEXT...  Export URLs in csv file
     --help                Show this message and exit.
 
 
@@ -139,6 +141,13 @@ Examples
     or
     $ readit --openurl urlid
 
+9. **Export** bookmarks into the CSV file:
+
+.. code-block:: bash
+
+   $ readit --export
+   or
+   $ readit -e
 
 How to install source code for development 
 **********************************************
