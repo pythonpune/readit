@@ -42,6 +42,8 @@ table_tag.column_headers = ["Available TAGs "]
 
 
 class DatabaseConnection(object):
+    """Class to perform database operations.
+    """
 
     def __init__(self):
         """
@@ -55,6 +57,11 @@ class DatabaseConnection(object):
         creates or opens file mydatabase with sqlite3 DataBase.
         get cursor object.
         create table.
+
+        Attributes
+        ----------
+        db : sqlite database connection.
+        cursor : sqlite database cursor.
         """
 
         try:
@@ -81,6 +88,17 @@ class DatabaseConnection(object):
     def add_url(self, url):
         """
         URL will be adding to database.
+
+
+        Parameters
+        ----------
+        url : str
+            A URL to add in database.
+
+        Returns
+        -------
+        str
+            A URL inserted in database.
         """
 
         try:
@@ -99,6 +117,19 @@ class DatabaseConnection(object):
     def tag_url(self, tag_name, tagged_url):
         """
         URLs can be added by respective Tags.
+
+        Parameters
+        ----------
+        tag_name : str
+            A comma separated tag to URL.
+
+        tagged_url : str
+            A URL to be tagged.
+
+        Returns
+        -------
+        str
+            A URL inserted with tag.
         """
         self.tag = tag_name
         self.url = tagged_url
@@ -137,6 +168,16 @@ class DatabaseConnection(object):
     def delete_url(self, url_id):
         """
         URLs can deleted as per id number provided.
+
+        Parameters
+        ----------
+        urlid : int
+            id of url present in database.
+
+        Returns
+        -------
+        str
+            A URL deleted from database.
         """
         try:
             self.url_id = url_id
@@ -154,6 +195,19 @@ class DatabaseConnection(object):
     def update_url(self, url_id, url):
         """
         URLs can be updated with respect to id.
+
+        Parameters
+        ----------
+        url_id : int
+            id of url which present in database.
+
+        url : str
+            A URL to update.
+
+        Returns
+        -------
+        str
+            A URL updated in database.
         """
 
         try:
@@ -175,6 +229,11 @@ class DatabaseConnection(object):
     def show_url(self):
         """
         All URLs from database displayed to user on screen.
+
+        Returns
+        -------
+        list
+            A table representing all bookmarks.
         """
         try:
             self.cursor.execute(
@@ -196,6 +255,17 @@ class DatabaseConnection(object):
     def search_by_tag(self, tag):
         """
         Group of URLs displayed with respect to Tag.
+
+        Parameters
+        ----------
+        tag : str
+            tag to search URLs.
+
+        Returns
+        -------
+        list
+            A table containing bookmarks.
+
         """
         try:
             self.tag = tag
@@ -218,6 +288,11 @@ class DatabaseConnection(object):
     def delete_all_url(self):
         """
         All URLs from database will be deleted.
+
+        Returns
+        -------
+        null
+            All URLs will be removed from database.
         """
         try:
             if self.check_url_db():
@@ -233,6 +308,11 @@ class DatabaseConnection(object):
     def check_url_db(self):
         """
         Checks Whether URL is present in database or not.
+
+        Returns
+        -------
+        bool
+            It returns TRUE if URL is present in database else False.
         """
         self.cursor.execute(
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
@@ -245,6 +325,16 @@ class DatabaseConnection(object):
     def open_url(self, urlid):
         """
         Opens the URL in default browser.
+
+        Parameters
+        ----------
+        urlid:
+            id of url present in database.
+
+        Returns
+        -------
+        str
+            A URL opened in default browser.
         """
         try:
             self.urlid = urlid
@@ -260,6 +350,11 @@ class DatabaseConnection(object):
     def export_urls(self):
         """
         Exporting urls to csv file from database.
+
+        Returns
+        -------
+        csv file
+            A file containing exported bookmarks records.
         """
         try:
             config_path = os.path.expanduser("~/.config/readit")
