@@ -1,10 +1,7 @@
-
 Readit
 ======
 
-.. class:: no-web no-pdf
-
-|Python| |Licence| |Build Status| 
+|Python| |Licence| |Build Status| |docs passing|
 
 
 .. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
@@ -33,6 +30,7 @@ Features
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
+* Export URLs to CSV file
 
 Installation
 ============
@@ -80,6 +78,7 @@ Cmdline options
         -s, --search TEXT     Search all bookmarks by Tag
         -v, --view TEXT...    Show bookmarks
         -o, --openurl TEXT    Open URL in Browser
+	-e, --export TEXT...  Export URLs in csv file
         -V, --version         Check latest version
         --help                Show this message and exit.
 
@@ -148,13 +147,21 @@ Examples
         or
         $ readit --search tag_name
 
-8. Open URL in Browser using specific ID:
+8. **Open URL** in Browser using specific ID:
 
 .. code-block:: bash
 
         $ readit -o urlid
         or
         $ readit --openurl urlid
+
+9. **Export** URLs to CSV file:
+
+.. code-block:: bash
+
+	$ readit -e 
+	or
+	$ readit --export
 
 How to Contribute
 =================
@@ -189,12 +196,6 @@ How to Contribute
                 (venv) $ python setup.py build
 
 
-
-Project Structure
-=================
-* Flowchart
-* Modules
-
 Collaborators
 =============
 * `Daivshala Vighne <https://github.com/daivshala>`_
@@ -210,4 +211,7 @@ Collaborators
 .. |Build Status| image:: https://travis-ci.org/projectreadit/readit.svg?branch=master
     :target: https://travis-ci.org/projectreadit/readit
 
-
+.. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
+    :target: http://readit.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+                

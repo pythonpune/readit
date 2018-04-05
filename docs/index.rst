@@ -16,28 +16,6 @@ Command Line Bookmark manager.
    README.rst
 
 
-Modules and Methods
-===================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: __init__ module
-
-   __init__.rst
-
-.. toctree::
-   :maxdepth: 2
-   :caption: cli module
-
-   cli.rst
-
-.. toctree::
-   :maxdepth: 2
-   :caption: database module
-
-   database.rst
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Documentation
