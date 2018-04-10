@@ -83,7 +83,7 @@ class DatabaseConnection(object):
 
         except sqlite3.OperationalError:
 
-            print("Table coulden't be created:")
+            print("Table coulden't be created:-->")
 
     def add_url(self, url):
         """
@@ -112,7 +112,7 @@ class DatabaseConnection(object):
             self.db.commit()
             print("Bookmarked.")
         except Exception as e1:
-            print("URL is already present in database.", e1)
+            print("URL is already present in database:-->", e1)
 
     def tag_url(self, tag_name, tagged_url):
         """
@@ -190,7 +190,7 @@ class DatabaseConnection(object):
                 ''' DELETE FROM bookmarks WHERE id=? ''', (self.url_id,))
             self.db.commit()
         except Exception as e2:
-            print("URL of this id is present not in database.", e2)
+            print("URL of this id is present not in database:-->", e2)
 
     def update_url(self, url_id, url):
         """
@@ -250,7 +250,7 @@ class DatabaseConnection(object):
                 self.db.commit()
 
         except Exception as e4:
-            print("Database is empty.", e4)
+            print("Database is empty:-->", e4)
 
     def search_by_tag(self, tag):
         """
