@@ -25,15 +25,20 @@ import csv  # used to store bookmarks in CSV file
 from glob import glob  # used to find path name
 from os.path import expanduser  # used to perform operations on pathnames
 
-
 date = datetime.date.today()
 
 table = BeautifulTable()
+table_tag = BeautifulTable()
 table.left_border_char = '|'
 table.right_border_char = '|'
 table.top_border_char = '='
 table.header_seperator_char = '='
 table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
+table_tag.left_border_char = '|'
+table_tag.right_border_char = '|'
+table_tag.top_border_char = '='
+table_tag.header_seperator_char = '='
+table_tag.column_headers = ["Available TAGs "]
 
 
 class DatabaseConnection(object):
@@ -108,6 +113,26 @@ class DatabaseConnection(object):
             print("Bookmarked.")
         except Exception as t:
             print("Invalid input:--> ", t)
+
+    def list_all_tags(self):
+        """
+        Shows list of all available Tags in database.
+        """
+        tag_list = set()
+        try:
+            self.cursor.execute('''SELECT tags FROM bookmarks''')
+            tags_in_db = self.cursor.fetchall()
+            for tags_available in tags_in_db:
+                tag_list.add(tags_available)
+            tag_list = set(tag_list)
+            tag_list = list(tag_list)
+            tag_list.sort(reverse=False)
+            for tag_in_list in tag_list:
+                table_tag.append_row(tag_in_list)
+            print(table_tag)
+            self.db.commit()
+        except Exception as tg:
+            print("Tags are not found in database:-->", tg)
 
     def delete_url(self, url_id):
         """

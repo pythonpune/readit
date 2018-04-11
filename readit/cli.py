@@ -33,9 +33,10 @@ from readit import database  # used to perform database operations.
 @click.option('--version', '-V', is_flag=True, help="Check latest version")
 @click.option('--export', '-e', multiple=True,
               nargs=0, help="Export URLs in csv file")
+@click.option('--taglist', '-tl', multiple=True, nargs=0, help="Show all Tags")
 @click.argument('insert', nargs=-1, required=False)
 def main(insert, add, tag, delete, clear,
-         update, search, view, openurl, version, export):
+         update, search, view, openurl, version, export, taglist):
     """
     Readit - Command-line bookmark manager tool.
     """
@@ -96,6 +97,8 @@ def main(insert, add, tag, delete, clear,
                 print("Invalid URL:-->", tagged_url)
         except Exception as t:
             print("Invalid input:--> ", t)
+    elif taglist:
+        database_connection.list_all_tags()
     elif version:
         print("readit v0.1.1")
     elif export:
