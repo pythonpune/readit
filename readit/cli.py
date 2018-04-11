@@ -74,10 +74,10 @@ def main(insert, add, tag, delete, clear,
                 database_connection.update_url(url_id, url)
             else:
                 print("Invalid URL:--> ", url, "\n", "*" * 33)
-                option_yes_no(url)
+                update_option_yes_no(url_id, url)
         except Exception as e:
             print("Invalid input:-->  ", e, "\n", "*" * 33)
-            option_yes_no(url)
+            update_option_yes_no(url_id, url)
 
     elif view:
         database_connection.show_url()
@@ -127,7 +127,10 @@ def main(insert, add, tag, delete, clear,
 
 
 def option_yes_no(url):
-    option = input("Still you want to add: Yes/No --> ")
+    """
+    Asks whether to bookmark invalid URLs or Offline URLs to database.
+    """
+    option = input("Still you want to bookmark: Yes/No --> ")
     if option == "Yes" or option == "Y" or option == "y":
         database_connection.add_url(url)
     else:
@@ -135,8 +138,19 @@ def option_yes_no(url):
 
 
 def tag_option_yes_no(tag_name, tagged_url):
-    option = input("Still you want to add: Yes/No --> ")
+    """
+    Asks whether to tag and bookmark invalid URLs or Offline URLs.
+    """
+    option = input("Still you want to update: Yes/No --> ")
     if option == "Yes" or option == "Y" or option == "y":
         database_connection.tag_url(tag_name, tagged_url)
     else:
         sys.exit(0)
+def update_option_yes_no(url_id, url):
+    """
+    Asks whether to update existing bookmark with invalid URLs or Offline URLs
+    """
+    option = input("Still you want to update: Yes/No --> ")
+    if option == "Yes" or option == "Y" or option == "y":
+        database_connection.update_url(url_id, url)
+
