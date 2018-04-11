@@ -13,7 +13,11 @@ Command Line Bookmark manager.
    :maxdepth: 2
    :caption: User guide
 
-   README.rst
+   Readit.rst
+   installation.rst
+   usage.rst
+   get_involved.rst
+  
 
 
 .. toctree::
