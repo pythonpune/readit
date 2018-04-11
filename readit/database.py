@@ -38,7 +38,7 @@ table_tag.left_border_char = '|'
 table_tag.right_border_char = '|'
 table_tag.top_border_char = '='
 table_tag.header_seperator_char = '='
-table_tag.column_headers = ["TAG"]
+table_tag.column_headers = ["Available TAGs "]
 
 
 class DatabaseConnection(object):
