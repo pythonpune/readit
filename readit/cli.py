@@ -19,7 +19,9 @@
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
 from readit import database  # used to perform database operations.
+import sys
 
+database_connection = database.DatabaseConnection()
 
 @click.command()
 @click.option('--add', '-a', nargs=0, help="Add URLs with space-separated")
@@ -40,7 +42,7 @@ def main(insert, add, tag, delete, clear,
     """
     Readit - Command-line bookmark manager tool.
     """
-    database_connection = database.DatabaseConnection()
+   # database_connection = database.DatabaseConnection()
 
     if add:
         for url_to_add in add:
@@ -51,9 +53,12 @@ def main(insert, add, tag, delete, clear,
                 if validate_code == 200:
                     database_connection.add_url(url)
                 else:
-                    print("Invalid URL:--> ", url)
+                    print("Invalid URL:--> ", url, "\n", "*"*33)
+                    option_yes_no(url)
             except Exception as e:
-                print("Invalid input:--> ", e)
+                print("Invalid input:--> ", e, "\n", "*"*33)
+                option_yes_no(url)
+
 
     elif delete:
         database_connection.delete_url(delete)
@@ -70,9 +75,11 @@ def main(insert, add, tag, delete, clear,
             if validate_code == 200:
                 database_connection.update_url(url_id, url)
             else:
-                print("Invalid URL:--> ", url)
+                print("Invalid URL:--> ", url, "\n", "*"33)
+                option_yes_no(url)
         except Exception as e:
-            print("Invalid input:-->  ", e)
+            print("Invalid input:-->  ", e, "\n", "*"*33)
+            option_yes_no(url)
 
     elif view:
         database_connection.show_url()
@@ -94,9 +101,11 @@ def main(insert, add, tag, delete, clear,
             if validate_code == 200:
                 database_connection.tag_url(tag_name, tagged_url)
             else:
-                print("Invalid URL:-->", tagged_url)
+                print("Invalid URL:-->", tagged_url, "\n", "*"*33)
+                option_yes_no(url)
         except Exception as t:
-            print("Invalid input:--> ", t)
+            print("Invalid input:--> ", t, "\n", "*"*33)
+            option_yes_no(url)
     elif taglist:
         database_connection.list_all_tags()
     elif version:
@@ -112,6 +121,15 @@ def main(insert, add, tag, delete, clear,
                 if validate_code == 200:
                     database_connection.add_url(url)
                 else:
-                    print("Invalid URL:--> ", url)
+                    print("Invalid URL:--> ", url, "\n", "*"*33)
+                    option_yes_no(url)
             except Exception as e:
-                print("Invalid input:-->  ", e)
+                print("Invalid input:-->", e ,"\n", "*"*33)
+                option_yes_no(url)
+def option_yes_no(url):
+    option = input("Still you want to add: Yes/No --> ")
+    if option == "Yes" or option == "Y" or option == "y":
+        database_connection.add_url(url)
+    else:
+        sys.exit(0)
+
