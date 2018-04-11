@@ -38,7 +38,7 @@ table_tag.left_border_char = '|'
 table_tag.right_border_char = '|'
 table_tag.top_border_char = '='
 table_tag.header_seperator_char = '='
-table_tag.column_headers = ["Available TAGs "]
+table_tag.column_headers = ["Available TAGs"]
 
 
 class DatabaseConnection(object):
@@ -148,6 +148,11 @@ class DatabaseConnection(object):
     def list_all_tags(self):
         """
         Shows list of all available Tags in database.
+
+        Returns
+        -------
+        list
+            It returns all available Tags associated with URLs in database.
         """
         tag_list = set()
         try:
