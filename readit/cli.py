@@ -146,6 +146,8 @@ def tag_option_yes_no(tag_name, tagged_url):
         database_connection.tag_url(tag_name, tagged_url)
     else:
         sys.exit(0)
+
+
 def update_option_yes_no(url_id, url):
     """
     Asks whether to update existing bookmark with invalid URLs or Offline URLs
@@ -153,4 +155,3 @@ def update_option_yes_no(url_id, url):
     option = input("Still you want to update: Yes/No --> ")
     if option == "Yes" or option == "Y" or option == "y":
         database_connection.update_url(url_id, url)
-
