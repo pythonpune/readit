@@ -13,10 +13,10 @@ Command Line Bookmark manager.
    :maxdepth: 2
    :caption: User guide
 
-   Readit.rst
-   installation.rst
-   usage.rst
-   get_involved.rst
+   Readit
+   installation
+   usage
+   get_involved
   
 
 
