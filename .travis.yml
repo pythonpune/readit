@@ -8,6 +8,7 @@ before_install:
   - pip install --upgrade pip
 install:
   - pip install -r requirements.txt
-script: 
+script:
+  - pep8 --ignore = F841 
   - flake8 readit setup.py
   - pytest
