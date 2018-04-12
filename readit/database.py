@@ -112,7 +112,7 @@ class DatabaseConnection(object):
             self.db.commit()
             print("Bookmarked.")
         except Exception as e1:
-            print("URL is already present in database:-->", e1)
+            self.url_info(url)
 
     def tag_url(self, tag_name, tagged_url):
         """
@@ -143,7 +143,7 @@ class DatabaseConnection(object):
             self.db.commit()
             print("Bookmarked.")
         except Exception as t:
-            print("Invalid input:--> ", t)
+            self.url_info(tagged_url)
 
     def list_all_tags(self):
         """
@@ -383,3 +383,37 @@ class DatabaseConnection(object):
                     "/exported_bookmarks.csv")
         except Exception as ex:
             print("Bookmarks are not exported in csv file-->" + ex)
+
+    def url_info(self, url):
+        """
+        Display the information regarding already present URL in database.
+        
+        Parameters
+        ----------
+        url : str
+            url to search it's information from database.
+
+        Returns
+        -------
+        str
+            All the information about particular URL.
+        """
+        try:
+            self.url_exist = url
+            self.cursor.execute(
+                ''' SELECT id, url, tags, date, time
+                                FROM bookmarks WHERE url=?''', (self.url_exist,))
+            all_bookmarks = self.cursor.fetchall()
+            if all_bookmarks == []:
+                print("URL is not present in database.")
+            else:
+                print("This URL is already bookmarked.", "\n", "*" * 30)
+                for bookmark in all_bookmarks:
+                    table.append_row(
+                        [bookmark[0], bookmark[1], bookmark[2],
+                            bookmark[3], bookmark[4]])
+                print(table)
+                self.db.commit()
+        except Exception as t2:
+            print("Specified URL is invalid:--> ", t2)
+
