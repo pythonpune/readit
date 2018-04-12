@@ -404,16 +404,13 @@ class DatabaseConnection(object):
                 ''' SELECT id, url, tags, date, time
                                 FROM bookmarks WHERE url=?''', (self.url_exist,))
             all_bookmarks = self.cursor.fetchall()
-            if all_bookmarks == []:
-                print("URL is not present in database.")
-            else:
-                print("This URL is already bookmarked.", "\n", "*" * 30)
-                for bookmark in all_bookmarks:
-                    table.append_row(
-                        [bookmark[0], bookmark[1], bookmark[2],
-                            bookmark[3], bookmark[4]])
-                print(table)
-                self.db.commit()
+            print("This URL is already bookmarked.", "\n", "*" * 30)
+            for bookmark in all_bookmarks:
+                table.append_row(
+                    [bookmark[0], bookmark[1], bookmark[2],
+                        bookmark[3], bookmark[4]])
+            print(table)
+            self.db.commit()
         except Exception as t2:
             print("Specified URL is invalid:--> ", t2)
 
