@@ -4,12 +4,12 @@ Readit - Command Line Tool
 
 .. class:: no-web no-pdf
 
-|Python| |Licence| |Build Status| 
+|Python| |Licence| |Build Status| |docs passing|
 
 
-.. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
-   :alt: asciicast
-   :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
+.. raw:: html
+
+    <a href="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1" target="_blank"><img src="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png" width="900" height="500"/></a>
 
 
 Introduction
@@ -28,6 +28,7 @@ Features
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
+* Export bookmarks into the CSV file
 
 
 Dependencies
@@ -68,6 +69,7 @@ Command line options
     -v, --view TEXT...    Show bookmarks
     -o, --openurl TEXT    Open URL in Browser
     -V, --version         Check latest version
+    -e, --export TEXT...  Export URLs in csv file
     --help                Show this message and exit.
 
 
@@ -139,6 +141,13 @@ Examples
     or
     $ readit --openurl urlid
 
+9. **Export** bookmarks into the CSV file:
+
+.. code-block:: bash
+
+   $ readit --export
+   or
+   $ readit -e
 
 How to install source code for development 
 **********************************************
@@ -184,3 +193,7 @@ Readit - Command line tool is licensed under `GNU General Public License v3.0. <
 
 .. |Build Status| image:: https://travis-ci.org/projectreadit/readit.svg?branch=master
     :target: https://travis-ci.org/projectreadit/readit
+
+.. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
+    :target: http://readit.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
