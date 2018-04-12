@@ -17,6 +17,8 @@ readit module
     :show-inheritance:
 
 
+.. autofunction:: readit.__init__.main
 
 
+.. autofunction:: readit.cli.main
     
