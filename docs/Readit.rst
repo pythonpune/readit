@@ -24,7 +24,7 @@ Features
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
-* Export URLs to CSV file
+* Show all Tags available in database 
 
 
 .. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg

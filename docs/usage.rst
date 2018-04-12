@@ -20,6 +20,7 @@ Cmdline options
         -v, --view TEXT...    Show bookmarks
         -o, --openurl TEXT    Open URL in Browser
         -e, --export TEXT...  Export URLs to csv file
+        -tl, --taglist TEXT   Show all Tags available in database 
         -V, --version         Check latest version
         --help                Show this message and exit.
 
@@ -105,4 +106,10 @@ Examples
         or
         $ readit --export
 
+10. ** Show** all Tags available in database:
 
+..code-block: bash
+
+       $ readit -tl
+       or
+       $ readit --taglist
