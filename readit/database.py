@@ -387,7 +387,7 @@ class DatabaseConnection(object):
     def url_info(self, url):
         """
         Display the information regarding already present URL in database.
-        
+
         Parameters
         ----------
         url : str
@@ -402,7 +402,7 @@ class DatabaseConnection(object):
             self.url_exist = url
             self.cursor.execute(
                 ''' SELECT id, url, tags, date, time
-                                FROM bookmarks WHERE url=?''', (self.url_exist,))
+                            FROM bookmarks WHERE url=?''', (self.url_exist,))
             all_bookmarks = self.cursor.fetchall()
             print("This URL is already bookmarked.", "\n", "*" * 30)
             for bookmark in all_bookmarks:
@@ -413,4 +413,3 @@ class DatabaseConnection(object):
             self.db.commit()
         except Exception as t2:
             print("Specified URL is invalid:--> ", t2)
-
