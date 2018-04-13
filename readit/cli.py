@@ -52,10 +52,10 @@ def main(insert, add, tag, delete, clear,
                 if validate_code == 200:
                     database_connection.add_url(url)
                 else:
-                    print("Invalid URL:--> ", url, "\n", "*" * 33)
+                    print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     option_yes_no(url)
             except Exception as e:
-                print("Invalid input:--> ", e, "\n", "*" * 33)
+                print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 option_yes_no(url)
 
     elif delete:
@@ -73,10 +73,10 @@ def main(insert, add, tag, delete, clear,
             if validate_code == 200:
                 database_connection.update_url(url_id, url)
             else:
-                print("Invalid URL:--> ", url, "\n", "*" * 33)
+                print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 update_option_yes_no(url_id, url)
         except Exception as e:
-            print("Invalid input:-->  ", e, "\n", "*" * 33)
+            print("*" * 12, "\nInvalid URL\n", "*" * 11)
             update_option_yes_no(url_id, url)
 
     elif view:
@@ -99,10 +99,10 @@ def main(insert, add, tag, delete, clear,
             if validate_code == 200:
                 database_connection.tag_url(tag_name, tagged_url)
             else:
-                print("Invalid URL:-->", tagged_url, "\n", "*" * 33)
+                print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 tag_option_yes_no(tag_name, tagged_url)
         except Exception as t:
-            print("Invalid input:--> ", t, "\n", "*" * 33)
+            print("*" * 12, "\nInvalid URL\n", "*" * 11)
             tag_option_yes_no(tag_name, tagged_url)
     elif taglist:
         database_connection.list_all_tags()
@@ -119,10 +119,10 @@ def main(insert, add, tag, delete, clear,
                 if validate_code == 200:
                     database_connection.add_url(url)
                 else:
-                    print("Invalid URL:--> ", url, "\n", "*" * 33)
+                    print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     option_yes_no(url)
             except Exception as e:
-                print("Invalid input:-->", e, "\n", "*" * 33)
+                print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 option_yes_no(url)
 
 
