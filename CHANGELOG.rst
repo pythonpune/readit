@@ -4,6 +4,20 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+
+readit v0.2
+===========
+
+Updated
+*******
+* User should get information about existed URLs in database (#88)
+* User should have flexibility to bookmark links offline (86)
+* Show list of all Tags (#83)
+* Add doc strings to each method (#79)
+* Export bookmarks to CSV file (#77)
+* Update README.rst (#74)
+
+
 readit v0.1.1 - 2018-03-04
 ==========================
 
