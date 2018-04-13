@@ -106,10 +106,11 @@ Examples
         or
         $ readit --export
 
-10. ** Show** all Tags available in database:
 
-..code-block: bash
+10. **Show** all Tags available in database:
 
-       $ readit -tl
-       or
-       $ readit --taglist
+.. code-block:: bash
+
+        $ readit -tl
+        or
+        $ readit --taglist

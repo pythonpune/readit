@@ -6,7 +6,7 @@ Dependencies
 =============================================      ==================
      Features                                       Dependancy
 =============================================      ==================
-``Scripting Language``                              Python 2.7+
+``Scripting Language``                              Python 3.0+
 ``HTTP(S)``                                         requests
 ``Command-Line Option and argument parsing``        Click
 ``Database Used``                                   SQLite3
@@ -15,7 +15,7 @@ Dependencies
 
 From a package manager
 **********************
-* `PyPi <https://pypi.python.org/pypi/readit/0.1.1>`_ (pip3 install --user readit).
+* `PyPI <https://pypi.python.org/pypi/readit/0.1.1>`_ (pip3 install readit).
 
 
 Release Packages

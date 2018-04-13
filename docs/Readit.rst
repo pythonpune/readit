@@ -25,7 +25,7 @@ Features
 * URL validation
 * Open URL in browser
 * Show all Tags available in database 
-
+* Bookmark URLs either online or offline
 
 .. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg
 
