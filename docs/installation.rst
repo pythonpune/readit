@@ -15,7 +15,7 @@ Dependencies
 
 From a package manager
 **********************
-* `PyPI <https://pypi.python.org/pypi/readit/0.1.1>`_ (pip3 install readit).
+* `PyPI <https://pypi.python.org/pypi/readit/0.1.1>`_ (pip3 install --user readit).
 
 
 Release Packages
