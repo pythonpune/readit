@@ -279,7 +279,8 @@ class DatabaseConnection(object):
                                 FROM bookmarks WHERE tags=?''', (self.tag,))
             all_bookmarks = self.cursor.fetchall()
             if all_bookmarks == []:
-                print("Tag is not present in database.")
+                print("*"*26, "\nThis TAG is not available.\n", "*"*25)
+                self.list_all_tags()
             else:
                 for bookmark in all_bookmarks:
                     table.append_row(
@@ -288,7 +289,8 @@ class DatabaseConnection(object):
                 print(table)
                 self.db.commit()
         except Exception as t1:
-            print("Specified Tag is invalid:--> ", t1)
+            print("*"*26, "\nThis TAG is not available.\n", "*"*25)
+            self.list_all_tags()
 
     def delete_all_url(self):
         """
