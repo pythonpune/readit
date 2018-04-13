@@ -406,7 +406,7 @@ class DatabaseConnection(object):
                 ''' SELECT id, url, tags, date, time
                             FROM bookmarks WHERE url=?''', (self.url_exist,))
             all_bookmarks = self.cursor.fetchall()
-            print("*" * 31,"\nThis URL is already bookmarked.\n", "*" * 30)
+            print("*" * 31, "\nThis URL is already bookmarked.\n", "*" * 30)
             for bookmark in all_bookmarks:
                 table.append_row(
                     [bookmark[0], bookmark[1], bookmark[2],
