@@ -25,11 +25,11 @@ Features
 * Display all Bookmarks in table format
 * Remove a Bookmarked URL
 * Remove all Bookmarked URLs
-* Update a Bookmarked URL with specific ID
+* Update a Bookmarked URL with a specific ID
 * URL validation
 * Open URL in the browser
 * Export bookmarks into the CSV file
-* Show all Tags available in database
+* Show all Tags available in the database
 * Bookmark URLs either online or offline
 
 
@@ -96,7 +96,7 @@ Examples
     or
     $ readit --view
 
-3. **Update** a bookmark using it's ID:
+3. **Update** a bookmark using its ID:
 
 .. code-block:: bash
 
@@ -104,7 +104,7 @@ Examples
     or
     $ readit --update url_id url
 
-4. **Delete** a bookmarked URL using it's ID:
+4. **Delete** a bookmarked URL using its ID:
 
 .. code-block:: bash
 
@@ -128,7 +128,7 @@ Examples
     or
     $ readit --tag tag_name url
 
-7. **Search** and **Display** all bookmarks using TAG:
+7. **Search** and **Display** all bookmarks using the TAG:
 
 .. code-block:: bash
 
@@ -152,7 +152,7 @@ Examples
    or
    $ readit -e
 
-10. Show all Tags available in database
+10. Show all Tags available in the database
 
 .. code-block:: bash
 
@@ -186,7 +186,7 @@ How to install source code for development
  
         (venv) $ python setup.py install
 
-* To make build of project:
+* To make a build of the project:
 
 .. code-block:: bash
 
