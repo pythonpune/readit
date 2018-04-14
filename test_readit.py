@@ -47,5 +47,6 @@ def test_help_option(runner):
                        "  -o, --openurl TEXT    Open URL in Browser\n"
                        "  -V, --version         Check latest version\n"
                        "  -e, --export TEXT...  Export URLs in csv file\n"
+                       "  -tl, --taglist TEXT...  Show all Tags\n" 
                        "  --help                Show this message and exit.\n")
     assert result.output == expected_output
