@@ -7,9 +7,10 @@ Readit - Command Line Tool
 |Python| |Licence| |Build Status| |docs passing|
 
 
-.. raw:: html
-
-    <a href="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1" target="_blank"><img src="https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png" width="900" height="500"/></a>
+.. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
+   :alt: asciicast
+   :scale: 50%
+   :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
 
 
 Introduction
@@ -156,7 +157,7 @@ Examples
 
 .. code-block:: bash
 
-   $ readit -t1
+   $ readit -tl
    or
    $ readit --taglist
 
