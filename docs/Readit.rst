@@ -27,7 +27,7 @@ Features
 * Show all Tags available in database 
 * Bookmark URLs either online or offline
 
-.. |Python| image:: https://img.shields.io/badge/python-2.7%2C%203.6-blue.svg
+.. |Python| image:: https://img.shields.io/badge/python-3.6-blue.svg
 
 .. |Licence| image:: https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000
     :target: https://github.com/projectreadit/readit/blob/master/LICENSE
