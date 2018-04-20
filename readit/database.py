@@ -31,7 +31,7 @@ table_tag = BeautifulTable()
 table.left_border_char = '|'
 table.right_border_char = '|'
 table.top_border_char = '='
-table.header_seperator_char = '='
+table.header_separator_char = '='
 table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
 table_tag.left_border_char = '|'
 table_tag.right_border_char = '|'
