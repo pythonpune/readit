@@ -47,7 +47,7 @@ Examples
         or
         $ readit --view
 
-3. **Update** a bookmark using it's ID:
+3. **Update** a bookmark using its ID:
 
 .. code-block:: bash
 
@@ -56,7 +56,7 @@ Examples
         $ readit --update url_id url
 
 
-4. **Delete** a bookmarked URL using it's ID:
+4. **Delete** a bookmarked URL using its ID:
 
 .. code-block:: bash
 
@@ -72,7 +72,7 @@ Examples
         or
         $ readit --clear
 
-6. **Bookmark** URL with TAG:
+6. **Bookmark** URL along with TAG:
 
 .. code-block:: bash
 
@@ -81,7 +81,7 @@ Examples
         $ readit --tag tag_name url
 
 
-7. **Search** and **Display** all bookmarks using TAG:
+7. **Search** and **Display** all bookmarks using the TAG:
 
 .. code-block:: bash
 
@@ -90,7 +90,7 @@ Examples
         $ readit --search tag_name
 
 
-8. **Open URL** in Browser using specific ID:
+8. **Open URL** in the Browser using specific ID:
 
 .. code-block:: bash
 
@@ -107,7 +107,7 @@ Examples
         $ readit --export
 
 
-10. **Show** all Tags available in database:
+10. **Show** all Tags available in the database:
 
 .. code-block:: bash
 
