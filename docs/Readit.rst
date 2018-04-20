@@ -21,10 +21,10 @@ Features
 * Display all Bookmarks in table format
 * Remove a Bookmarked URL
 * Remove all Bookmarked URLs
-* Update a Bookmarked URL with specific ID
+* Update a Bookmarked URL with a specific ID
 * URL validation
-* Open URL in browser
-* Show all Tags available in database 
+* Open URL in the browser
+* Show all Tags available in the database 
 * Bookmark URLs either online or offline
 
 .. |Python| image:: https://img.shields.io/badge/python-3.6-blue.svg

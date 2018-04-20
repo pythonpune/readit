@@ -28,7 +28,7 @@ How to Contribute
 
                 (venv) $ python setup.py install
 
-* To make build of project:
+* To make a build of the project:
 
 .. code-block:: bash
 
