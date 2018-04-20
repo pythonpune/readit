@@ -1,4 +1,4 @@
-'''
+"""
  Copyright (C) 2017, 2018 projectreadit organization and contributors.
  This file is part of Readit - Command Line Bookmark Manager Tool.
 
@@ -14,7 +14,7 @@
 
  You should have received a copy of the GNU General Public License
  along with readit.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 from readit.cli import main
 

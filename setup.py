@@ -21,7 +21,7 @@ setup(
     version="v0.1.1",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
-    description="It is bookmark manager.",
+    description="Readit - Command Line Bookmark Manager Tool",
     long_description=long_description,
     license="GNU General Public License v3.0",
     keywords="clitool bookmark readit",

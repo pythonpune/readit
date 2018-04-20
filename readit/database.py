@@ -1,20 +1,19 @@
-'''
- Copyright (C) 2017, 2018 projectreadit organization and contributors.
- This file is part of Readit - Command Line Bookmark Manager Tool.
+# Copyright (C) 2017, 2018 projectreadit organization and contributors.
+# This file is part of Readit - Command Line Bookmark Manager Tool.
+#
+# This project is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This project is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with readit.  If not, see <http://www.gnu.org/licenses/>.
 
- This project is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This project is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with readit.  If not, see <http://www.gnu.org/licenses/>.
-'''
 
 import sqlite3  # library of database used for project
 import datetime  # used for getting current time and date
@@ -38,10 +37,12 @@ table_tag.left_border_char = '|'
 table_tag.right_border_char = '|'
 table_tag.top_border_char = '='
 table_tag.header_seperator_char = '='
-table_tag.column_headers = ["Available TAGs "]
+table_tag.column_headers = ["Available TAGs"]
 
 
 class DatabaseConnection(object):
+    """Class to perform database operations.
+    """
 
     def __init__(self):
         """
@@ -55,6 +56,11 @@ class DatabaseConnection(object):
         creates or opens file mydatabase with sqlite3 DataBase.
         get cursor object.
         create table.
+
+        Attributes
+        ----------
+        db : sqlite database connection.
+        cursor : sqlite database cursor.
         """
 
         try:
@@ -76,11 +82,22 @@ class DatabaseConnection(object):
 
         except sqlite3.OperationalError:
 
-            print("Table coulden't be created:")
+            print("Table coulden't be created:-->")
 
     def add_url(self, url):
         """
         URL will be adding to database.
+
+
+        Parameters
+        ----------
+        url : str
+            A URL to add in database.
+
+        Returns
+        -------
+        str
+            A URL inserted in database.
         """
 
         try:
@@ -94,11 +111,24 @@ class DatabaseConnection(object):
             self.db.commit()
             print("Bookmarked.")
         except Exception as e1:
-            print("URL is already present in database.", e1)
+            self.url_info(url)
 
     def tag_url(self, tag_name, tagged_url):
         """
         URLs can be added by respective Tags.
+
+        Parameters
+        ----------
+        tag_name : str
+            A comma separated tag to URL.
+
+        tagged_url : str
+            A URL to be tagged.
+
+        Returns
+        -------
+        str
+            A URL inserted with tag.
         """
         self.tag = tag_name
         self.url = tagged_url
@@ -112,11 +142,16 @@ class DatabaseConnection(object):
             self.db.commit()
             print("Bookmarked.")
         except Exception as t:
-            print("Invalid input:--> ", t)
+            self.url_info(tagged_url)
 
     def list_all_tags(self):
         """
         Shows list of all available Tags in database.
+
+        Returns
+        -------
+        list
+            It returns all available Tags associated with URLs in database.
         """
         tag_list = set()
         try:
@@ -137,6 +172,16 @@ class DatabaseConnection(object):
     def delete_url(self, url_id):
         """
         URLs can deleted as per id number provided.
+
+        Parameters
+        ----------
+        urlid : int
+            id of url present in database.
+
+        Returns
+        -------
+        str
+            A URL deleted from database.
         """
         try:
             self.url_id = url_id
@@ -149,11 +194,24 @@ class DatabaseConnection(object):
                 ''' DELETE FROM bookmarks WHERE id=? ''', (self.url_id,))
             self.db.commit()
         except Exception as e2:
-            print("URL of this id is present not in database.", e2)
+            print("URL of this id is present not in database:-->", e2)
 
     def update_url(self, url_id, url):
         """
         URLs can be updated with respect to id.
+
+        Parameters
+        ----------
+        url_id : int
+            id of url which present in database.
+
+        url : str
+            A URL to update.
+
+        Returns
+        -------
+        str
+            A URL updated in database.
         """
 
         try:
@@ -175,6 +233,11 @@ class DatabaseConnection(object):
     def show_url(self):
         """
         All URLs from database displayed to user on screen.
+
+        Returns
+        -------
+        list
+            A table representing all bookmarks.
         """
         try:
             self.cursor.execute(
@@ -191,11 +254,22 @@ class DatabaseConnection(object):
                 self.db.commit()
 
         except Exception as e4:
-            print("Database is empty.", e4)
+            print("Database is empty:-->", e4)
 
     def search_by_tag(self, tag):
         """
         Group of URLs displayed with respect to Tag.
+
+        Parameters
+        ----------
+        tag : str
+            tag to search URLs.
+
+        Returns
+        -------
+        list
+            A table containing bookmarks.
+
         """
         try:
             self.tag = tag
@@ -204,7 +278,8 @@ class DatabaseConnection(object):
                                 FROM bookmarks WHERE tags=?''', (self.tag,))
             all_bookmarks = self.cursor.fetchall()
             if all_bookmarks == []:
-                print("Tag is not present in database.")
+                print("*" * 26, "\nThis TAG is not available.\n", "*" * 25)
+                self.list_all_tags()
             else:
                 for bookmark in all_bookmarks:
                     table.append_row(
@@ -213,11 +288,17 @@ class DatabaseConnection(object):
                 print(table)
                 self.db.commit()
         except Exception as t1:
-            print("Specified Tag is invalid:--> ", t1)
+            print("*" * 26, "\nThis TAG is not available.\n", "*" * 25)
+            self.list_all_tags()
 
     def delete_all_url(self):
         """
         All URLs from database will be deleted.
+
+        Returns
+        -------
+        null
+            All URLs will be removed from database.
         """
         try:
             if self.check_url_db():
@@ -233,6 +314,11 @@ class DatabaseConnection(object):
     def check_url_db(self):
         """
         Checks Whether URL is present in database or not.
+
+        Returns
+        -------
+        bool
+            It returns TRUE if URL is present in database else False.
         """
         self.cursor.execute(
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
@@ -245,6 +331,16 @@ class DatabaseConnection(object):
     def open_url(self, urlid):
         """
         Opens the URL in default browser.
+
+        Parameters
+        ----------
+        urlid:
+            id of url present in database.
+
+        Returns
+        -------
+        str
+            A URL opened in default browser.
         """
         try:
             self.urlid = urlid
@@ -260,6 +356,11 @@ class DatabaseConnection(object):
     def export_urls(self):
         """
         Exporting urls to csv file from database.
+
+        Returns
+        -------
+        csv file
+            A file containing exported bookmarks records.
         """
         try:
             config_path = os.path.expanduser("~/.config/readit")
@@ -283,3 +384,33 @@ class DatabaseConnection(object):
                     "/exported_bookmarks.csv")
         except Exception as ex:
             print("Bookmarks are not exported in csv file-->" + ex)
+
+    def url_info(self, url):
+        """
+        Display the information regarding already present URL in database.
+
+        Parameters
+        ----------
+        url : str
+            url to search it's information from database.
+
+        Returns
+        -------
+        str
+            All the information about particular URL.
+        """
+        try:
+            self.url_exist = url
+            self.cursor.execute(
+                ''' SELECT id, url, tags, date, time
+                            FROM bookmarks WHERE url=?''', (self.url_exist,))
+            all_bookmarks = self.cursor.fetchall()
+            print("*" * 31, "\nThis URL is already bookmarked.\n", "*" * 30)
+            for bookmark in all_bookmarks:
+                table.append_row(
+                    [bookmark[0], bookmark[1], bookmark[2],
+                        bookmark[3], bookmark[4]])
+            print(table)
+            self.db.commit()
+        except Exception as t2:
+            print("Specified URL is invalid:--> ", t2)
