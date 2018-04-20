@@ -10,12 +10,16 @@ readit v0.2
 
 Updated
 *******
+* Update description in setup file (#100)
+* Copyright header appearing multiple times in the readthedocs documention (#98)* Write the test-cases for --help option (#85)
+* Taglist should available to user instead of Error message (#91)
+* Update README.rst (#90)
 * User should get information about existed URLs in database (#88)
 * User should have flexibility to bookmark links offline (86)
 * Show list of all Tags (#83)
 * Add doc strings to each method (#79)
 * Export bookmarks to CSV file (#77)
-* Update README.rst (#74)
+
 
 
 readit v0.1.1 - 2018-03-04
