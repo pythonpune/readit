@@ -24,6 +24,7 @@ Features
 * Update a Bookmarked URL with a specific ID
 * URL validation
 * Open URL in the browser
+* Export bookmarks into the CSV file
 * Show all Tags available in the database 
 * Bookmark URLs either online or offline
 
