@@ -9,4 +9,5 @@ install:
   - pip install -r requirements.txt
 script:
   - flake8 readit setup.py
+  - python setup.py check -r -s
   - pytest
