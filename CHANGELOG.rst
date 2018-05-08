@@ -43,7 +43,6 @@ readit v0.1 - 2018-02-11
 
 Added
 *****
-
 * Bookmark multiple URLs at a time
 * Bookmark URL with respective Tags
 * Search and display Bookmarks by TAG
@@ -53,5 +52,4 @@ Added
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
-
 
