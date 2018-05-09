@@ -16,23 +16,23 @@ How to Contribute
 
         $ cd readit/
 
-        $ virtualenv venv
+        $ python3 -m venv env
 
-        $ source venv/bin/activate
+        $ source env/bin/activate
 
-        (venv) $
+        (env) $
 
 * To install using setup.py file:
 
 .. code-block:: bash
 
-                (venv) $ python setup.py install
+                (env) $ python setup.py install
 
 * To make a build of the project:
 
 .. code-block:: bash
 
-                (venv) $ python setup.py build
+                (env) $ python setup.py build
 
 
 
