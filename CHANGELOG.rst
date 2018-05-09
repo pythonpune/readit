@@ -5,13 +5,16 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
-readit v0.2
+readit v0.2 - 2018-05-10
 ===========
+
+* Supports Python 3.0+
 
 Updated
 *******
+
+* Write the documentation (#63)
 * Update description in setup file (#100)
-* Copyright header appearing multiple times in the readthedocs documention (#98) 
 * Write the test-cases for --help option (#85)
 * Taglist should available to user instead of Error message (#91)
 * Update README.rst (#90)
@@ -20,8 +23,9 @@ Updated
 * Show list of all Tags (#83)
 * Add doc strings to each method (#79)
 * Export bookmarks to CSV file (#77)
-
-
+* Copyright header appearing multiple times in the readthedocs documention (#98)
+* Convert CHANGELOG.md to ReStructuredText for documentation (#93)
+* Deprecation Warning after prompting any commands leads to readit (#103)
 
 readit v0.1.1 - 2018-03-04
 ==========================
