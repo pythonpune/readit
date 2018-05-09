@@ -106,7 +106,7 @@ def main(insert, add, tag, delete, clear,
     elif taglist:
         database_connection.list_all_tags()
     elif version:
-        print("readit v0.1.1")
+        print("readit v0.2")
     elif export:
         database_connection.export_urls()
     else:
