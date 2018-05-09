@@ -13,7 +13,7 @@ def test_version(runner):
     result = runner.invoke(c.main, ['--version'])
     assert not result.exception
     assert result.exit_code == 0
-    expected = "readit v0.1.1\n"
+    expected = "readit v0.2\n"
     assert result.output == expected
 
 
@@ -22,7 +22,7 @@ def test_by_version(runner):
     result = runner.invoke(c.main, ['-V'])
     assert not result.exception
     assert result.exit_code == 0
-    expected = "readit v0.1.1\n"
+    expected = "readit v0.2\n"
     assert result.output == expected
 
 
