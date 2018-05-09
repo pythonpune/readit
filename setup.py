@@ -18,7 +18,7 @@ setup(
             'readit = readit.__init__:main',
         ],
     },
-    version="v0.1.1",
+    version="v0.2",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description="Readit - Command Line Bookmark Manager Tool",
