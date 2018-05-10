@@ -207,5 +207,5 @@ Readit - Command line tool is licensed under `GNU General Public License v3.0. <
     :target: https://travis-ci.org/projectreadit/readit
 
 .. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
-    :target: http://readit.readthedocs.io/en/latest/?badge=latest
+    :target: http://readittool.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
