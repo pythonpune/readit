@@ -17,6 +17,7 @@ Command Line Bookmark manager.
    installation
    usage
    get_involved
+   changes
   
 
 
