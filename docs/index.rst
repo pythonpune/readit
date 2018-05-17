@@ -1,4 +1,4 @@
-.. readit documentation master file, created by
+i.. readit documentation master file, created by
    sphinx-quickstart on Sat Mar 24 05:48:38 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -17,6 +17,7 @@ Command Line Bookmark manager.
    installation
    usage
    get_involved
+   changes
   
 
 
