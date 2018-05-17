@@ -152,5 +152,6 @@ def update_option_yes_no(url_id, url):
     Asks whether to update existing bookmark with invalid URLs or Offline URLs
     """
     option = input("Still you want to update: Yes/No ? ")
-    if option == "Yes" or option == "Y" or option == "y":
+    if option == "Yes" or option == "Y" or option == "y" or "yes":
         database_connection.update_url(url_id, url)
+
