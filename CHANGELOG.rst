@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 
 readit v0.2 - 2018-05-10
-===========
+========================
 
 * Supports Python 3.0+
 
