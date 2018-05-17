@@ -130,9 +130,9 @@ def option_yes_no(url):
     Asks whether to bookmark invalid URLs or Offline URLs to database.
     """
     option = input("Still you want to bookmark: Yes/No ? ")
-    if option == "Yes" or option == "Y" or option == "y" or option == "yes":
+    if option.lower() in ['yes', 'y']:
         database_connection.add_url(url)
-    elif option == "No" or option == "N" or option == "n" or option == "no":
+    else:
         sys.exit(0)
 
 
@@ -141,9 +141,9 @@ def tag_option_yes_no(tag_name, tagged_url):
     Asks whether to tag and bookmark invalid URLs or Offline URLs.
     """
     option = input("Still you want to update: Yes/No ? ")
-    if option == "Yes" or option == "Y" or option == "y" or option == "yes":
+    if option.lower() in ['yes', 'y']:
         database_connection.tag_url(tag_name, tagged_url)
-    elif option == "No" or option == "N" or option == "n" or option == "no":
+    else:
         sys.exit(0)
 
 
@@ -152,5 +152,5 @@ def update_option_yes_no(url_id, url):
     Asks whether to update existing bookmark with invalid URLs or Offline URLs
     """
     option = input("Still you want to update: Yes/No ? ")
-    if option == "Yes" or option == "Y" or option == "yes" or option == "y":
+    if option.lower() in ['yes', 'y']:
         database_connection.update_url(url_id, url)
