@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with readit.  If not, see <http://www.gnu.org/licenses/>.
 
-
 import requests  # to check whether url is valid or not
 import click  # used for command line interface.
 from readit import database  # used to perform database operations.
+from readit.view import *  # Used to show results to users
 import sys  # used to exit from system
 
 database_connection = database.DatabaseConnection()
@@ -36,9 +36,10 @@ database_connection = database.DatabaseConnection()
 @click.option('--export', '-e', multiple=True,
               nargs=0, help="Export URLs in csv file")
 @click.option('--taglist', '-tl', multiple=True, nargs=0, help="Show all Tags")
+@click.option('--urlinfo', '-ui', nargs=1, help="Check particular URL info")
 @click.argument('insert', nargs=-1, required=False)
 def main(insert, add, tag, delete, clear,
-         update, search, view, openurl, version, export, taglist):
+         update, search, view, openurl, version, export, taglist, urlinfo):
     """
     Readit - Command-line bookmark manager tool.
     """
@@ -49,17 +50,16 @@ def main(insert, add, tag, delete, clear,
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
-                    database_connection.add_url(url)
+                    result(database_connection.add_url(url))
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                    option_yes_no(url)
+                    result(option_yes_no(url))
+
             except Exception as e:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                option_yes_no(url)
-
+                result(option_yes_no(url))
     elif delete:
-        database_connection.delete_url(delete)
-
+        result(database_connection.delete_url(delete))
     elif update:
         url_list = []
         for update_to_url in update:
@@ -70,22 +70,22 @@ def main(insert, add, tag, delete, clear,
             validate_url = requests.get(url)
             validate_code = validate_url.status_code
             if validate_code == 200:
-                database_connection.update_url(url_id, url)
+                result(database_connection.update_url(url_id, url))
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                update_option_yes_no(url_id, url)
+                result(update_option_yes_no(url_id, url))
         except Exception as e:
             print("*" * 12, "\nInvalid URL\n", "*" * 11)
-            update_option_yes_no(url_id, url)
+            result(update_option_yes_no(url_id, url))
 
     elif view:
-        database_connection.show_url()
+        print_bookmarks(database_connection.show_url())
     elif openurl:
         database_connection.open_url(openurl)
     elif search:
-        database_connection.search_by_tag(search)
+        print_bookmarks(database_connection.search_by_tag(search))
     elif clear:
-        database_connection.delete_all_url()
+        result(database_connection.delete_all_url())
     elif tag:
         tag_list = []
         for tag_to_url in tag:
@@ -96,19 +96,21 @@ def main(insert, add, tag, delete, clear,
             validate_url = requests.get(tagged_url)
             validate_code = validate_url.status_code
             if validate_code == 200:
-                database_connection.tag_url(tag_name, tagged_url)
+                result(database_connection.tag_url(tag_name, tagged_url))
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                tag_option_yes_no(tag_name, tagged_url)
+                result(tag_option_yes_no(tag_name, tagged_url))
         except Exception as t:
             print("*" * 12, "\nInvalid URL\n", "*" * 11)
-            tag_option_yes_no(tag_name, tagged_url)
+            result(tag_option_yes_no(tag_name, tagged_url))
     elif taglist:
-        database_connection.list_all_tags()
+        all_tags(database_connection.list_all_tags())
     elif version:
-        print("readit v0.2")
+        result("readit v0.3")
     elif export:
-        database_connection.export_urls()
+        result(database_connection.export_urls())
+    elif urlinfo:
+        print_bookmarks(database_connection.url_info(urlinfo))
     else:
         for url_to_add in insert:
             url = url_to_add
@@ -116,13 +118,13 @@ def main(insert, add, tag, delete, clear,
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
-                    database_connection.add_url(url)
+                    result(database_connection.add_url(url))
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                    option_yes_no(url)
+                    result(option_yes_no(url))
             except Exception as e:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                option_yes_no(url)
+                result(option_yes_no(url))
 
 
 def option_yes_no(url):
@@ -131,7 +133,7 @@ def option_yes_no(url):
     """
     option = input("Still you want to bookmark: Yes/No ? ")
     if option.lower() in ['yes', 'y']:
-        database_connection.add_url(url)
+        return database_connection.add_url(url)
     else:
         sys.exit(0)
 
@@ -140,9 +142,9 @@ def tag_option_yes_no(tag_name, tagged_url):
     """
     Asks whether to tag and bookmark invalid URLs or Offline URLs.
     """
-    option = input("Still you want to update: Yes/No ? ")
+    option = input("Still you want to bookmakr: Yes/No ? ")
     if option.lower() in ['yes', 'y']:
-        database_connection.tag_url(tag_name, tagged_url)
+        return database_connection.tag_url(tag_name, tagged_url)
     else:
         sys.exit(0)
 
@@ -153,4 +155,4 @@ def update_option_yes_no(url_id, url):
     """
     option = input("Still you want to update: Yes/No ? ")
     if option.lower() in ['yes', 'y']:
-        database_connection.update_url(url_id, url)
+        return database_connection.update_url(url_id, url)
