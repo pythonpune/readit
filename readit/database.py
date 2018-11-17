@@ -108,9 +108,9 @@ class DatabaseConnection(object):
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
             ''', (self.url, "None", date, time))
             self.db.commit()
-            return "Bookmarked."
+            return True
         except Exception as e1:
-            return "URL is already bookmarked. Check URL info."
+            return False
 
     def tag_url(self, tag_name, tagged_url):
         """
@@ -139,9 +139,9 @@ class DatabaseConnection(object):
                 '''INSERT INTO bookmarks(url, tags, date, time)
                 VALUES(?, ?, ?, ?)''', (self.url, self.tag, date, time))
             self.db.commit()
-            return "Bookmarked."
+            return True
         except Exception as t:
-            return "URL is already tagged. Check URL info."
+            return False 
 
     def list_all_tags(self):
         """
@@ -188,9 +188,12 @@ class DatabaseConnection(object):
             self.cursor.execute(
                 ''' DELETE FROM bookmarks WHERE id=? ''', (self.url_id,))
             self.db.commit()
-            return "Deleted URL:--> " + deleted_url[0]
+            if deleted_url:
+                return True
+            else:
+                return False
         except Exception as e2:
-            return "URL of this id is present not in database:-->", e2
+            return False
 
     def update_url(self, url_id, url):
         """
@@ -220,9 +223,9 @@ class DatabaseConnection(object):
             self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
                                                     (self.url, self.url_id,))
             self.db.commit()
-            return "Replaced URL:--> " + url_replaced[0]
+            return True
         except Exception as e3:
-            return "Provided id is not present or URL is already in database"
+            return False
 
     def show_url(self):
         """
@@ -239,12 +242,11 @@ class DatabaseConnection(object):
             all_bookmarks = self.cursor.fetchall()
             self.db.commit()
             if all_bookmarks == []:
-                return "Database is empty."
+                return None
             else:
                 return all_bookmarks
-
         except Exception as e4:
-            return "Database is empty:-->" + e4
+            return None
 
     def search_by_tag(self, tag):
         """
@@ -269,11 +271,11 @@ class DatabaseConnection(object):
             all_bookmarks = self.cursor.fetchall()
             self.db.commit
             if all_bookmarks == []:
-                return all_bookmarks
+                return None
             else:
                 return all_bookmarks
         except Exception as t1:
-            return self.all_bookmarks
+            return None
 
     def delete_all_url(self):
         """
@@ -291,10 +293,9 @@ class DatabaseConnection(object):
             else:
                 self.cursor.execute(''' DELETE FROM bookmarks ''')
                 self.db.commit()
-                return "All bookmarks deleted."
-
+                return True
         except Exception as e5:
-            return "Database does not have any data:--> " + e5
+            return False
 
     def check_url_db(self):
         """
@@ -309,9 +310,9 @@ class DatabaseConnection(object):
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
         all_bookmarks = self.cursor.fetchall()
         if all_bookmarks == []:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def open_url(self, urlid):
         """
@@ -335,8 +336,9 @@ class DatabaseConnection(object):
             for url in all_row:
                 webbrowser.open_new(url)
             self.db.commit()
+            return True
         except Exception as i:
-            print("Specified ID is invalid:--> ", i)
+            return False
 
     def export_urls(self):
         """
@@ -350,9 +352,11 @@ class DatabaseConnection(object):
         try:
             config_path = os.path.expanduser("~/.config/readit")
             if not os.path.exists(config_path):
-                print("File path does not exist: " + config_path)
+                msg = "File path does not exist: " + config_path
+                return False, msg
         except OSError:
-            print("Error: Finding directory: " + config_path)
+            msg = "Error: Finding directory: " + config_path
+            return False, msg
         databasefile = os.path.join(config_path, "bookmarks.db")
         try:
             self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
@@ -363,10 +367,9 @@ class DatabaseConnection(object):
                 csv_writer.writerow([i[0] for i in self.cursor.description])
                 csv_writer.writerows(self.cursor)
                 dirpath = os.getcwd()
-                msg = "Exported bookmarks available at"
-                return "{0} {1}/exported_bookmarks.csv".format(msg, dirpath)
+                return dirpath
         except Exception as ex:
-            return "Bookmarks are not exported in csv file-->" + ex
+            return None
 
     def url_info(self, url):
         """
@@ -391,4 +394,4 @@ class DatabaseConnection(object):
             self.db.commit()
             return all_bookmarks
         except Exception as t2:
-            return "Specified URL is invalid:--> " + t2
+            return None

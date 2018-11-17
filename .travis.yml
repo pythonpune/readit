@@ -8,7 +8,7 @@ before_install:
 install:
   - pip install -r requirements.txt
 script:
-  - flake8 --ignore=F403,F405,F841,E127,E126,E128 readit setup.py
+  - flake8 --ignore=F403,F405,F841,E127,E126,E128,W291,E501 readit setup.py
   - python setup.py install
   - python setup.py check -r -s
   - pytest
