@@ -48,6 +48,6 @@ def test_help_option(runner):
                        "  -V, --version           Check latest version\n"
                        "  -e, --export TEXT...    Export URLs in csv file\n"
                        "  -tl, --taglist TEXT...  Show all Tags\n"
-                       "  -ui, --urlinfo TEXT...  Check particular URL info\n"
+                       "  -ui, --urlinfo TEXT     Check particular URL information\n"
                        "  --help                  Show this message and exit.\n")
     assert result.output == expected_output
