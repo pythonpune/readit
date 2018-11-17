@@ -13,7 +13,7 @@ def test_version(runner):
     result = runner.invoke(c.main, ['--version'])
     assert not result.exception
     assert result.exit_code == 0
-    expected = "readit v0.2\n"
+    expected = "readit v0.3\n"
     assert result.output == expected
 
 
@@ -47,6 +47,7 @@ def test_help_option(runner):
                        "  -o, --openurl TEXT      Open URL in Browser\n"
                        "  -V, --version           Check latest version\n"
                        "  -e, --export TEXT...    Export URLs in csv file\n"
-                       "  -tl, --taglist TEXT...  Show all Tags\n" 
+                       "  -tl, --taglist TEXT...  Show all Tags\n"
+                       "  -ui, --urlinfo TEXT...  Check particular URL info\n"
                        "  --help                  Show this message and exit.\n")
     assert result.output == expected_output
