@@ -21,13 +21,13 @@ class ShowResults(object):
     def __init__(self):
         pass
 
-    def all_tags(self, tag_list):
+    def print_all_tags(self, tag_list):
         if tag_list:
             for tag_in_list in tag_list:
                 table_tag.append_row(tag_in_list)
                 print(table_tag)
         else:
-            print("Tags are not found in database.")
+            print("Tags list is empty.")
 
     def print_bookmarks(self, all_bookmarks):
         if all_bookmarks:
@@ -38,4 +38,4 @@ class ShowResults(object):
                             bookmark[3], bookmark[4]])
             print(table)
         else:
-            print("Bookmarked URLs not available.")
+            print("No bookmarks found.")
