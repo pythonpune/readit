@@ -289,7 +289,7 @@ class DatabaseConnection(object):
         try:
             if self.check_url_db():
                 self.db.commit()
-                return "Database is empty."
+                return False
             else:
                 self.cursor.execute(''' DELETE FROM bookmarks ''')
                 self.db.commit()
@@ -310,9 +310,9 @@ class DatabaseConnection(object):
             ''' SELECT id, url, tags, date, time FROM bookmarks ''')
         all_bookmarks = self.cursor.fetchall()
         if all_bookmarks == []:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def open_url(self, urlid):
         """
@@ -366,7 +366,7 @@ class DatabaseConnection(object):
                 csv_writer = csv.writer(csv_file, delimiter='\t')
                 csv_writer.writerow([i[0] for i in self.cursor.description])
                 csv_writer.writerows(self.cursor)
-                dirpath = os.getcwd()
+                dirpath = os.getcwd() + "/exported_bookmarks.csv"
                 return dirpath
         except Exception as ex:
             return None

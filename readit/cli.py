@@ -151,10 +151,10 @@ def main(insert, add, tag, delete, clear,
     elif version:
         print("readit v0.3")
     elif export:
-        is_db_exported = database_connection.export_urls()
+        path = database_connection.export_urls()
         msg = "Exported bookmarks available at"
-        if is_db_exported:
-            path = "{0} {1}/exported_bookmarks.csv".format(msg, is_db_exported)
+        if path:
+            path = "{0} {1}".format(msg, path)
             print(path)
         else:
             print("Bookmarks are not exported in csv file.")
@@ -204,7 +204,7 @@ def tag_option_yes_no(tag_name, tagged_url):
     """
     Asks whether to tag and bookmark invalid URLs or Offline URLs.
     """
-    option = input("Still you want to bookmakr: Yes/No ? ")
+    option = input("Still you want to bookmark: Yes/No ? ")
     if option.lower() in ['yes', 'y']:
         return database_connection.tag_url(tag_name, tagged_url)
     else:
