@@ -25,22 +25,34 @@ output = view.ShowResults()
 
 
 @click.command()
-@click.option('--add', '-a', nargs=0, help="Add URLs with space-separated")
-@click.option('--tag', '-t', nargs=2, help="Add Tag with space-separated URL")
-@click.option('--delete', '-d', nargs=1, help="Remove a URL of particular ID")
-@click.option('--clear', '-c', multiple=True, nargs=0, help="Clear bookmarks")
-@click.option('--update', '-u', nargs=2, help="Update a URL for specific ID")
-@click.option('--search', '-s', nargs=1, help="Search all bookmarks by Tag")
-@click.option('--view', '-v', multiple=True, nargs=0, help="Show bookmarks")
-@click.option('--openurl', '-o', nargs=1, help="Open URL in Browser")
-@click.option('--version', '-V', is_flag=True, help="Check latest version")
-@click.option('--export', '-e', multiple=True,
-              nargs=0, help="Export URLs in csv file")
-@click.option('--taglist', '-tl', multiple=True, nargs=0, help="Show all Tags")
-@click.option('--urlinfo', '-ui', nargs=1, help="Check particular URL information")
-@click.argument('insert', nargs=-1, required=False)
-def main(insert, add, tag, delete, clear,
-         update, search, view, openurl, version, export, taglist, urlinfo):
+@click.option("--add", "-a", nargs=0, help="Add URLs with space-separated")
+@click.option("--tag", "-t", nargs=2, help="Add Tag with space-separated URL")
+@click.option("--delete", "-d", nargs=1, help="Remove a URL of particular ID")
+@click.option("--clear", "-c", multiple=True, nargs=0, help="Clear bookmarks")
+@click.option("--update", "-u", nargs=2, help="Update a URL for specific ID")
+@click.option("--search", "-s", nargs=1, help="Search all bookmarks by Tag")
+@click.option("--view", "-v", multiple=True, nargs=0, help="Show bookmarks")
+@click.option("--openurl", "-o", nargs=1, help="Open URL in Browser")
+@click.option("--version", "-V", is_flag=True, help="Check latest version")
+@click.option("--export", "-e", multiple=True, nargs=0, help="Export URLs in csv file")
+@click.option("--taglist", "-tl", multiple=True, nargs=0, help="Show all Tags")
+@click.option("--urlinfo", "-ui", nargs=1, help="Check particular URL information")
+@click.argument("insert", nargs=-1, required=False)
+def main(
+    insert,
+    add,
+    tag,
+    delete,
+    clear,
+    update,
+    search,
+    view,
+    openurl,
+    version,
+    export,
+    taglist,
+    urlinfo,
+):
     """
     Readit - Command-line bookmark manager tool.
     """
@@ -55,21 +67,29 @@ def main(insert, add, tag, delete, clear,
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print("URL is already bookmarked. Check URL information. See help")
+                        print(
+                            "URL is already bookmarked. Check URL information. See help"
+                        )
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                    is_url_added = option_yes_no(url)
+                    if option_yes_no():
+                        is_url_added = database_connection.add_url(url)
+                        if is_url_added:
+                            print("Bookmarked.")
+                        else:
+                            print(
+                                "URL is already bookmarked. Check URL information. See help"
+                            )
+            except Exception as e:
+                print("*" * 12, "\nInvalid URL\n", "*" * 11)
+                if option_yes_no():
+                    is_url_added = database_connection.add_url(url)
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print("URL is already bookmarked. Check URL information. See help")
-            except Exception as e:
-                print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                is_url_added = option_yes_no(url)
-                if is_url_added:
-                    print("Bookmarked.")
-                else:
-                    print("URL is already bookmarked. Check URL information. See help")
+                        print(
+                            "URL is already bookmarked. Check URL information. See help"
+                        )
     elif delete:
         is_url_deleted = database_connection.delete_url(delete)
         if is_url_deleted:
@@ -90,21 +110,29 @@ def main(insert, add, tag, delete, clear,
                 if is_url_updated:
                     print("URL of this id updated.")
                 else:
-                    print("Provided id is not present or same URL is already in available.")
+                    print(
+                        "Provided id is not present or same URL is already in available."
+                    )
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                is_url_updated = update_option_yes_no(url_id, url)
+                if option_yes_no():
+                    is_url_updated = database_connection.update_url(url_id, url)
+                    if is_url_updated:
+                        print("URL of this id updated.")
+                    else:
+                        print(
+                            "Provided id is not present or same URL is already in available."
+                        )
+        except Exception as e:
+            print("*" * 12, "\nInvalid URL\n", "*" * 11)
+            if option_yes_no():
+                is_url_updated = database_connection.update_url(url_id, url)
                 if is_url_updated:
                     print("URL of this id updated.")
                 else:
-                    print("Provided id is not present or same URL is already in available.")
-        except Exception as e:
-            print("*" * 12, "\nInvalid URL\n", "*" * 11)
-            is_url_updated = update_option_yes_no(url_id, url)
-            if is_url_updated:
-                print("URL of this id updated.")
-            else:
-                print("Provided id is not present or same URL is already in available.")
+                    print(
+                        "Provided id is not present or same URL is already in available."
+                    )
     elif view:
         output.print_bookmarks(database_connection.show_url())
     elif openurl:
@@ -131,21 +159,29 @@ def main(insert, add, tag, delete, clear,
                 if is_url_tagged:
                     print("Bookmarked URL with tag.")
                 else:
-                    print("URL is already bookmarked with tag. Check URL information. See help")
+                    print(
+                        "URL is already bookmarked with tag. Check URL information. See help"
+                    )
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                is_url_tagged = tag_option_yes_no(tag_name, tagged_url)
+                if option_yes_no():
+                    is_url_tagged = database_connection.tag_url(tag_name, tagged_url)
+                    if is_url_tagged:
+                        print("Bookmarked URL with tag.")
+                    else:
+                        print(
+                            "URL is already bookmarked with tag. Check URL information. See help"
+                        )
+        except Exception as t:
+            print("*" * 12, "\nInvalid URL\n", "*" * 11)
+            if option_yes_no():
+                is_url_tagged = database_connection.tag_url(tag_name, tagged_url)
                 if is_url_tagged:
                     print("Bookmarked URL with tag.")
                 else:
-                    print("URL is already bookmarked with tag. Check URL information. See help")
-        except Exception as t:
-            print("*" * 12, "\nInvalid URL\n", "*" * 11)
-            is_url_tagged = tag_option_yes_no(tag_name, tagged_url)
-            if is_url_tagged:
-                print("Bookmarked URL with tag.")
-            else:
-                print("URL is already bookmarked with tag. Check URL information. See help")
+                    print(
+                        "URL is already bookmarked with tag. Check URL information. See help"
+                    )
     elif taglist:
         output.print_all_tags(database_connection.list_all_tags())
     elif version:
@@ -171,50 +207,38 @@ def main(insert, add, tag, delete, clear,
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print("URL is already bookmarked. Check URL information. See help")
+                        print(
+                            "URL is already bookmarked. Check URL information. See help"
+                        )
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                    is_url_added = option_yes_no(url)
-                    if is_url_added:
-                        print("Bookmarked.")
-                    else:
-                        print("URL is already bookmarked. Check URL information. See help")
+                    if option_yes_no():
+                        is_url_added = database_connection.add_url(url)
+                        if is_url_added:
+                            print("Bookmarked.")
+                        else:
+                            print(
+                                "URL is already bookmarked. Check URL information. See help"
+                            )
 
             except Exception as e:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
-                is_url_added = option_yes_no(url)
-                if is_url_added:
-                    print("Bookmarked.")
-                else:
-                    print("URL is already bookmarked. Check URL information. See help")
+                if option_yes_no():
+                    is_url_added = database_connection.add_url(url)
+                    if is_url_added:
+                        print("Bookmarked.")
+                    else:
+                        print(
+                            "URL is already bookmarked. Check URL information. See help"
+                        )
 
 
-def option_yes_no(url):
+def option_yes_no():
     """
     Asks whether to bookmark invalid URLs or Offline URLs to database.
     """
     option = input("Still you want to bookmark: Yes/No ? ")
-    if option.lower() in ['yes', 'y']:
-        return database_connection.add_url(url)
+    if option.lower() in ["yes", "y"]:
+        return True
     else:
         sys.exit(0)
-
-
-def tag_option_yes_no(tag_name, tagged_url):
-    """
-    Asks whether to tag and bookmark invalid URLs or Offline URLs.
-    """
-    option = input("Still you want to bookmark: Yes/No ? ")
-    if option.lower() in ['yes', 'y']:
-        return database_connection.tag_url(tag_name, tagged_url)
-    else:
-        sys.exit(0)
-
-
-def update_option_yes_no(url_id, url):
-    """
-    Asks whether to update existing bookmark with invalid URLs or Offline URLs
-    """
-    option = input("Still you want to update: Yes/No ? ")
-    if option.lower() in ['yes', 'y']:
-        return database_connection.update_url(url_id, url)
