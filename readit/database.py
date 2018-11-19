@@ -28,15 +28,15 @@ date = datetime.date.today()
 
 table = BeautifulTable()
 table_tag = BeautifulTable()
-table.left_border_char = '|'
-table.right_border_char = '|'
-table.top_border_char = '='
-table.header_separator_char = '='
+table.left_border_char = "|"
+table.right_border_char = "|"
+table.top_border_char = "="
+table.header_separator_char = "="
 table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
-table_tag.left_border_char = '|'
-table_tag.right_border_char = '|'
-table_tag.top_border_char = '='
-table_tag.header_separator_char = '='
+table_tag.left_border_char = "|"
+table_tag.right_border_char = "|"
+table_tag.top_border_char = "="
+table_tag.header_separator_char = "="
 table_tag.column_headers = ["Available TAGs"]
 
 
@@ -64,20 +64,21 @@ class DatabaseConnection(object):
         """
 
         try:
-            config_path = os.path.join(
-                os.path.expanduser('~'), ".config/readit")
+            config_path = os.path.join(os.path.expanduser("~"), ".config/readit")
             if not os.path.exists(config_path):
                 os.mkdir(config_path)
         except OSError:
-            print('Error: Creating directory.' + config_path)
+            print("Error: Creating directory." + config_path)
 
         databasefile = os.path.join(config_path, "bookmarks.db")
         try:
             self.db = sqlite3.connect(databasefile)
             self.cursor = self.db.cursor()
-            self.cursor.execute('''CREATE TABLE IF NOT EXISTS bookmarks
+            self.cursor.execute(
+                """CREATE TABLE IF NOT EXISTS bookmarks
             (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            url TEXT UNIQUE NOT NULL, tags TEXT, date TEXT, time TEXT)''')
+            url TEXT UNIQUE NOT NULL, tags TEXT, date TEXT, time TEXT)"""
+            )
             self.db.commit()
 
         except sqlite3.OperationalError:
@@ -104,9 +105,12 @@ class DatabaseConnection(object):
             global date
             start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
-            self.cursor.execute('''
+            self.cursor.execute(
+                """
             INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
-            ''', (self.url, "None", date, time))
+            """,
+                (self.url, "None", date, time),
+            )
             self.db.commit()
             return True
         except Exception as e1:
@@ -136,12 +140,14 @@ class DatabaseConnection(object):
             start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
             self.cursor.execute(
-                '''INSERT INTO bookmarks(url, tags, date, time)
-                VALUES(?, ?, ?, ?)''', (self.url, self.tag, date, time))
+                """INSERT INTO bookmarks(url, tags, date, time)
+                VALUES(?, ?, ?, ?)""",
+                (self.url, self.tag, date, time),
+            )
             self.db.commit()
             return True
         except Exception as t:
-            return False 
+            return False
 
     def list_all_tags(self):
         """
@@ -154,7 +160,7 @@ class DatabaseConnection(object):
         """
         tag_list = set()
         try:
-            self.cursor.execute('''SELECT tags FROM bookmarks''')
+            self.cursor.execute("""SELECT tags FROM bookmarks""")
             tags_in_db = self.cursor.fetchall()
             for tags_available in tags_in_db:
                 tag_list.add(tags_available)
@@ -183,10 +189,12 @@ class DatabaseConnection(object):
         try:
             self.url_id = url_id
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks where id=? ''', (self.url_id,))
+                """ SELECT url FROM bookmarks where id=? """, (self.url_id,)
+            )
             deleted_url = self.cursor.fetchone()
             self.cursor.execute(
-                ''' DELETE FROM bookmarks WHERE id=? ''', (self.url_id,))
+                """ DELETE FROM bookmarks WHERE id=? """, (self.url_id,)
+            )
             self.db.commit()
             if deleted_url:
                 return True
@@ -218,10 +226,12 @@ class DatabaseConnection(object):
             self.url_id = url_id
             self.url = url
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks WHERE id=?''', (self.url_id,))
+                """ SELECT url FROM bookmarks WHERE id=?""", (self.url_id,)
+            )
             url_replaced = self.cursor.fetchone()
-            self.cursor.execute(''' UPDATE bookmarks SET url=? WHERE id=?''',
-                                                    (self.url, self.url_id,))
+            self.cursor.execute(
+                """ UPDATE bookmarks SET url=? WHERE id=?""", (self.url, self.url_id)
+            )
             self.db.commit()
             return True
         except Exception as e3:
@@ -237,8 +247,7 @@ class DatabaseConnection(object):
             A table representing all bookmarks.
         """
         try:
-            self.cursor.execute(
-                ''' SELECT id, url, tags, date, time FROM bookmarks ''')
+            self.cursor.execute(""" SELECT id, url, tags, date, time FROM bookmarks """)
             all_bookmarks = self.cursor.fetchall()
             self.db.commit()
             if all_bookmarks == []:
@@ -266,8 +275,10 @@ class DatabaseConnection(object):
         try:
             self.tag = tag
             self.cursor.execute(
-                ''' SELECT id, url, tags, date, time
-                                FROM bookmarks WHERE tags=?''', (self.tag,))
+                """ SELECT id, url, tags, date, time
+                                FROM bookmarks WHERE tags=?""",
+                (self.tag,),
+            )
             all_bookmarks = self.cursor.fetchall()
             self.db.commit
             if all_bookmarks == []:
@@ -291,7 +302,7 @@ class DatabaseConnection(object):
                 self.db.commit()
                 return False
             else:
-                self.cursor.execute(''' DELETE FROM bookmarks ''')
+                self.cursor.execute(""" DELETE FROM bookmarks """)
                 self.db.commit()
                 return True
         except Exception as e5:
@@ -306,8 +317,7 @@ class DatabaseConnection(object):
         bool
             It returns TRUE if URL is present in database else False.
         """
-        self.cursor.execute(
-            ''' SELECT id, url, tags, date, time FROM bookmarks ''')
+        self.cursor.execute(""" SELECT id, url, tags, date, time FROM bookmarks """)
         all_bookmarks = self.cursor.fetchall()
         if all_bookmarks == []:
             return True
@@ -331,7 +341,8 @@ class DatabaseConnection(object):
         try:
             self.urlid = urlid
             self.cursor.execute(
-                ''' SELECT url FROM bookmarks WHERE id=?''', (self.urlid,))
+                """ SELECT url FROM bookmarks WHERE id=?""", (self.urlid,)
+            )
             all_row = self.cursor.fetchone()
             for url in all_row:
                 webbrowser.open_new(url)
@@ -362,8 +373,8 @@ class DatabaseConnection(object):
             self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
             self.cursor = self.conn.cursor()
             self.cursor.execute("select * from bookmarks")
-            with open("exported_bookmarks.csv", "w", newline='') as csv_file:
-                csv_writer = csv.writer(csv_file, delimiter='\t')
+            with open("exported_bookmarks.csv", "w", newline="") as csv_file:
+                csv_writer = csv.writer(csv_file, delimiter="\t")
                 csv_writer.writerow([i[0] for i in self.cursor.description])
                 csv_writer.writerows(self.cursor)
                 dirpath = os.getcwd() + "/exported_bookmarks.csv"
@@ -388,8 +399,10 @@ class DatabaseConnection(object):
         try:
             self.url_exist = url
             self.cursor.execute(
-                ''' SELECT id, url, tags, date, time
-                            FROM bookmarks WHERE url=?''', (self.url_exist,))
+                """ SELECT id, url, tags, date, time
+                            FROM bookmarks WHERE url=?""",
+                (self.url_exist,),
+            )
             all_bookmarks = self.cursor.fetchall()
             self.db.commit()
             return all_bookmarks
