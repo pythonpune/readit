@@ -19,15 +19,15 @@ from beautifultable import BeautifulTable  # Used to create table formats
 
 table = BeautifulTable()
 table_tag = BeautifulTable()
-table.left_border_char = '|'
-table.right_border_char = '|'
-table.top_border_char = '='
-table.header_separator_char = '='
+table.left_border_char = "|"
+table.right_border_char = "|"
+table.top_border_char = "="
+table.header_separator_char = "="
 table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
-table_tag.left_border_char = '|'
-table_tag.right_border_char = '|'
-table_tag.top_border_char = '='
-table_tag.header_separator_char = '='
+table_tag.left_border_char = "|"
+table_tag.right_border_char = "|"
+table_tag.top_border_char = "="
+table_tag.header_separator_char = "="
 table_tag.column_headers = ["Available TAGs"]
 
 
@@ -35,6 +35,7 @@ class ShowResults(object):
     """This class includes methods. Which are used to 
         show output to the user in table format.
     """
+
     def __init__(self):
         pass
 
@@ -51,8 +52,8 @@ class ShowResults(object):
             print("*" * 24, "\nAlready bookmarked URLs.\n", "*" * 23)
             for bookmark in all_bookmarks:
                 table.append_row(
-                        [bookmark[0], bookmark[1], bookmark[2],
-                            bookmark[3], bookmark[4]])
+                    [bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]]
+                )
             print(table)
         else:
             print("No bookmarks found.")
