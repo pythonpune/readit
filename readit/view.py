@@ -43,7 +43,7 @@ class ShowResults(object):
         if tag_list:
             for tag_in_list in tag_list:
                 table_tag.append_row(tag_in_list)
-                print(table_tag)
+            print(table_tag)
         else:
             print("Tags list is empty.")
 
