@@ -324,7 +324,7 @@ class DatabaseConnection(object):
         else:
             return False
 
-    def open_url(self, urlid):
+    def open_url(self, urlid_list):
         """
         Opens the URL in default browser.
 
@@ -339,13 +339,31 @@ class DatabaseConnection(object):
             A URL opened in default browser.
         """
         try:
-            self.urlid = urlid
-            self.cursor.execute(
-                """ SELECT url FROM bookmarks WHERE id=?""", (self.urlid,)
-            )
-            all_row = self.cursor.fetchone()
-            for url in all_row:
-                webbrowser.open_new(url)
+            search_result = []
+            for urlid in urlid_list:
+                self.cursor.execute(
+                    """ SELECT url FROM bookmarks WHERE id=?""", (urlid,)
+                )
+                all_row = self.cursor.fetchone()
+                for url in all_row:
+                    if not url.startswith('http'):
+                        if not url.startswith('www'):
+                            if not url.endswith('.com'):
+                                try:
+                                    from googlesearch import search
+                                except ImportError:
+                                    print("No module named 'google' found")
+                                for search_result in search(url, tld="co.in", num=10, stop=1, pause=2):
+                                    search_result.append(search_result)
+                                return search_result
+                            else:
+                                url = "http://" + url
+                    elif url == "http://" or url == "http://www.":
+                        return False
+                    else:
+                        if url.endswith('.com'):
+                            url = "http://www." + url
+                    webbrowser.open_new_tab(url)
             self.db.commit()
             return True
         except Exception as i:

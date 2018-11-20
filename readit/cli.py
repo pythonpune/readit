@@ -32,7 +32,7 @@ output = view.ShowResults()
 @click.option("--update", "-u", nargs=2, help="Update a URL for specific ID")
 @click.option("--search", "-s", nargs=1, help="Search all bookmarks by Tag")
 @click.option("--view", "-v", multiple=True, nargs=0, help="Show bookmarks")
-@click.option("--openurl", "-o", nargs=1, help="Open URL in Browser")
+@click.option("--openurl", "-o", nargs=5, help="Open URL in Browser")
 @click.option("--version", "-V", is_flag=True, help="Check latest version")
 @click.option("--export", "-e", multiple=True, nargs=0, help="Export URLs in csv file")
 @click.option("--taglist", "-tl", multiple=True, nargs=0, help="Show all Tags")
@@ -136,7 +136,11 @@ def main(
     elif view:
         output.print_bookmarks(database_connection.show_url())
     elif openurl:
-        database_connection.open_url(openurl)
+        url_list =[]
+        for url_id in openurl:
+            url_list.append(url_id)
+        print(url_list)
+        database_connection.open_url(url_list)
     elif search:
         output.print_bookmarks(database_connection.search_by_tag(search))
     elif clear:
