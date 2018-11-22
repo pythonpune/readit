@@ -22,7 +22,7 @@ Features
 ********
 * Bookmark multiple URLs at a time
 * Bookmark URL with respective Tags
-* Search and display Bookmarks by TAG
+* Search and display Bookmarks by TAG and URL's substring
 * Display all Bookmarks in table format
 * Remove a Bookmarked URL
 * Remove all Bookmarked URLs
@@ -68,9 +68,9 @@ Command line options
     -d, --delete TEXT       Remove a URL of particular ID
     -c, --clear TEXT...     Clear bookmarks
     -u, --update TEXT...    Update a URL for specific ID
-    -s, --search TEXT       Search all bookmarks by Tag
+    -s, --search TEXT       Search all bookmarks by Tag and URL's substring
     -v, --view TEXT...      Show bookmarks
-    -o, --openurl TEXT      Open URL in Browser
+    -o, --openurl TEXT      Open URL in Browser using id, tag or URL's substring
     -V, --version           Check latest version
     -e, --export TEXT...    Export URLs in csv file
     -tl, --taglist TEXT...  Show all Tags
@@ -129,21 +129,27 @@ Examples
     or
     $ readit --tag tag_name url
 
-7. **Search** and **Display** all bookmarks using the TAG:
+7. **Search** and **Display** all bookmarks using the TAG or URL's substring:
 
 .. code-block:: bash
 
     $ readit -s tag_name
     or
     $ readit --search tag_name
+    or
+    $ readit -s url_substring
 
-8. Open URL in the Browser using specific ID:
+8. Open URL in the Browser using specific ID, TAG or URL's substring:
 
 .. code-block:: bash
 
     $ readit -o urlid
     or
     $ readit --openurl urlid
+    or
+    $ readit -o url_substring
+    or 
+    $ readit -o tag
 
 9. **Export** bookmarks into the CSV file:
 
