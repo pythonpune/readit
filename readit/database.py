@@ -56,11 +56,6 @@ class DatabaseConnection(object):
         creates or opens file mydatabase with sqlite3 DataBase.
         get cursor object.
         create table.
-
-        Attributes
-        ----------
-        db : sqlite database connection.
-        cursor : sqlite database cursor.
         """
 
         try:
@@ -87,17 +82,6 @@ class DatabaseConnection(object):
     def add_url(self, url):
         """
         URL will be adding to database.
-
-
-        Parameters
-        ----------
-        url : str
-            A URL to add in database.
-
-        Returns
-        -------
-        str
-            A URL inserted in database.
         """
 
         try:
@@ -119,19 +103,6 @@ class DatabaseConnection(object):
     def tag_url(self, tag_name, tagged_url):
         """
         URLs can be added by respective Tags.
-
-        Parameters
-        ----------
-        tag_name : str
-            A comma separated tag to URL.
-
-        tagged_url : str
-            A URL to be tagged.
-
-        Returns
-        -------
-        str
-            A URL inserted with tag.
         """
         self.tag = tag_name
         self.url = tagged_url
@@ -152,11 +123,6 @@ class DatabaseConnection(object):
     def list_all_tags(self):
         """
         Shows list of all available Tags in database.
-
-        Returns
-        -------
-        list
-            It returns all available Tags associated with URLs in database.
         """
         tag_list = set()
         try:
@@ -175,16 +141,6 @@ class DatabaseConnection(object):
     def delete_url(self, url_id):
         """
         URLs can deleted as per id number provided.
-
-        Parameters
-        ----------
-        urlid : int
-            id of url present in database.
-
-        Returns
-        -------
-        str
-            A URL deleted from database.
         """
         try:
             self.url_id = url_id
@@ -206,19 +162,6 @@ class DatabaseConnection(object):
     def update_url(self, url_id, url):
         """
         URLs can be updated with respect to id.
-
-        Parameters
-        ----------
-        url_id : int
-            id of url which present in database.
-
-        url : str
-            A URL to update.
-
-        Returns
-        -------
-        str
-            A URL updated in database.
         """
 
         try:
@@ -240,11 +183,6 @@ class DatabaseConnection(object):
     def show_url(self):
         """
         All URLs from database displayed to user on screen.
-
-        Returns
-        -------
-        list
-            A table representing all bookmarks.
         """
         try:
             self.cursor.execute(""" SELECT id, url, tags, date, time FROM bookmarks """)
@@ -257,29 +195,28 @@ class DatabaseConnection(object):
         except Exception as e4:
             return None
 
-    def search_by_tag(self, tag):
+    def search_url(self, search_value):
         """
-        Group of URLs displayed with respect to Tag.
-
-        Parameters
-        ----------
-        tag : str
-            tag to search URLs.
-
-        Returns
-        -------
-        list
-            A table containing bookmarks.
+        Group of URLs displayed with respect to search_value.
 
         """
         try:
-            self.tag = tag
-            self.cursor.execute(
-                """ SELECT id, url, tags, date, time
-                                FROM bookmarks WHERE tags=?""",
-                (self.tag,),
-            )
-            all_bookmarks = self.cursor.fetchall()
+            self.search = search_value
+            all_bookmarks = []
+            if self.check_tag(search_value):
+                self.cursor.execute(
+                    """ SELECT id, url, tags, date, time
+                                    FROM bookmarks WHERE tags=?""",
+                    (self.search,),
+                )
+                all_bookmarks = self.cursor.fetchall()
+
+            else:
+                self.cursor.execute(""" SELECT * FROM bookmarks""")
+                bookmarks = self.cursor.fetchall()
+                for bookmark in bookmarks:
+                    if search_value.lower() in bookmark[1]:
+                        all_bookmarks.append(bookmark)
             self.db.commit
             if all_bookmarks == []:
                 return None
@@ -291,11 +228,6 @@ class DatabaseConnection(object):
     def delete_all_url(self):
         """
         All URLs from database will be deleted.
-
-        Returns
-        -------
-        null
-            All URLs will be removed from database.
         """
         try:
             if self.check_url_db():
@@ -311,11 +243,6 @@ class DatabaseConnection(object):
     def check_url_db(self):
         """
         Checks Whether URL is present in database or not.
-
-        Returns
-        -------
-        bool
-            It returns TRUE if URL is present in database else False.
         """
         self.cursor.execute(""" SELECT id, url, tags, date, time FROM bookmarks """)
         all_bookmarks = self.cursor.fetchall()
@@ -324,41 +251,66 @@ class DatabaseConnection(object):
         else:
             return False
 
-    def open_url(self, urlid):
+    def open_url(self, url_id_tag):
         """
-        Opens the URL in default browser.
-
-        Parameters
-        ----------
-        urlid:
-            id of url present in database.
-
-        Returns
-        -------
-        str
-            A URL opened in default browser.
+        Opens the URLs in default browser.
         """
         try:
-            self.urlid = urlid
-            self.cursor.execute(
-                """ SELECT url FROM bookmarks WHERE id=?""", (self.urlid,)
-            )
-            all_row = self.cursor.fetchone()
-            for url in all_row:
-                webbrowser.open_new(url)
-            self.db.commit()
-            return True
+            if self.check_id(url_id_tag):
+                all_row = self.check_id(url_id_tag)
+            elif self.search_url(url_id_tag):
+                all_rows = self.search_url(url_id_tag)
+                for bookmark in all_rows:
+                    webbrowser.open(bookmark[1])
+                self.db.commit()
+                return True
+            else:
+                print(
+                    "Provide either valid url id or url tag name or any valid substring."
+                )
+
+            if all_row:
+                for i in range(len(all_row)):
+                    for url in all_row[i]:
+                        webbrowser.open_new_tab(url)
+                self.db.commit()
+                return True
         except Exception as i:
             return False
+
+    def check_tag(self, url_tag):
+        """
+        Checks this tag is available in database.
+        """
+        try:
+            self.cursor.execute(
+                """ SELECT url FROM bookmarks WHERE tags=?""", (url_tag,)
+            )
+            all_row = self.cursor.fetchall()
+            self.db.commit()
+            if all_row == []:
+                return None
+            return all_row
+        except Exception as i:
+            return None
+
+    def check_id(self, url_id):
+        """
+        Check this is available in database.
+        """
+        try:
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (url_id,))
+            all_row = self.cursor.fetchall()
+            if all_row == []:
+                return None
+            self.db.commit()
+            return all_row
+        except Exception as i:
+            return None
 
     def export_urls(self):
         """
         Exporting urls to csv file from database.
-
-        Returns
-        -------
-        csv file
-            A file containing exported bookmarks records.
         """
         try:
             config_path = os.path.expanduser("~/.config/readit")
@@ -385,16 +337,6 @@ class DatabaseConnection(object):
     def url_info(self, url):
         """
         Display the information regarding already present URL in database.
-
-        Parameters
-        ----------
-        url : str
-            url to search it's information from database.
-
-        Returns
-        -------
-        str
-            All the information about particular URL.
         """
         try:
             self.url_exist = url

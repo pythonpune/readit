@@ -138,7 +138,7 @@ def main(
     elif openurl:
         database_connection.open_url(openurl)
     elif search:
-        output.print_bookmarks(database_connection.search_by_tag(search))
+        output.print_bookmarks(database_connection.search_url(search))
     elif clear:
         is_db_clear = database_connection.delete_all_url()
         if is_db_clear:
