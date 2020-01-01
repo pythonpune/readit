@@ -25,7 +25,7 @@ Features
 * URL validation
 * Open URL in the browser
 * Export bookmarks into the CSV file
-* Show all Tags available in the database 
+* Show all Tags available in the database
 * Bookmark URLs either online or offline
 
 .. |Python| image:: https://img.shields.io/badge/python-3.6-blue.svg
@@ -39,5 +39,3 @@ Features
 .. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
     :target: http://readit.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
-
-

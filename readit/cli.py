@@ -13,12 +13,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with readit.  If not, see <http://www.gnu.org/licenses/>.
+import sys  # used to exit from system
 
-import requests  # to check whether url is valid or not
 import click  # used for command line interface.
+import requests  # to check whether url is valid or not
+
 from readit import database  # used to perform database operations.
 from readit import view  # Used to show results to users
-import sys  # used to exit from system
 
 database_connection = database.DatabaseConnection()
 output = view.ShowResults()
@@ -67,9 +68,7 @@ def main(
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print(
-                            "URL is already bookmarked. Check URL information. See help"
-                        )
+                        print("URL is already bookmarked. Check URL information. See help")
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     if option_yes_no():
@@ -77,19 +76,15 @@ def main(
                         if is_url_added:
                             print("Bookmarked.")
                         else:
-                            print(
-                                "URL is already bookmarked. Check URL information. See help"
-                            )
-            except Exception as e:
+                            print("URL is already bookmarked. Check URL information. See help")
+            except Exception:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print(
-                            "URL is already bookmarked. Check URL information. See help"
-                        )
+                        print("URL is already bookmarked. Check URL information. See help")
     elif delete:
         is_url_deleted = database_connection.delete_url(delete)
         if is_url_deleted:
@@ -110,9 +105,7 @@ def main(
                 if is_url_updated:
                     print("URL of this id updated.")
                 else:
-                    print(
-                        "Provided id is not present or same URL is already in available."
-                    )
+                    print("Provided id is not present or same URL is already in available.")
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
@@ -120,19 +113,15 @@ def main(
                     if is_url_updated:
                         print("URL of this id updated.")
                     else:
-                        print(
-                            "Provided id is not present or same URL is already in available."
-                        )
-        except Exception as e:
+                        print("Provided id is not present or same URL is already in available.")
+        except Exception:
             print("*" * 12, "\nInvalid URL\n", "*" * 11)
             if option_yes_no():
                 is_url_updated = database_connection.update_url(url_id, url)
                 if is_url_updated:
                     print("URL of this id updated.")
                 else:
-                    print(
-                        "Provided id is not present or same URL is already in available."
-                    )
+                    print("Provided id is not present or same URL is already in available.")
     elif view:
         output.print_bookmarks(database_connection.show_url())
     elif openurl:
@@ -159,9 +148,7 @@ def main(
                 if is_url_tagged:
                     print("Bookmarked URL with tag.")
                 else:
-                    print(
-                        "URL is already bookmarked with tag. Check URL information. See help"
-                    )
+                    print("URL is already bookmarked with tag. Check URL information. See help")
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
@@ -169,19 +156,15 @@ def main(
                     if is_url_tagged:
                         print("Bookmarked URL with tag.")
                     else:
-                        print(
-                            "URL is already bookmarked with tag. Check URL information. See help"
-                        )
-        except Exception as t:
+                        print("URL is already bookmarked with tag. Check URL information. See help")
+        except Exception:
             print("*" * 12, "\nInvalid URL\n", "*" * 11)
             if option_yes_no():
                 is_url_tagged = database_connection.tag_url(tag_name, tagged_url)
                 if is_url_tagged:
                     print("Bookmarked URL with tag.")
                 else:
-                    print(
-                        "URL is already bookmarked with tag. Check URL information. See help"
-                    )
+                    print("URL is already bookmarked with tag. Check URL information. See help")
     elif taglist:
         output.print_all_tags(database_connection.list_all_tags())
     elif version:
@@ -190,7 +173,7 @@ def main(
         path = database_connection.export_urls()
         msg = "Exported bookmarks available at"
         if path:
-            path = "{0} {1}".format(msg, path)
+            path = "{} {}".format(msg, path)
             print(path)
         else:
             print("Bookmarks are not exported in csv file.")
@@ -207,9 +190,7 @@ def main(
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print(
-                            "URL is already bookmarked. Check URL information. See help"
-                        )
+                        print("URL is already bookmarked. Check URL information. See help")
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     if option_yes_no():
@@ -217,20 +198,16 @@ def main(
                         if is_url_added:
                             print("Bookmarked.")
                         else:
-                            print(
-                                "URL is already bookmarked. Check URL information. See help"
-                            )
+                            print("URL is already bookmarked. Check URL information. See help")
 
-            except Exception as e:
+            except Exception:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
                         print("Bookmarked.")
                     else:
-                        print(
-                            "URL is already bookmarked. Check URL information. See help"
-                        )
+                        print("URL is already bookmarked. Check URL information. See help")
 
 
 def option_yes_no():

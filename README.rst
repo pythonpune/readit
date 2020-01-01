@@ -148,7 +148,7 @@ Examples
     $ readit --openurl urlid
     or
     $ readit -o url_substring
-    or 
+    or
     $ readit -o tag
 
 9. **Export** bookmarks into the CSV file:
@@ -167,7 +167,7 @@ Examples
    or
    $ readit --taglist
 
-How to install source code for development 
+How to install source code for development
 **********************************************
 * Clone project from github:
 
@@ -180,7 +180,7 @@ How to install source code for development
 .. code-block:: bash
 
     $ cd readit/
-  
+
     $ python3 -m venv env
 
     $ source env/bin/activate
@@ -190,7 +190,7 @@ How to install source code for development
 * To install using setup.py file:
 
 .. code-block:: bash
- 
+
         (env) $ python setup.py install
 
 * To make a build of the project:

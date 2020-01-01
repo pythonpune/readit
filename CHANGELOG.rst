@@ -56,4 +56,3 @@ Added
 * Update a Bookmarked URL with specific ID
 * URL validation
 * Open URL in browser
-

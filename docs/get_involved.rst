@@ -41,5 +41,3 @@ Collaborators
 * `Daivshala Vighne <https://github.com/daivshala>`_
 * `Ganesh Hubale <https://github.com/ganeshhubale>`_
 * `Shital Mule <https://github.com/shitalmule04>`_
-
-
