@@ -13,8 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with readit.  If not, see <http://www.gnu.org/licenses/>.
-
-
 from beautifultable import BeautifulTable  # Used to create table formats
 
 table = BeautifulTable()
@@ -32,7 +30,7 @@ table_tag.column_headers = ["Available TAGs"]
 
 
 class ShowResults(object):
-    """This class includes methods. Which are used to 
+    """This class includes methods. Which are used to
         show output to the user in table format.
     """
 
@@ -51,9 +49,7 @@ class ShowResults(object):
         if all_bookmarks:
             print("*" * 24, "\nAlready bookmarked URLs.\n", "*" * 23)
             for bookmark in all_bookmarks:
-                table.append_row(
-                    [bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]]
-                )
+                table.append_row([bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]])
             print(table)
         else:
             print("No bookmarks found.")

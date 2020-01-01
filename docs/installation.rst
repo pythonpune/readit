@@ -21,5 +21,3 @@ From a package manager
 Release Packages
 ****************
 Packages for Fedora are availabe with the `latest release <https://github.com/projectreadit/readit/releases/tag/v0.2>`_.
-
-

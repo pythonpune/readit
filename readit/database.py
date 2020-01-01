@@ -13,16 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with readit.  If not, see <http://www.gnu.org/licenses/>.
-
-
-import sqlite3  # library of database used for project
-import datetime  # used for getting current time and date
-from beautifultable import BeautifulTable  # display output in table format
-import webbrowser  # used to open url in browser
-import os  # used to find home directory of user
 import csv  # used to store bookmarks in CSV file
+import datetime  # used for getting current time and date
+import os  # used to find home directory of user
+import sqlite3  # library of database used for project
+import webbrowser  # used to open url in browser
 from glob import glob  # used to find path name
 from os.path import expanduser  # used to perform operations on pathnames
+
+from beautifultable import BeautifulTable  # display output in table format
 
 date = datetime.date.today()
 
@@ -97,7 +96,7 @@ class DatabaseConnection(object):
             )
             self.db.commit()
             return True
-        except Exception as e1:
+        except Exception:
             return False
 
     def tag_url(self, tag_name, tagged_url):
@@ -117,7 +116,7 @@ class DatabaseConnection(object):
             )
             self.db.commit()
             return True
-        except Exception as t:
+        except Exception:
             return False
 
     def list_all_tags(self):
@@ -135,7 +134,7 @@ class DatabaseConnection(object):
             tag_list.sort(reverse=False)
             self.db.commit
             return tag_list
-        except Exception as tg:
+        except Exception:
             return None
 
     def delete_url(self, url_id):
@@ -144,19 +143,15 @@ class DatabaseConnection(object):
         """
         try:
             self.url_id = url_id
-            self.cursor.execute(
-                """ SELECT url FROM bookmarks where id=? """, (self.url_id,)
-            )
+            self.cursor.execute(""" SELECT url FROM bookmarks where id=? """, (self.url_id,))
             deleted_url = self.cursor.fetchone()
-            self.cursor.execute(
-                """ DELETE FROM bookmarks WHERE id=? """, (self.url_id,)
-            )
+            self.cursor.execute(""" DELETE FROM bookmarks WHERE id=? """, (self.url_id,))
             self.db.commit()
             if deleted_url:
                 return True
             else:
                 return False
-        except Exception as e2:
+        except Exception:
             return False
 
     def update_url(self, url_id, url):
@@ -168,16 +163,13 @@ class DatabaseConnection(object):
 
             self.url_id = url_id
             self.url = url
-            self.cursor.execute(
-                """ SELECT url FROM bookmarks WHERE id=?""", (self.url_id,)
-            )
-            url_replaced = self.cursor.fetchone()
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id,))
             self.cursor.execute(
                 """ UPDATE bookmarks SET url=? WHERE id=?""", (self.url, self.url_id)
             )
             self.db.commit()
             return True
-        except Exception as e3:
+        except Exception:
             return False
 
     def show_url(self):
@@ -192,7 +184,7 @@ class DatabaseConnection(object):
                 return None
             else:
                 return all_bookmarks
-        except Exception as e4:
+        except Exception:
             return None
 
     def search_url(self, search_value):
@@ -222,7 +214,7 @@ class DatabaseConnection(object):
                 return None
             else:
                 return all_bookmarks
-        except Exception as t1:
+        except Exception:
             return None
 
     def delete_all_url(self):
@@ -237,7 +229,7 @@ class DatabaseConnection(object):
                 self.cursor.execute(""" DELETE FROM bookmarks """)
                 self.db.commit()
                 return True
-        except Exception as e5:
+        except Exception:
             return False
 
     def check_url_db(self):
@@ -265,9 +257,7 @@ class DatabaseConnection(object):
                 self.db.commit()
                 return True
             else:
-                print(
-                    "Provide either valid url id or url tag name or any valid substring."
-                )
+                print("Provide either valid url id or url tag name or any valid substring.")
 
             if all_row:
                 for i in range(len(all_row)):
@@ -275,7 +265,7 @@ class DatabaseConnection(object):
                         webbrowser.open_new_tab(url)
                 self.db.commit()
                 return True
-        except Exception as i:
+        except Exception:
             return False
 
     def check_tag(self, url_tag):
@@ -283,15 +273,13 @@ class DatabaseConnection(object):
         Checks this tag is available in database.
         """
         try:
-            self.cursor.execute(
-                """ SELECT url FROM bookmarks WHERE tags=?""", (url_tag,)
-            )
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE tags=?""", (url_tag,))
             all_row = self.cursor.fetchall()
             self.db.commit()
             if all_row == []:
                 return None
             return all_row
-        except Exception as i:
+        except Exception:
             return None
 
     def check_id(self, url_id):
@@ -305,7 +293,7 @@ class DatabaseConnection(object):
                 return None
             self.db.commit()
             return all_row
-        except Exception as i:
+        except Exception:
             return None
 
     def export_urls(self):
@@ -331,7 +319,7 @@ class DatabaseConnection(object):
                 csv_writer.writerows(self.cursor)
                 dirpath = os.getcwd() + "/exported_bookmarks.csv"
                 return dirpath
-        except Exception as ex:
+        except Exception:
             return None
 
     def url_info(self, url):
@@ -348,5 +336,5 @@ class DatabaseConnection(object):
             all_bookmarks = self.cursor.fetchall()
             self.db.commit()
             return all_bookmarks
-        except Exception as t2:
+        except Exception:
             return None

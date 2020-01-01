@@ -21,4 +21,3 @@ readit module
 
 
 .. autofunction:: readit.cli.main
-    
