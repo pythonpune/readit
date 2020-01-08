@@ -10,7 +10,7 @@ setup(
     name="readit",
     packages=find_packages(),
     entry_points={"console_scripts": ["readit = readit.__init__:main"]},
-    version="v0.2",
+    version="0.2",
     author="Ganesh, Shital, Daivshala",
     author_email="ganeshhubale03@gmail.com",
     description="Readit - Command Line Bookmark Manager Tool",

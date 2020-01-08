@@ -44,9 +44,7 @@ jobs:
           architecture: x64
 
       - name: Setup Package
-        run: |
-          python setup.py check -r -s
-          python -m pip install .
+        run: python -m pip install .
 
       - name: Unit Tests
         run: |
