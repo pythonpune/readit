@@ -151,10 +151,10 @@ class DatabaseConnection(object):
         """
 
         try:
-
             self.url_id = url_id
             self.url = url
-            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id))
+            # To check whether URL is present in DB
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id,))
             self.cursor.execute(
                 """ UPDATE bookmarks SET url=? WHERE id=?""", (self.url, self.url_id)
             )
@@ -190,7 +190,7 @@ class DatabaseConnection(object):
                 self.cursor.execute(
                     """ SELECT id, url, tags, date, time
                                     FROM bookmarks WHERE tags=?""",
-                    (self.search),
+                    (self.search,),
                 )
                 all_bookmarks = self.cursor.fetchall()
             else:
@@ -223,9 +223,11 @@ class DatabaseConnection(object):
         Opens the URLs in default browser.
         """
         try:
+            # TODO: Comnine these two lists of urls
+            all_row = []
             all_row = self.check_id(url_id_tag)
-            if not all_row:
-                all_row = self.search_url(url_id_tag)
+            all_row.append(self.search_url(url_id_tag))
+            if all_row:
                 for bookmark in all_row:
                     webbrowser.open(bookmark[1])
                 self.db.commit()
@@ -261,7 +263,7 @@ class DatabaseConnection(object):
         Check this is available in database.
         """
         try:
-            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (url_id))
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (url_id,))
             all_row = self.cursor.fetchall()
             if all_row == []:
                 return None
