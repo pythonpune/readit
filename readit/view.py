@@ -17,16 +17,9 @@ from beautifultable import BeautifulTable  # Used to create table formats
 
 table = BeautifulTable()
 table_tag = BeautifulTable()
-table.left_border_char = "|"
-table.right_border_char = "|"
-table.top_border_char = "="
-table.header_separator_char = "="
-table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
-table_tag.left_border_char = "|"
-table_tag.right_border_char = "|"
-table_tag.top_border_char = "="
-table_tag.header_separator_char = "="
-table_tag.column_headers = ["Available TAGs"]
+table.columns.header = ["ID", "URL", "TAG", "DATE", "TIME"]
+table_tag.columns.header = ["Available TAGs"]
+table.set_style(BeautifulTable.STYLE_SEPARATED)
 
 
 class ShowResults(object):
@@ -49,7 +42,7 @@ class ShowResults(object):
         if all_bookmarks:
             print("*" * 24, "\nAlready bookmarked URLs.\n", "*" * 23)
             for bookmark in all_bookmarks:
-                table.append_row([bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]])
+                table.rows.append([bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]])
             print(table)
         else:
             print("No bookmarks found.")
