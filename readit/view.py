@@ -18,8 +18,7 @@ from beautifultable import BeautifulTable  # Used to create table formats
 table = BeautifulTable()
 table_tag = BeautifulTable()
 table.columns.header = ["ID", "URL", "TAG", "DATE", "TIME"]
-table_tag.columns.header = ["Available TAGs"]
-table.set_style(BeautifulTable.STYLE_SEPARATED)
+table_tag.columns.header = ["Available Tags"]
 
 
 class ShowResults(object):
@@ -33,7 +32,7 @@ class ShowResults(object):
     def print_all_tags(self, tag_list):
         if tag_list:
             for tag_in_list in tag_list:
-                table_tag.append_row(tag_in_list)
+                table_tag.rows.append(tag_in_list)
             print(table_tag)
         else:
             print("Tags list is empty.")

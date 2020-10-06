@@ -17,6 +17,7 @@ import csv
 import datetime
 import os
 import sqlite3
+import sys
 import webbrowser
 from glob import glob
 
@@ -30,36 +31,43 @@ class DatabaseConnection(object):
         """
         Calls the function init_db().
         """
-        self.init_db("", "")
+        self.config_path = os.path.expanduser("~/.config/readit")
+        self.databasefile = os.path.join(self.config_path, "bookmarks.db")
+        self._check_conf_dir()
+        self.db = sqlite3.connect(self.databasefile)
+        self.cursor = self.db.cursor()
+        self.init_db()
 
-    def init_db(self, cursor, db):
-        """
-        Create database connection.
-        creates or opens file mydatabase with sqlite3 DataBase.
+    def _check_conf_dir(self):
+        if not os.path.exists(self.config_path):
+            os.mkdir(self.config_path)
+            return True
+        elif os.path.exists(self.config_path):
+            return True
+        return False
+
+    def init_db(self):
+        """Create database connection.
+        creates or opens file mydatabase with sqlite3 Database.
         get cursor object.
         create table.
         """
 
         try:
-            config_path = os.path.join(os.path.expanduser("~"), ".config/readit")
-            if not os.path.exists(config_path):
-                os.mkdir(config_path)
-        except OSError:
-            print("Error: Creating directory." + config_path)
+            if self._check_conf_dir():
+                self.cursor.execute(
+                    """CREATE TABLE IF NOT EXISTS bookmarks
+                    (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    url TEXT UNIQUE NOT NULL, tags TEXT, date TEXT, time TEXT)"""
+                )
+                self.db.commit()
+            else:
+                raise IOError("Directory does not exists")
 
-        databasefile = os.path.join(config_path, "bookmarks.db")
-        try:
-            self.db = sqlite3.connect(databasefile)
-            self.cursor = self.db.cursor()
-            self.cursor.execute(
-                """CREATE TABLE IF NOT EXISTS bookmarks
-            (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            url TEXT UNIQUE NOT NULL, tags TEXT, date TEXT, time TEXT)"""
-            )
-            self.db.commit()
-
-        except sqlite3.OperationalError:
-            print("Table coulden't be created:-->")
+        except sqlite3.OperationalError as e:
+            print("ERROR: Failed to create table.")
+            print(e)
+            sys.exit(1)
 
     def add_url(self, url):
         """
@@ -73,14 +81,14 @@ class DatabaseConnection(object):
             time = start.strftime("%H:%M:%S")
             self.cursor.execute(
                 """
-            INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
-            """,
+                INSERT INTO bookmarks(url, tags, date, time) VALUES (?, ?, ?, ?)
+                """,
                 (self.url, "None", date, time),
             )
             self.db.commit()
             return True
         except Exception:
-            return False
+            raise sqlite3.OperationalError
 
     def tag_url(self, tag_name, tagged_url):
         """
@@ -100,7 +108,7 @@ class DatabaseConnection(object):
             self.db.commit()
             return True
         except Exception:
-            return False
+            raise sqlite3.OperationalError
 
     def list_all_tags(self):
         """
@@ -115,10 +123,10 @@ class DatabaseConnection(object):
             tag_list = set(tag_list)
             tag_list = list(tag_list)
             tag_list.sort(reverse=False)
-            self.db.commit
+            self.db.commit()
             return tag_list
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def delete_url(self, url_id):
         """
@@ -135,7 +143,7 @@ class DatabaseConnection(object):
             else:
                 return False
         except Exception:
-            return False
+            raise sqlite3.OperationalError
 
     def update_url(self, url_id, url):
         """
@@ -146,14 +154,14 @@ class DatabaseConnection(object):
 
             self.url_id = url_id
             self.url = url
-            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id,))
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id))
             self.cursor.execute(
                 """ UPDATE bookmarks SET url=? WHERE id=?""", (self.url, self.url_id)
             )
             self.db.commit()
             return True
         except Exception:
-            return False
+            raise sqlite3.OperationalError
 
     def show_url(self):
         """
@@ -168,7 +176,7 @@ class DatabaseConnection(object):
             else:
                 return all_bookmarks
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def search_url(self, search_value):
         """
@@ -182,10 +190,9 @@ class DatabaseConnection(object):
                 self.cursor.execute(
                     """ SELECT id, url, tags, date, time
                                     FROM bookmarks WHERE tags=?""",
-                    (self.search,),
+                    (self.search),
                 )
                 all_bookmarks = self.cursor.fetchall()
-
             else:
                 self.cursor.execute(""" SELECT * FROM bookmarks""")
                 bookmarks = self.cursor.fetchall()
@@ -198,44 +205,28 @@ class DatabaseConnection(object):
             else:
                 return all_bookmarks
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def delete_all_url(self):
         """
         All URLs from database will be deleted.
         """
         try:
-            if self.check_url_db():
-                self.db.commit()
-                return False
-            else:
-                self.cursor.execute(""" DELETE FROM bookmarks """)
-                self.db.commit()
-                return True
-        except Exception:
-            return False
-
-    def check_url_db(self):
-        """
-        Checks Whether URL is present in database or not.
-        """
-        self.cursor.execute(""" SELECT id, url, tags, date, time FROM bookmarks """)
-        all_bookmarks = self.cursor.fetchall()
-        if all_bookmarks == []:
+            self.cursor.execute(""" DELETE FROM bookmarks """)
+            self.db.commit()
             return True
-        else:
-            return False
+        except Exception:
+            raise sqlite3.OperationalError
 
     def open_url(self, url_id_tag):
         """
         Opens the URLs in default browser.
         """
         try:
-            if self.check_id(url_id_tag):
-                all_row = self.check_id(url_id_tag)
-            elif self.search_url(url_id_tag):
-                all_rows = self.search_url(url_id_tag)
-                for bookmark in all_rows:
+            all_row = self.check_id(url_id_tag)
+            if not all_row:
+                all_row = self.search_url(url_id_tag)
+                for bookmark in all_row:
                     webbrowser.open(bookmark[1])
                 self.db.commit()
                 return True
@@ -249,7 +240,7 @@ class DatabaseConnection(object):
                 self.db.commit()
                 return True
         except Exception:
-            return False
+            raise sqlite3.OperationalError
 
     def check_tag(self, url_tag):
         """
@@ -263,21 +254,20 @@ class DatabaseConnection(object):
                 return None
             return all_row
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def check_id(self, url_id):
         """
         Check this is available in database.
         """
         try:
-            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (url_id,))
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (url_id))
             all_row = self.cursor.fetchall()
             if all_row == []:
                 return None
-            self.db.commit()
             return all_row
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def export_urls(self):
         """
@@ -303,7 +293,7 @@ class DatabaseConnection(object):
                 dirpath = os.getcwd() + "/exported_bookmarks.csv"
                 return dirpath
         except Exception:
-            return None
+            raise sqlite3.OperationalError
 
     def url_info(self, url):
         """
@@ -312,12 +302,12 @@ class DatabaseConnection(object):
         try:
             self.url_exist = url
             self.cursor.execute(
-                """ SELECT id, url, tags, date, time
-                            FROM bookmarks WHERE url=?""",
+                """ SELECT id, url, tags, date, time FROM bookmarks WHERE url=?
+                """,
                 (self.url_exist,),
             )
             all_bookmarks = self.cursor.fetchall()
             self.db.commit()
             return all_bookmarks
         except Exception:
-            return None
+            raise sqlite3.OperationalError
