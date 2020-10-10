@@ -13,30 +13,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with readit.  If not, see <http://www.gnu.org/licenses/>.
-import csv  # used to store bookmarks in CSV file
-import datetime  # used for getting current time and date
-import os  # used to find home directory of user
-import sqlite3  # library of database used for project
-import webbrowser  # used to open url in browser
-from glob import glob  # used to find path name
-from os.path import expanduser  # used to perform operations on pathnames
-
-from beautifultable import BeautifulTable  # display output in table format
+import csv
+import datetime
+import os
+import sqlite3
+import webbrowser
+from glob import glob
 
 date = datetime.date.today()
-
-table = BeautifulTable()
-table_tag = BeautifulTable()
-table.left_border_char = "|"
-table.right_border_char = "|"
-table.top_border_char = "="
-table.header_separator_char = "="
-table.column_headers = ["ID", "URL", "TAG", "DATE", "TIME"]
-table_tag.left_border_char = "|"
-table_tag.right_border_char = "|"
-table_tag.top_border_char = "="
-table_tag.header_separator_char = "="
-table_tag.column_headers = ["Available TAGs"]
 
 
 class DatabaseConnection(object):
@@ -310,7 +294,7 @@ class DatabaseConnection(object):
             return False, msg
         databasefile = os.path.join(config_path, "bookmarks.db")
         try:
-            self.conn = sqlite3.connect(glob(expanduser(databasefile))[0])
+            self.conn = sqlite3.connect(glob(os.path.expanduser(databasefile))[0])
             self.cursor = self.conn.cursor()
             self.cursor.execute("select * from bookmarks")
             with open("exported_bookmarks.csv", "w", newline="") as csv_file:
