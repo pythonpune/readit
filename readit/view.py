@@ -24,7 +24,7 @@ table.set_style(BeautifulTable.STYLE_SEPARATED)
 
 class ShowResults(object):
     """This class includes methods. Which are used to
-        show output to the user in table format.
+    show output to the user in table format.
     """
 
     def __init__(self):

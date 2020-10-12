@@ -24,8 +24,7 @@ date = datetime.date.today()
 
 
 class DatabaseConnection(object):
-    """Class to perform database operations.
-    """
+    """Class to perform database operations."""
 
     def __init__(self):
         """
