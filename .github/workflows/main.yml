@@ -50,9 +50,7 @@ jobs:
           architecture: x64
 
       - name: Setup Package
-        run: python -m pip install .
+        run: python -m pip install .[dev,test]
 
       - name: Unit Tests
-        run: |
-          python -m pip install pytest
-          py.test -v
+        run: py.test -v
