@@ -15,13 +15,46 @@
  You should have received a copy of the GNU General Public License
  along with readit.  If not, see <http://www.gnu.org/licenses/>.
 """
-from readit.cli import main
+import click
+
+from readit.cli import add
+from readit.cli import clear
+from readit.cli import delete
+from readit.cli import export
+from readit.cli import insert
+from readit.cli import openurl
+from readit.cli import search
+from readit.cli import tag
+from readit.cli import taglist
+from readit.cli import update
+from readit.cli import urlinfo
+from readit.cli import version
+from readit.cli import view
+
+
+@click.group()
+def main():
+    pass
+
+
+main.add_command(add)
+main.add_command(tag)
+main.add_command(delete)
+main.add_command(clear)
+main.add_command(update)
+main.add_command(search)
+main.add_command(view)
+main.add_command(openurl)
+main.add_command(version)
+main.add_command(export)
+main.add_command(taglist)
+main.add_command(urlinfo)
+main.add_command(insert)
 
 if __name__ == "__main__":
 
     """
     This is initial function.
     It calls the main function.
-
     """
     main()
