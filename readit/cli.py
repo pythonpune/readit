@@ -61,7 +61,7 @@ def main(
         for url_to_add in add:
             url = url_to_add
             try:
-                if (url.startswith(("http://", "https://"))):
+                if url.startswith(("http://", "https://")):
                     validate_code = requests.get(url).status_code
                 elif requests.get("http://" + url).status_code == 200:
                     validate_code = 200
@@ -106,12 +106,12 @@ def main(
         url_id = url_list[0]
         url = url_list[1]
         try:
-            if (url.startswith(("http://", "https://"))):
+            if url.startswith(("http://", "https://")):
                 validate_code = requests.get(url).status_code
-            elif requests.get("http://"+url).status_code == 200:
+            elif requests.get("http://" + url).status_code == 200:
                 validate_code = 200
                 url = "http://" + url
-            elif requests.get("https://"+url).status_code == 200:
+            elif requests.get("https://" + url).status_code == 200:
                 validate_code = 200
                 url = "https://" + url
             else:
@@ -199,12 +199,12 @@ def main(
         for url_to_add in insert:
             url = url_to_add
             try:
-                if (url.startswith(("http://", "https://"))):
+                if url.startswith(("http://", "https://")):
                     validate_code = requests.get(url).status_code
-                elif requests.get("http://"+url).status_code == 200:
+                elif requests.get("http://" + url).status_code == 200:
                     validate_code = 200
                     url = "http://" + url
-                elif requests.get("https://"+url).status_code == 200:
+                elif requests.get("https://" + url).status_code == 200:
                     validate_code = 200
                     url = "https://" + url
                 else:
@@ -232,6 +232,7 @@ def main(
                         print("Bookmarked.")
                     else:
                         print("URL is already bookmarked. Check URL information. See help")
+
 
 def option_yes_no():
     """
