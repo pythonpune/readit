@@ -35,7 +35,7 @@ class ShowResults(object):
                 table_tag.rows.append(tag_in_list)
             print(table_tag)
         else:
-            print("Tags list is empty.")
+            print("\nTags list is empty.")
 
     def print_bookmarks(self, all_bookmarks):
         if all_bookmarks:
@@ -44,4 +44,4 @@ class ShowResults(object):
                 table.rows.append([bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]])
             print(table)
         else:
-            print("No bookmarks found.")
+            print("\nNo bookmarks found.")

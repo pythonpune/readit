@@ -62,16 +62,20 @@ class DatabaseConnection(object):
                 )
                 self.db.commit()
             else:
-                raise IOError("Directory does not exists")
-
+                raise IOError("\nDirectory does not exists")
         except sqlite3.OperationalError as e:
-            print("ERROR: Failed to create table.")
-            print(e)
+            print("\nERROR: Failed to create table in the database.")
+            print(f"\nSQLite Error: {str(e)}")
+            sys.exit(1)
+        
+        except Exception as e:
+            print(f"\nAn unexpected error occurred: {str(e)}")
             sys.exit(1)
 
     def add_url(self, url):
         """
-        URL will be adding to database.
+        Add a URL to the database. 
+        If the URL already exists, provide a user-friendly error message.
         """
 
         try:
@@ -87,12 +91,23 @@ class DatabaseConnection(object):
             )
             self.db.commit()
             return True
-        except Exception:
-            raise sqlite3.OperationalError
+        
+        except sqlite3.IntegrityError as e:
+            if 'UNIQUE constraint failed' in str(e):
+                print(f"\nError: The URL '{self.url}' already exists in the database.")
+                return False
+            else:
+                print(f"\nDatabase error: {str(e)}")
+                return False
+
+        except Exception as e:
+            print(f"\nAn unexpected error occurred: {str(e)}")
+            return False
 
     def tag_url(self, tag_name, tagged_url):
         """
-        URLs can be added by respective Tags.
+        URLs can be added by respective Tags. 
+        If the URL already exists, provide a user-friendly error message.
         """
         self.tag = tag_name
         self.url = tagged_url
@@ -107,8 +122,18 @@ class DatabaseConnection(object):
             )
             self.db.commit()
             return True
-        except Exception:
-            raise sqlite3.OperationalError
+        
+        except sqlite3.IntegrityError as e:
+            if 'UNIQUE constraint failed' in str(e):
+                print(f"\nError: The URL '{self.url}' has already been tagged.")
+                return False
+            else:
+                print(f"\nDatabase error: {str(e)}")
+                return False
+
+        except Exception as e:
+            print(f"\nAn unexpected error occurred: {str(e)}")
+            return False
 
     def list_all_tags(self):
         """
@@ -134,34 +159,55 @@ class DatabaseConnection(object):
         """
         try:
             self.url_id = url_id
-            self.cursor.execute(""" SELECT url FROM bookmarks where id=? """, (self.url_id,))
+            # Check if the URL exists before attempting to delete
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=? """, (self.url_id,))
             deleted_url = self.cursor.fetchone()
-            self.cursor.execute(""" DELETE FROM bookmarks WHERE id=? """, (self.url_id,))
-            self.db.commit()
+
             if deleted_url:
+                # Proceed to delete the URL if it exists
+                self.cursor.execute(""" DELETE FROM bookmarks WHERE id=? """, (self.url_id,))
+                self.db.commit()
                 return True
             else:
+                print(f"\nError: No URL found with ID `{self.url_id}`. Nothing was deleted.")
                 return False
-        except Exception:
-            raise sqlite3.OperationalError
+        except sqlite3.OperationalError as e:
+            print(f"\nDatabase error occurred: {str(e)}")
+            return False
+        except Exception as e:
+            print(f"\nAn unexpected error occurred: {str(e)}")
+            return False
 
-    def update_url(self, url_id, url):
+    def update_url(self, url_id, new_url):
         """
         URLs can be updated with respect to id.
         """
 
         try:
-
             self.url_id = url_id
-            self.url = url
-            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id))
-            self.cursor.execute(
-                """ UPDATE bookmarks SET url=? WHERE id=?""", (self.url, self.url_id)
-            )
-            self.db.commit()
-            return True
-        except Exception:
-            raise sqlite3.OperationalError
+            self.new_url = new_url
+        
+            # Check if the record with the given id exists
+            self.cursor.execute(""" SELECT url FROM bookmarks WHERE id=?""", (self.url_id,))
+            current_url = self.cursor.fetchone()
+
+            if current_url[0] != new_url:
+                # Perform the update
+                self.cursor.execute(
+                    """ UPDATE bookmarks SET url=? WHERE id=?""", (self.new_url, self.url_id)
+                )
+                self.db.commit()
+                return True
+            else:
+                print("\nSuccess: The provided URL is already bookmarked. No changes were made.")
+                return False
+
+        except sqlite3.OperationalError as e:
+            print(f"\nERROR: Failed to update URL. {str(e)}")
+            return False
+        except Exception as e:
+            print(f"\nError: An unexpected error occurred: {str(e)}")
+            return False
 
     def show_url(self):
         """
@@ -212,11 +258,25 @@ class DatabaseConnection(object):
         All URLs from database will be deleted.
         """
         try:
-            self.cursor.execute(""" DELETE FROM bookmarks """)
-            self.db.commit()
-            return True
-        except Exception:
-            raise sqlite3.OperationalError
+            # Check if there are any URLs in the database before deleting
+            self.cursor.execute(""" SELECT COUNT(*) FROM bookmarks """)
+            url_count = self.cursor.fetchone()[0]
+
+            if url_count > 0:
+                # If URLs exist, proceed to delete all records
+                self.cursor.execute(""" DELETE FROM bookmarks """)
+                self.db.commit()
+                print(f"\nSuccess: All {url_count} URLs have been successfully deleted.")
+                return True
+            else:
+                print("\n Success: No URLs found in the database to delete.")
+                return False
+        except sqlite3.OperationalError as e:
+            print(f"\nDatabase error occurred: {str(e)}")
+            return False
+        except Exception as e:
+            print(f"\nAn unexpected error occurred: {str(e)}")
+            return False
 
     def open_url(self, url_id_tag):
         """
@@ -231,7 +291,7 @@ class DatabaseConnection(object):
                 self.db.commit()
                 return True
             else:
-                print("Provide either valid url id or url tag name or any valid substring.")
+                print("\nError: Provide either valid url id or url tag name or any valid substring.")
 
             if all_row:
                 for i in range(len(all_row)):
@@ -279,7 +339,7 @@ class DatabaseConnection(object):
                 msg = "File path does not exist: " + config_path
                 return False, msg
         except OSError:
-            msg = "Error: Finding directory: " + config_path
+            msg = "\nError: Finding directory: " + config_path
             return False, msg
         databasefile = os.path.join(config_path, "bookmarks.db")
         try:
