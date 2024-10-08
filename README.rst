@@ -185,7 +185,7 @@ How to install source code for development
 
     $ source env/bin/activate
 
-    (env) $
+    $ pip3 install setuptools
 
 * To install using setup.py file:
 
