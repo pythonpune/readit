@@ -18,8 +18,10 @@ import datetime
 import os
 import sqlite3
 import sys
+import tkinter as tk
 import webbrowser
 from glob import glob
+from tkinter import filedialog
 
 date = datetime.date.today()
 
@@ -329,31 +331,75 @@ class DatabaseConnection(object):
         except Exception:
             raise sqlite3.OperationalError
 
+    @staticmethod
+    def select_directory():
+        # Function to open a directory dialog and select a folder
+        # Create the root window
+        root = tk.Tk()
+        root.withdraw()  # Hide the root window
+
+        # Open directory dialog
+        folder_path = filedialog.askdirectory(title="Select a folder")
+
+        if folder_path:
+            print(f"\nSelected folder: {folder_path}")
+        else:
+            print("\nNo folder selected")
+        return folder_path
+
     def export_urls(self):
         """
-        Exporting urls to csv file from database.
+        Export URLs from the database to a CSV file.
+        Returns the path of the exported CSV file or a tuple with a failure message.
         """
         try:
-            config_path = os.path.expanduser("~/.config/readit")
-            if not os.path.exists(config_path):
-                msg = "File path does not exist: " + config_path
+            folder_path = self.select_directory()
+            if not folder_path:
+                folder_path = os.path.expanduser("~/.config/readit")
+
+            if not os.path.exists(folder_path):
+                msg = "File path does not exist: " + folder_path
                 return False, msg
-        except OSError:
-            msg = "\nError: Finding directory: " + config_path
+            
+        except OSError as e:
+            msg = f"Error: Finding directory: {str(e)}"
             return False, msg
-        databasefile = os.path.join(config_path, "bookmarks.db")
+        
+        database_file = os.path.join(os.path.expanduser("~/.config/readit"), "bookmarks.db")
         try:
-            self.conn = sqlite3.connect(glob(os.path.expanduser(databasefile))[0])
-            self.cursor = self.conn.cursor()
-            self.cursor.execute("select * from bookmarks")
-            with open("exported_bookmarks.csv", "w", newline="") as csv_file:
-                csv_writer = csv.writer(csv_file, delimiter="\t")
-                csv_writer.writerow([i[0] for i in self.cursor.description])
-                csv_writer.writerows(self.cursor)
-                dirpath = os.getcwd() + "/exported_bookmarks.csv"
-                return dirpath
-        except Exception:
-            raise sqlite3.OperationalError
+            # Ensure the database file exists
+            db_file_paths = glob(os.path.expanduser(database_file))
+            if not db_file_paths:
+                return False, f"Error: Database file not found at: {database_file}"
+
+            # Open the database connection and export to CSV
+            with sqlite3.connect(db_file_paths[0]) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM bookmarks")
+                
+                # Export to CSV
+                csv_file_path = os.path.join(folder_path, "exported_bookmarks.csv")
+                with open(csv_file_path, "w", newline="") as csv_file:
+                    csv_writer = csv.writer(csv_file, delimiter="\t")
+                    csv_writer.writerow([i[0] for i in cursor.description])  # Headers
+                    csv_writer.writerows(cursor)  # Data rows
+
+                return csv_file_path
+        
+        except sqlite3.OperationalError as e:
+            msg = f"Database operation failed: {str(e)}"
+            return False, msg
+
+        except Exception as e:
+            msg = f"Unexpected error: {str(e)}"
+            return False, msg
+
+        exporter = BookmarkExporter()
+        result = exporter.export_urls()
+        if isinstance(result, tuple) and result[0] is False:
+            print(result[1])  # Print error message
+        else:
+            print(f"Bookmarks exported successfully to: {result}")
 
     def url_info(self, url):
         """
