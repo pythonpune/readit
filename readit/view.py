@@ -32,7 +32,7 @@ class ShowResults(object):
     def print_all_tags(self, tag_list):
         if tag_list:
             for tag_in_list in tag_list:
-                table_tag.rows.append(tag_in_list)
+                table_tag.rows.append([tag_in_list])
             print(table_tag)
         else:
             print("\nTags list is empty.")
