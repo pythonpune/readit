@@ -31,13 +31,12 @@ output = view.ShowResults()
 @click.option("--delete", "-d", nargs=1, help="Remove a URL of particular ID")
 @click.option("--clear", "-c", multiple=True, nargs=0, help="Clear bookmarks")
 @click.option("--update", "-u", nargs=2, help="Update a URL for specific ID")
-@click.option("--search", "-s", nargs=1, help="Search all bookmarks by Tag")
+@click.option("--search", "-s", nargs=1, help="Search for bookmarks using either a tag or a substring of the URL")
 @click.option("--view", "-v", multiple=True, nargs=0, help="Show bookmarks")
-@click.option("--openurl", "-o", nargs=1, help="Open URL in Browser")
+@click.option("--openurl", "-o", nargs=1, help="Open a URL in your browser by entering a part of the URL.")
 @click.option("--version", "-V", is_flag=True, help="Check latest version")
 @click.option("--export", "-e", multiple=True, nargs=0, help="Export URLs in csv file")
 @click.option("--taglist", "-tl", multiple=True, nargs=0, help="Show all Tags")
-@click.option("--urlinfo", "-ui", nargs=1, help="Check particular URL information")
 @click.argument("insert", nargs=-1, required=False)
 def main(
     insert,
@@ -52,58 +51,49 @@ def main(
     version,
     export,
     taglist,
-    urlinfo,
 ):
     """
     Readit - Command-line bookmark manager tool.
     """
     if add:
         for url_to_add in add:
-            url = url_to_add
+            url = url_to_add.strip()  # Strip any leading/trailing whitespace
             try:
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\nSuccess: Bookmarked URL `{url}`.")
+                        print(f"\nSuccess: The URL '{url}' has been added to the database.")
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     if option_yes_no():
                         is_url_added = database_connection.add_url(url)
                         if is_url_added:
-                            print(f"\nSuccess: Bookmarked URL `{url}`.")
+                            print(f"\nSuccess: The URL '{url}' has been added to the database.")
             except Exception:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\nSuccess: Bookmarked URL `{url}`.")
+                        print(f"\nSuccess: The URL '{url}' has been added to the database.")
     elif delete:
-        is_url_deleted = database_connection.delete_url(delete)
-        delete_url_id = delete
-        if is_url_deleted:
-            print(f"\nURL with ID `{delete_url_id}` successfully deleted.")
-            
+        database_connection.delete_url(delete)            
     elif update:
         url_list = []
         for update_to_url in update:
             url_list.append(update_to_url)
         url_id = url_list[0]
-        url = url_list[1]
+        url = url_list[1].strip()  # Strip any leading/trailing whitespace
         try:
             validate_url = requests.get(url)
             validate_code = validate_url.status_code
             if validate_code == 200:
-                is_url_updated = database_connection.update_url(url_id, url)
-                if is_url_updated:
-                    print(f"\nSuccess: URL of ID {url_id} updated.")
+                database_connection.update_url(url_id, url)
             else:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
-                    is_url_updated = database_connection.update_url(url_id, url)
-                    if is_url_updated:
-                        print(f"\nSuccess: URL of ID {url_id} updated.")
+                    database_connection.update_url(url_id, url)
         except Exception:
             print("*" * 12, "\nInvalid URL\n", "*" * 11)
             if option_yes_no():
@@ -111,7 +101,7 @@ def main(
                 if is_url_updated:
                     print(f"\nSuccess: URL of ID {url_id} updated.")
     elif view:
-        output.print_bookmarks(database_connection.show_url())
+        output.print_bookmarks(database_connection.show_urls())
     elif openurl:
         database_connection.open_url(openurl)
     elif search:
@@ -123,7 +113,7 @@ def main(
         for tag_to_url in tag:
             tag_list.append(tag_to_url)
         tag_name = tag_list[0]
-        tagged_url = tag_list[1]
+        tagged_url = tag_list[1].strip()  # Strip any leading/trailing whitespace
         try:
             validate_url = requests.get(tagged_url)
             validate_code = validate_url.status_code
@@ -153,31 +143,29 @@ def main(
             print(f"\nExported bookmarks available at `{path}`")
         else:
             print("\nError: Bookmarks are not exported in csv file.")
-    elif urlinfo:
-        output.print_bookmarks(database_connection.url_info(urlinfo))
     else:
         for url_to_add in insert:
-            url = url_to_add
+            url = url_to_add.strip()  # Strip any leading/trailing whitespace
             try:
                 validate_url = requests.get(url)
                 validate_code = validate_url.status_code
                 if validate_code == 200:
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\nSuccess: Bookmarked URL `{url}`.")
+                        print(f"\nSuccess: The URL '{url}' has been added to the database.")
                 else:
                     print("*" * 12, "\nInvalid URL\n", "*" * 11)
                     if option_yes_no():
                         is_url_added = database_connection.add_url(url)
                         if is_url_added:
-                            print(f"\nSuccess: Bookmarked URL `{url}`.")
+                            print(f"\nSuccess: The URL '{url}' has been added to the database.")
 
             except Exception:
                 print("*" * 12, "\nInvalid URL\n", "*" * 11)
                 if option_yes_no():
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\nSuccess: Bookmarked URL `{url}`.")
+                        print(f"\nSuccess: The URL '{url}' has been added to the database.")
 
 def option_yes_no():
     """
