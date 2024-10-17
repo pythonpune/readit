@@ -31,17 +31,18 @@ class ShowResults(object):
 
     def print_all_tags(self, tag_list):
         if tag_list:
+            print("\033[34m\n*Collection of associated Tags.*\033[0m\n")
             for tag_in_list in tag_list:
                 table_tag.rows.append([tag_in_list])
             print(table_tag)
         else:
-            print("\nTags list is empty.")
+            print("\033[92m\nSuccess: Tags list is empty.\033[0m")
 
     def print_bookmarks(self, all_bookmarks):
         if all_bookmarks:
-            print("*" * 24, "\nAlready bookmarked URLs.\n", "*" * 23)
+            print("\033[34m\n*Collection of Bookmarked Links*\033[0m\n")
             for bookmark in all_bookmarks:
                 table.rows.append([bookmark[0], bookmark[1], bookmark[2], bookmark[3], bookmark[4]])
             print(table)
         else:
-            print("\nNo bookmarks found.")
+            print("\033[92m\nSuccess: No bookmarks found.\033[0m")

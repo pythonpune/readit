@@ -84,7 +84,7 @@ class DatabaseConnection(object):
             else:
                 raise IOError("\nDirectory does not exists")
         except sqlite3.OperationalError as e:
-            print("\nERROR: Failed to create table in the database.")
+            print("\033[91m\nERROR: Failed to create table in the database.\033[0m")
             print(f"\nSQLite Error: {str(e)}")
             sys.exit(1)
         
@@ -103,11 +103,6 @@ class DatabaseConnection(object):
             start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
 
-            # Check if the URL is empty or invalid before attempting to add
-            if not self.url:
-                print("\nError: Cannot add an empty URL.")
-                return False
-
             self.cursor.execute(
                 """
                 INSERT INTO bookmarks(url, date, time) VALUES (?, ?, ?)
@@ -119,7 +114,7 @@ class DatabaseConnection(object):
 
         except sqlite3.IntegrityError as e:
             if 'UNIQUE constraint failed' in str(e):
-                print(f"\nError: The URL '{self.url}' already exists in the database.")
+                print(f"\033[91m\nError: The URL '{self.url}' already bookmarked.\033[0m")
                 return False
             else:
                 print(f"\nDatabase error: {str(e)}")
@@ -182,7 +177,7 @@ class DatabaseConnection(object):
 
         except sqlite3.IntegrityError as e:
             if 'UNIQUE constraint failed' in str(e):
-                print(f"\nError: The URL '{self.url}' has already been taggedwith '{self.tag}'.")
+                print(f"\033[91m\nError: The URL '{self.url}' has already been taggedwith '{self.tag}'.\033[0m")
                 return False
             else:
                 print(f"\nDatabase error: {str(e)}")
@@ -236,10 +231,10 @@ class DatabaseConnection(object):
                 # Commit the transaction
                 self.db.commit()
                 
-                print(f"\nSuccessfully deleted URL '{deleted_url[0]}' and its associated tags.")
+                print(f"\033[92m\nSuccessfully deleted URL '{deleted_url[0]}' and its associated tags.\033[0m")
                 return True
             else:
-                print(f"\nError: No URL found with ID `{self.url_id}`. Nothing was deleted.")
+                print(f"\033[91m\nError: No URL found with ID `{self.url_id}`. Nothing was deleted.\033[0m")
                 return False
 
         except sqlite3.OperationalError as e:
@@ -269,13 +264,13 @@ class DatabaseConnection(object):
                         """UPDATE bookmarks SET url=? WHERE id=?""", (self.new_url, self.url_id)
                     )
                     self.db.commit()
-                    print(f"\nSuccess: URL updated to '{self.new_url}'.")
+                    print(f"\033[92m\nSuccess: URL updated to '{self.new_url}'.\033[0m")
                     return True
                 else:
-                    print("\nNo changes: The provided URL is already bookmarked. No update needed.")
+                    print("\033[92m\nNo changes: The provided URL is already bookmarked. No update needed.\033[0m")
                     return False
             else:
-                print(f"\nError: No URL found with ID `{self.url_id}`. Update failed.")
+                print(f"\033[91m\nError: No URL found with ID `{self.url_id}`. Update failed.\033[0m")
                 return False
 
         except sqlite3.OperationalError as e:
@@ -367,10 +362,10 @@ class DatabaseConnection(object):
                 self.cursor.execute("""DELETE FROM url_tags""")  # Delete all associations in the junction table
                 self.cursor.execute("""DELETE FROM tags WHERE tag_name NOT IN (SELECT tag_name FROM url_tags)""")  # Delete orphaned tags
                 self.db.commit()
-                print(f"\nSuccess: All {url_count} URLs and their associated tags have been successfully deleted.")
+                print(f"\033[92m\nSuccess: All {url_count} URLs and their associated tags have been successfully deleted.\033[0m")
                 return True
             else:
-                print("\nSuccess: No URLs found in the database to delete.")
+                print("\033[92m\nSuccess: No URLs found in the database to delete.\033[0m")
                 return False
                 
         except sqlite3.OperationalError as e:
@@ -388,10 +383,10 @@ class DatabaseConnection(object):
             urls = self.search_url(part_of_url)
             if urls:
                 # Prompt the user before opening multiple URLs
-                print(f"\nFound {len(urls)} URLs. Do you want to open them all? (yes/no)")
+                print(f"\033[96m\nFound {len(urls)} URLs. Do you want to open them all? (yes/no) \033[0m")
                 user_confirmation = input().strip().lower()
 
-                if user_confirmation == 'yes':
+                if user_confirmation in ["yes", "y"]:
                     for url in urls:
                         url_to_open = url[1]  # Assuming url[1] contains the actual URL
                         try:
@@ -400,11 +395,11 @@ class DatabaseConnection(object):
                         except Exception as e:
                             print(f"Could not open {url_to_open}: {str(e)}")
                 else:
-                    print("\nOperation cancelled. No URLs were opened.")
+                    print("\033[92m\nOperation cancelled. No URLs were opened.\033[0m")
                 self.db.commit()
                 return True
             else:
-                print("\nError: Please enter a valid URL substring to proceed.")
+                print("\033[91m\nError: Please enter a valid URL substring to proceed.\033[0m")
 
         except sqlite3.OperationalError as e:
             print(f"\nDatabase error occurred: {str(e)}")
@@ -422,9 +417,9 @@ class DatabaseConnection(object):
         folder_path = filedialog.askdirectory(title="Select a folder")
 
         if folder_path:
-            print(f"\nSelected folder: {folder_path}")
+            print(f"\n\033[92mSelected folder: {folder_path}.\033[0m")
         else:
-            print("\nNo folder selected")
+            print("\n\033[92mNo folder selected.\033[0m")
         return folder_path
 
     def export_urls(self):
@@ -438,11 +433,11 @@ class DatabaseConnection(object):
                 folder_path = os.path.expanduser("~/.config/readit")
 
             if not os.path.exists(folder_path):
-                msg = "File path does not exist: " + folder_path
+                msg = f"\033[91m\nFile path does not exist: {folder_path}.\033[0m"
                 return False, msg
             
         except OSError as e:
-            msg = f"Error: Finding directory: {str(e)}"
+            msg = f"\033[91m\nError: Finding directory: {str(e)}.\033[0m"
             return False, msg
         
         database_file = os.path.join(os.path.expanduser("~/.config/readit"), "bookmarks.db")
@@ -450,7 +445,7 @@ class DatabaseConnection(object):
             # Ensure the database file exists
             db_file_paths = glob(os.path.expanduser(database_file))
             if not db_file_paths:
-                return False, f"Error: Database file not found at: {database_file}"
+                return False, f"\033[91mError: Database file not found at: {database_file}.\033[0m"
 
             # Open the database connection and export to CSV
             with sqlite3.connect(db_file_paths[0]) as conn:
@@ -479,4 +474,4 @@ class DatabaseConnection(object):
         if isinstance(result, tuple) and result[0] is False:
             print(result[1])  # Print error message
         else:
-            print(f"Bookmarks exported successfully to: {result}")
+            print(f"\033[92m\nSuccess: Bookmarks exported successfully to: {result}.\033[0m")
