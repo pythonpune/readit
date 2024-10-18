@@ -1,7 +1,7 @@
 name: Pre-Commit and Cross-Platform Test Suite
 
 on:
-  pull_request: 
+  pull_request:
     branches:
       - master
     types:
@@ -12,7 +12,7 @@ on:
     # Run every Friday at 23:59 UTC
     - cron: '59 23 * * 5'
   workflow_dispatch:
-  
+
 jobs:
   pre-commit:
     name: Pre-Commit Checks

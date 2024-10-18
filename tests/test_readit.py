@@ -26,6 +26,7 @@ def test_by_version(runner):
     # Check if version number is correctly outputted
     assert "readit v0.3" in result.output
 
+
 # Testing --help option
 def test_help_option(runner):
     """Test the help output of the readit CLI tool"""
