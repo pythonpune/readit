@@ -21,15 +21,14 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 Features
 ********
 * Bookmark multiple URLs at a time
-* Bookmark url with respective Tags at the same time
+* Bookmark URL with respective Tags at the same time [NEW]
 * Search and display Bookmarks by TAG and URL's substring
 * Display all Bookmarks in table format
-* Remove a Bookmarked URL
-* Remove all Bookmarked URLs
+* Remove single or all Bookmarked URL
 * Update a Bookmarked URL with a specific ID
 * URL validation
-* Open URL in the browser
-* Choose specific folder and Export bookmarks into the CSV file
+* Open multiple URLs in the browser
+* Choose specific folder and Export bookmarks into the CSV file [NEW]
 * Show all Tags available in the database
 * Bookmark URLs either online or offline
 
@@ -168,7 +167,7 @@ How to install source code for development
 
 .. code-block:: bash
 
-    $ git clone https://github.com/projectreadit/readit.git
+    $ git clone https://github.com/pythonpune/readit.git
 
 * We recommend to create and activate a virtualenv first:
 
@@ -195,16 +194,16 @@ How to install source code for development
         (env) $ python setup.py build
 
 ************************************************************************
-`Licence <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
+`Licence <https://github.com/pythonpune/readit/blob/master/LICENSEE>`_
 ************************************************************************
-Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/projectreadit/readit/blob/master/LICENSE>`_
+Readit - Command line tool is licensed under `GNU General Public License v3.0. <https://github.com/pythonpune/readit/blob/master/LICENSE>`_
 
 .. |Python| image:: https://img.shields.io/badge/python-3.6-blue.svg
 
 .. |Licence| image:: https://img.shields.io/badge/license-GPLv3-yellow.svg?maxAge=2592000
-    :target: https://github.com/projectreadit/readit/blob/master/LICENSE
+    :target: https://github.com/pythonpune/readit/blob/master/LICENSE
 
-.. |Build Status| image:: https://travis-ci.org/projectreadit/readit.svg?branch=master
+.. |Build Status| image:: https://travis-ci.org/pythonpune/readit.svg?branch=master
     :target: https://travis-ci.org/projectreadit/readit
 
 .. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
