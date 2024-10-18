@@ -8,9 +8,9 @@ Readit - Command Line Tool
 
 
 .. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
-   :alt: asciicast
-   :scale: 50%
-   :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
+    :alt: asciicast
+    :scale: 50%
+    :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
 
 
 Introduction
@@ -21,7 +21,7 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 Features
 ********
 * Bookmark multiple URLs at a time
-* Bookmark URL with respective Tags
+* Bookmark url with respective Tags at the same time
 * Search and display Bookmarks by TAG and URL's substring
 * Display all Bookmarks in table format
 * Remove a Bookmarked URL
@@ -29,7 +29,7 @@ Features
 * Update a Bookmarked URL with a specific ID
 * URL validation
 * Open URL in the browser
-* Export bookmarks into the CSV file
+* Choose specific folder and Export bookmarks into the CSV file
 * Show all Tags available in the database
 * Bookmark URLs either online or offline
 
@@ -37,7 +37,7 @@ Features
 Dependencies
 ************
 =============================================      ==================
-     Features                                       Dependancy
+    Features                                       Dependancy
 =============================================      ==================
 ``Scripting Language``                              Python 3.0+
 ``HTTP(S)``                                         requests
@@ -48,7 +48,7 @@ Dependencies
 
 Installation
 ************
-readit is available on PyPI and can be installed with pip3:
+Readit is available on PyPI and can be installed with pip3:
 
 .. code-block:: bash
 
@@ -60,20 +60,23 @@ Command line options
 
     Usage: readit [OPTIONS] [INSERT]...
 
-      Readit - Command-line bookmark manager tool.
-
+        Readit - Command-line bookmark manager tool.
     Options:
-    -a, --add TEXT...       Add URLs with space-separated
-    -t, --tag TEXT...       Add Tag with space-separated URL
-    -d, --delete TEXT       Remove a URL of particular ID
-    -c, --clear TEXT...     Clear bookmarks
-    -u, --update TEXT...    Update a URL for specific ID
-    -s, --search TEXT       Search all bookmarks by Tag and URL's substring
-    -v, --view TEXT...      Show bookmarks
-    -o, --openurl TEXT      Open URL in Browser using id, tag or URL's substring
-    -V, --version           Check latest version
-    -e, --export TEXT...    Export URLs in csv file
-    -tl, --taglist TEXT...  Show all Tags
+    -a, --add TEXT          Add urls --> readit -a <url1> <url2>
+    -t, --tag TEXT          Use to tag url --> readit -a <url1> -t <tag1>
+    -d, --delete TEXT       Remove a URL of particular ID --> readit -d <url_id>
+    -c, --clear TEXT        Clear bookmarks --> readit -c
+    -u, --update TEXT       Update a URL for specific ID --> readit -u
+                            <existing_id> <new_url>
+    -s, --search TEXT       Search for bookmarks using either a tag or a
+                            substring of the URL --> readit -s <tag> or
+                            <substring>
+    -v, --view TEXT...      Show bookmarks --> readit -v
+    -o, --openurl TEXT      Open a URL in your browser by entering a part of the
+                            URL. --> readit -o <url_substring>
+    -V, --version           Check latest version --> readit -V
+    -e, --export TEXT...    Export URLs in csv file --> readit -e
+    -tl, --taglist TEXT...  Show all Tags --> readit -tl
     --help                  Show this message and exit.
 
 
@@ -83,11 +86,17 @@ Examples
 
 .. code-block:: bash
 
-    $ readit url1 url2 ...
+    $ readit <url1> <url2> ...
     or
-    $ readit --add url1 url2 ...
+    $ readit --add <url1> <url2> ...
     or
-    $ readit -a url1 url2 ...
+    $ readit -a <url1> <url2> ...
+
+2. **Bookmark** urls and tags at the same time
+
+.. code-block:: bash
+
+    $ readit -a <url1> -t <tag1>
 
 2. **View** all available bookmarks:
 
@@ -101,17 +110,17 @@ Examples
 
 .. code-block:: bash
 
-    $ readit -u url_id url
+    $ readit -u <url_id> <url>
     or
-    $ readit --update url_id url
+    $ readit --update <url_id> <url>
 
 4. **Delete** a bookmarked URL using its ID:
 
 .. code-block:: bash
 
-    $ readit -d url_id
+    $ readit -d <url_id>
     or
-    $ readit --delete url_id
+    $ readit --delete <url_id>
 
 5. **Clear** all the bookmarks:
 
@@ -121,51 +130,37 @@ Examples
     or
     $ readit --clear
 
-6. **Bookmark** URL along with TAG:
+6. **Search** and **Display** all bookmarks using the TAG or URL's substring:
 
 .. code-block:: bash
 
-    $ readit -t tag_name url
+    $ readit -s <tag_name> or <url_substring>
     or
-    $ readit --tag tag_name url
+    $ readit --search <tag_name> or <url_substring>
 
-7. **Search** and **Display** all bookmarks using the TAG or URL's substring:
+7. Open URL in the Browser using URL's substring:
 
 .. code-block:: bash
 
-    $ readit -s tag_name
+    $ readit -o <url_substring>
     or
-    $ readit --search tag_name
-    or
-    $ readit -s url_substring
+    $ readit --openurl <url_substring>
 
-8. Open URL in the Browser using specific ID, TAG or URL's substring:
+8. **Export** bookmarks into the CSV file:
 
 .. code-block:: bash
 
-    $ readit -o urlid
+    $ readit --export
     or
-    $ readit --openurl urlid
-    or
-    $ readit -o url_substring
-    or
-    $ readit -o tag
+    $ readit -e
 
-9. **Export** bookmarks into the CSV file:
+9. Show all Tags available in the database
 
 .. code-block:: bash
 
-   $ readit --export
-   or
-   $ readit -e
-
-10. Show all Tags available in the database
-
-.. code-block:: bash
-
-   $ readit -tl
-   or
-   $ readit --taglist
+    $ readit -tl
+    or
+    $ readit --taglist
 
 How to install source code for development
 **********************************************
