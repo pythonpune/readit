@@ -310,7 +310,7 @@ class DatabaseConnection(object):
 
     def search_url(self, search_value):
         """
-        Displays a group of URLs associated with the provided search_value (tag).
+        Displays a group of URLs associated with the provided search_value (tag or url substring).
         """
         try:
             self.search = search_value.lower()
@@ -325,6 +325,7 @@ class DatabaseConnection(object):
                 WHERE t.tag_name = ?
             """, (self.search,))  # Use a tuple with a trailing comma
             all_bookmarks = self.cursor.fetchall()
+
             if not all_bookmarks:
                 # If no bookmarks found with the tag, search in all URLs by given value as substring
                 bookmarks = self.show_urls() # Fetch all URls
