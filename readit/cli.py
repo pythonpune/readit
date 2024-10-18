@@ -30,12 +30,27 @@ output = view.ShowResults()
 @click.option("--tag", "-t", help="Use to tag url --> readit -a <url1> -t <tag1>")
 @click.option("--delete", "-d", help="Remove a URL of particular ID --> readit -d <url_id>")
 @click.option("--clear", "-c", nargs=0, help="Clear bookmarks --> readit -c")
-@click.option("--update", "-u", help="Update a URL for specific ID --> readit -u <existing_id> <new_url>")
-@click.option("--search", "-s", help="Search for bookmarks using either a tag or a substring of the URL --> readit -s <tag> or <substring>")
+@click.option(
+    "--update", "-u", help="Update a URL for specific ID --> readit -u <existing_id> <new_url>"
+)
+@click.option(
+    "--search",
+    "-s",
+    help="""
+    Search for bookmarks using either a tag or a substring of the URL
+    --> readit -s <tag> or <substring>
+    """,
+)
 @click.option("--view", "-v", multiple=True, nargs=0, help="Show bookmarks --> readit -v")
-@click.option("--openurl", "-o", help="Open a URL in your browser by entering a part of the URL. --> readit -o <url_substring>")
+@click.option(
+    "--openurl",
+    "-o",
+    help="Open a URL in your browser by entering a part of the URL. --> readit -o <url_substring>",
+)
 @click.option("--version", "-V", is_flag=True, help="Check latest version --> readit -V")
-@click.option("--export", "-e", multiple=True, nargs=0, help="Export URLs in csv file --> readit -e")
+@click.option(
+    "--export", "-e", multiple=True, nargs=0, help="Export URLs in csv file --> readit -e"
+)
 @click.option("--taglist", "-tl", multiple=True, nargs=0, help="Show all Tags --> readit -tl")
 @click.argument("insert", nargs=-1, required=False)
 def main(
@@ -61,7 +76,10 @@ def main(
         if not tag:
             tag = "general"  # Default tag if none provided
         if not url:
-            print("\033[91m\nError: URL not provided. Please use the following format: readit -a <url> -t <tag>\033[0m")
+            print(
+                """\033[91m\nError: URL not provided. Please use the following format:
+                readit -a <url> -t <tag>\033[0m"""
+            )
             sys.exit(0)
         try:
             validate_code = check_url_validation(url)
@@ -71,19 +89,25 @@ def main(
                 if is_url_added:
                     print(f"\033[92m\nSuccess! Bookmarked URL `{url}` with tag `{tag}`. 🎉\033[0m")
             else:
-                print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+                print(
+                    "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+                )  # Warning in yellow
                 if option_yes_no():
                     is_url_added = database_connection.tag_url(url, tag)
                     if is_url_added:
-                        print(f"\033[92m\nSuccess! Bookmarked URL `{url}` with tag `{tag}`. 🎉\033[0m")
+                        print(
+                            f"\033[92m\nSuccess! Bookmarked URL `{url}` with tag `{tag}`. 🎉\033[0m"
+                        )
         except Exception:
-            print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+            print(
+                "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+            )  # Warning in yellow
             if option_yes_no():
                 is_url_added = database_connection.tag_url(url, tag)
                 if is_url_added:
                     print(f"\033[92m\nSuccess! Bookmarked URL `{url}` with tag `{tag}`. 🎉\033[0m")
     elif delete:
-        database_connection.delete_url(delete)            
+        database_connection.delete_url(delete)
     elif update:
         url_list = []
         for update_to_url in update:
@@ -96,11 +120,15 @@ def main(
             if validate_code == 200:
                 database_connection.update_url(url_id, url)
             else:
-                print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+                print(
+                    "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+                )  # Warning in yellow
                 if option_yes_no():
                     database_connection.update_url(url_id, url)
         except Exception:
-            print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+            print(
+                "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+            )  # Warning in yellow
             if option_yes_no():
                 is_url_updated = database_connection.update_url(url_id, url)
                 if is_url_updated:
@@ -131,19 +159,35 @@ def main(
                 if validate_code == 200:
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\033[92mSuccess! The URL '{url}' has been successfully bookmarked. 🎉\033[0m")
+                        print(
+                            f"""
+                            \033[92mSuccess! The URL '{url}'
+                            has been successfully bookmarked. 🎉\033[0m
+                            """
+                        )
                 else:
-                    print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+                    print(
+                        "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+                    )  # Warning in yellow
                     if option_yes_no():
                         is_url_added = database_connection.add_url(url)
                         if is_url_added:
-                            print(f"\033[92mSuccess! The URL '{url}' has been successfully bookmarked. 🎉\033[0m")
+                            print(
+                                f"""\033[92mSuccess! The URL '{url}'
+                                has been successfully bookmarked. 🎉\033[0m"""
+                            )
             except Exception:
-                print("\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m")  # Warning in yellow
+                print(
+                    "\033[93m\nWarning: The URL seems to be inaccessible at the moment.\033[0m"
+                )  # Warning in yellow
                 if option_yes_no():
                     is_url_added = database_connection.add_url(url)
                     if is_url_added:
-                        print(f"\033[92mSuccess! The URL '{url}' has been successfully bookmarked. 🎉\033[0m")
+                        print(
+                            f"""\033[92mSuccess! The URL '{url}'
+                            has been successfully bookmarked. 🎉\033[0m"""
+                        )
+
 
 def option_yes_no():
     """
@@ -155,12 +199,13 @@ def option_yes_no():
     else:
         sys.exit(0)
 
+
 def check_url_validation(url_given):
     url = url_given.strip()  # Strip any leading/trailing whitespace
     if not url:
         print("\033[91m\nError: Cannot add an empty URL.\033[0m")
         sys.exit(0)
-    
+
     # Initialize the validation code
     validate_code = 0
 
@@ -174,7 +219,7 @@ def check_url_validation(url_given):
                 url = full_url  # Update URL with valid prefix
                 break
         else:
-            validate_code = 0 
+            validate_code = 0
     else:
         # If URL starts with http or https, validate directly
         response = requests.get(url)

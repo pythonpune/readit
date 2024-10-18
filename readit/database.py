@@ -87,14 +87,14 @@ class DatabaseConnection(object):
             print("\033[91m\nERROR: Failed to create table in the database.\033[0m")
             print(f"\nSQLite Error: {str(e)}")
             sys.exit(1)
-        
+
         except Exception as e:
             print(f"\nAn unexpected error occurred: {str(e)}")
             sys.exit(1)
 
     def add_url(self, url):
         """
-        Add a URL to the database. 
+        Add a URL to the database.
         If the URL already exists, provide a user-friendly error message.
         """
         try:
@@ -112,7 +112,7 @@ class DatabaseConnection(object):
             return True
 
         except sqlite3.IntegrityError as e:
-            if 'UNIQUE constraint failed' in str(e):
+            if "UNIQUE constraint failed" in str(e):
                 print(f"\033[91m\nError: The URL '{url}' already bookmarked.\033[0m")
                 return False
             else:
@@ -125,7 +125,8 @@ class DatabaseConnection(object):
 
     def tag_url(self, tagged_url, tag_name):
         """
-        URLs can be tagged with multiple tags. If the URL already exists, associate it with the new tag.
+        URLs can be tagged with multiple tags.
+        If the URL already exists, associate it with the new tag.
         """
         self.tag = tag_name.lower()
         self.url = tagged_url
@@ -144,7 +145,7 @@ class DatabaseConnection(object):
                 self.cursor.execute(
                     """INSERT INTO bookmarks(url, date, time)
                     VALUES(?, ?, ?)""",
-                    (self.url, date, time)
+                    (self.url, date, time),
                 )
                 url_id = self.cursor.lastrowid
             else:
@@ -156,10 +157,7 @@ class DatabaseConnection(object):
 
             if not tag_row:
                 # If tag does not exist, insert it
-                self.cursor.execute(
-                    """INSERT INTO tags(tag_name) VALUES(?)""",
-                    (self.tag,)
-                )
+                self.cursor.execute("""INSERT INTO tags(tag_name) VALUES(?)""", (self.tag,))
                 tag_id = self.cursor.lastrowid
             else:
                 tag_id = tag_row[0]
@@ -168,15 +166,18 @@ class DatabaseConnection(object):
             self.cursor.execute(
                 """INSERT OR IGNORE INTO url_tags(url_id, tag_id)
                 VALUES(?, ?)""",
-                (url_id, tag_id)
+                (url_id, tag_id),
             )
 
             self.db.commit()
             return True
 
         except sqlite3.IntegrityError as e:
-            if 'UNIQUE constraint failed' in str(e):
-                print(f"\033[91m\nError: The URL '{self.url}' has already been taggedwith '{self.tag}'.\033[0m")
+            if "UNIQUE constraint failed" in str(e):
+                print(
+                    f"""\033[91m\nError: The URL '{self.url}'
+                    has already been taggedwith '{self.tag}'.\033[0m"""
+                )
                 return False
             else:
                 print(f"\nDatabase error: {str(e)}")
@@ -200,22 +201,23 @@ class DatabaseConnection(object):
             tag_list.sort()
 
             return tag_list
-    
+
         except sqlite3.OperationalError as e:
             print(f"\nDatabase error occurred: {str(e)}")
             return []
-    
+
         except Exception as e:
             print(f"\nAn unexpected error occurred: {str(e)}")
             return []
 
     def delete_url(self, url_id):
         """
-        Deletes the URL and its associated tags (from the url_tags table) based on the provided URL ID.
+        Deletes the URL and its associated tags
+        (from the url_tags table) based on the provided URL ID.
         """
         try:
             self.url_id = url_id
-            
+
             # Check if the URL exists before attempting to delete
             self.cursor.execute("""SELECT url FROM bookmarks WHERE id=?""", (self.url_id,))
             deleted_url = self.cursor.fetchone()
@@ -223,17 +225,23 @@ class DatabaseConnection(object):
             if deleted_url:
                 # Delete the associated entries from url_tags table
                 self.cursor.execute("""DELETE FROM url_tags WHERE url_id=?""", (self.url_id,))
-                
+
                 # Delete the URL from bookmarks table
                 self.cursor.execute("""DELETE FROM bookmarks WHERE id=?""", (self.url_id,))
-                
+
                 # Commit the transaction
                 self.db.commit()
-                
-                print(f"\033[92m\nSuccessfully deleted URL '{deleted_url[0]}' and its associated tags.\033[0m")
+
+                print(
+                    f"""\033[92m\nSuccessfully deleted URL '{deleted_url[0]}' and
+                    its associated tags.\033[0m"""
+                )
                 return True
             else:
-                print(f"\033[91m\nError: No URL found with ID `{self.url_id}`. Nothing was deleted.\033[0m")
+                print(
+                    f"""\033[91m\nError: No URL found with ID `{self.url_id}`.
+                    Nothing was deleted.\033[0m"""
+                )
                 return False
 
         except sqlite3.OperationalError as e:
@@ -266,10 +274,16 @@ class DatabaseConnection(object):
                     print(f"\033[92m\nSuccess: URL updated to '{self.new_url}'.\033[0m")
                     return True
                 else:
-                    print("\033[92m\nNo changes: The provided URL is already bookmarked. No update needed.\033[0m")
+                    print(
+                        """\033[92m\nNo changes: The provided URL is already bookmarked.
+                        No update needed.\033[0m"""
+                    )
                     return False
             else:
-                print(f"\033[91m\nError: No URL found with ID `{self.url_id}`. Update failed.\033[0m")
+                print(
+                    f"""\033[91m\nError: No URL found with ID `{self.url_id}`.
+                    Update failed.\033[0m"""
+                )
                 return False
 
         except sqlite3.OperationalError as e:
@@ -282,7 +296,8 @@ class DatabaseConnection(object):
 
     def show_urls(self):
         """
-        Fetches all URLs along with their associated tags, date, and time from the database.
+        Fetches all URLs along with their associated tags, date, and
+        time from the database.
         """
         try:
             # Join bookmarks with url_tags and tags to fetch the required data
@@ -310,25 +325,29 @@ class DatabaseConnection(object):
 
     def search_url(self, search_value):
         """
-        Displays a group of URLs associated with the provided search_value (tag or url substring).
+        Displays a group of URLs associated with the provided
+        search_value (tag or url substring).
         """
         try:
             self.search = search_value.lower()
             all_bookmarks = []
 
             # Search for URLs directly by tag
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                 SELECT b.id, b.url, t.tag_name, b.date, b.time
                 FROM bookmarks AS b
                 JOIN url_tags AS ut ON b.id = ut.url_id
                 JOIN tags AS t ON ut.tag_id = t.id
                 WHERE t.tag_name = ?
-            """, (self.search,))  # Use a tuple with a trailing comma
+            """,
+                (self.search,),
+            )  # Use a tuple with a trailing comma
             all_bookmarks = self.cursor.fetchall()
 
             if not all_bookmarks:
                 # If no bookmarks found with the tag, search in all URLs by given value as substring
-                bookmarks = self.show_urls() # Fetch all URls
+                bookmarks = self.show_urls()  # Fetch all URls
                 for bookmark in bookmarks:
                     if self.search in bookmark[1].lower():  # Case-insensitive match
                         all_bookmarks.append(bookmark)
@@ -359,15 +378,22 @@ class DatabaseConnection(object):
             if url_count > 0:
                 # If URLs exist, proceed to delete all records
                 self.cursor.execute("""DELETE FROM bookmarks""")
-                self.cursor.execute("""DELETE FROM url_tags""")  # Delete all associations in the junction table
-                self.cursor.execute("""DELETE FROM tags WHERE tag_name NOT IN (SELECT tag_name FROM url_tags)""")  # Delete orphaned tags
+                self.cursor.execute(
+                    """DELETE FROM url_tags"""
+                )  # Delete all associations in the junction table
+                self.cursor.execute(
+                    """DELETE FROM tags WHERE tag_name NOT IN (SELECT tag_name FROM url_tags)"""
+                )  # Delete orphaned tags
                 self.db.commit()
-                print(f"\033[92m\nSuccess: All {url_count} URLs and their associated tags have been successfully deleted.\033[0m")
+                print(
+                    f"""\033[92m\nSuccess: All {url_count} URLs and
+                    their associated tags have been successfully deleted.\033[0m"""
+                )
                 return True
             else:
                 print("\033[92m\nSuccess: No URLs found in the database to delete.\033[0m")
                 return False
-                
+
         except sqlite3.OperationalError as e:
             print(f"\nDatabase error occurred: {str(e)}")
             return False
@@ -383,7 +409,10 @@ class DatabaseConnection(object):
             urls = self.search_url(part_of_url)
             if urls:
                 # Prompt the user before opening multiple URLs
-                print(f"\033[96m\nFound {len(urls)} URLs. Do you want to open them all? (yes/no) \033[0m")
+                print(
+                    f"""\033[96m\nFound {len(urls)} URLs.
+                    Do you want to open them all? (yes/no) \033[0m"""
+                )
                 user_confirmation = input().strip().lower()
 
                 if user_confirmation in ["yes", "y"]:
@@ -419,7 +448,8 @@ class DatabaseConnection(object):
         if folder_path:
             print(f"\n\033[92mSelected folder: {folder_path}.\033[0m")
         else:
-            print("\n\033[92mNo folder selected.\033[0m")
+            print("\n\033[92mNo folder selected. No Bookmarks are exported.\033[0m")
+            sys.exit(0)
         return folder_path
 
     def export_urls(self):
@@ -435,11 +465,11 @@ class DatabaseConnection(object):
             if not os.path.exists(folder_path):
                 msg = f"\033[91m\nFile path does not exist: {folder_path}.\033[0m"
                 return False, msg
-            
+
         except OSError as e:
             msg = f"\033[91m\nError: Finding directory: {str(e)}.\033[0m"
             return False, msg
-        
+
         database_file = os.path.join(os.path.expanduser("~/.config/readit"), "bookmarks.db")
         try:
             # Ensure the database file exists
@@ -451,16 +481,15 @@ class DatabaseConnection(object):
             with sqlite3.connect(db_file_paths[0]) as conn:
                 cursor = conn.cursor()
                 cursor.execute("SELECT * FROM bookmarks")
-                
+
                 # Export to CSV
                 csv_file_path = os.path.join(folder_path, "exported_bookmarks.csv")
                 with open(csv_file_path, "w", newline="") as csv_file:
                     csv_writer = csv.writer(csv_file, delimiter="\t")
                     csv_writer.writerow([i[0] for i in cursor.description])  # Headers
                     csv_writer.writerows(cursor)  # Data rows
-
                 return csv_file_path
-        
+
         except sqlite3.OperationalError as e:
             msg = f"Database operation failed: {str(e)}"
             return False, msg
@@ -468,10 +497,3 @@ class DatabaseConnection(object):
         except Exception as e:
             msg = f"Unexpected error: {str(e)}"
             return False, msg
-
-        exporter = BookmarkExporter()
-        result = exporter.export_urls()
-        if isinstance(result, tuple) and result[0] is False:
-            print(result[1])  # Print error message
-        else:
-            print(f"\033[92m\nSuccess: Bookmarks exported successfully to: {result}.\033[0m")
