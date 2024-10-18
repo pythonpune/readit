@@ -98,7 +98,6 @@ class DatabaseConnection(object):
         If the URL already exists, provide a user-friendly error message.
         """
         try:
-            self.url = url
             global date
             start = datetime.datetime.now()
             time = start.strftime("%H:%M:%S")
@@ -107,14 +106,14 @@ class DatabaseConnection(object):
                 """
                 INSERT INTO bookmarks(url, date, time) VALUES (?, ?, ?)
                 """,
-                (self.url, date, time),
+                (url, date, time),
             )
             self.db.commit()
             return True
 
         except sqlite3.IntegrityError as e:
             if 'UNIQUE constraint failed' in str(e):
-                print(f"\033[91m\nError: The URL '{self.url}' already bookmarked.\033[0m")
+                print(f"\033[91m\nError: The URL '{url}' already bookmarked.\033[0m")
                 return False
             else:
                 print(f"\nDatabase error: {str(e)}")
@@ -124,7 +123,7 @@ class DatabaseConnection(object):
             print(f"\nAn unexpected error occurred: {str(e)}")
             return False
 
-    def tag_url(self, tag_name, tagged_url):
+    def tag_url(self, tagged_url, tag_name):
         """
         URLs can be tagged with multiple tags. If the URL already exists, associate it with the new tag.
         """
