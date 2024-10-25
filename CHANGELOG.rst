@@ -4,13 +4,47 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+readit v1.0.0 - 2020-01-21
+========================
+
+* Supports Python 3.6+
+
+Features
+********
+- Add URL with Tags: Introduced the ability to add URLs along with a tag in a single operation, improving efficiency and flexibility.
+- Enhanced Bookmark Export: Users can now choose the path to save exported bookmarked URLs, offering greater control and customization.
+
+Improvements
+************
+- URL Validation: Improved validation logic for URLs to ensure accuracy and prevent errors.
+- URL Tagging: Enhanced the tagging feature, allowing a URL to be associated with multiple tags.
+- Search Functionality: Expanded search capabilities, enabling users to search URLs by tags or substrings for better filtering and retrieval.
+- Open URL Flexibility: Updated the "open URL" feature, giving users the ability to specify how many URLs they want to open simultaneously.
+- Error Handling: Improved error handling across the application, providing more graceful responses and preventing abrupt failures.
+
+Updates
+*******
+- Test Cases for Database Modules: Added comprehensive test cases for database-related modules to ensure stability and reliability with future updates.
+- Documentation: Updated the project documentation to reflect newly added features and changes.
+
+readit v0.3 - 2020-01-21
+========================
+
+* Supports Python 3.0+
+
+Updates
+*******
+
+* Github action workflows
+* Refactor setup.cfg and setup.py
+* Fix deploy
 
 readit v0.2 - 2018-05-10
 ========================
 
 * Supports Python 3.0+
 
-Updated
+Updates
 *******
 
 * Write the documentation (#63)
@@ -32,8 +66,8 @@ readit v0.1.1 - 2018-03-04
 
 * Supports Python 2.7 and Python 3.6
 
-Solved
-******
+Updates
+*******
 
 * 'test.db' is created in current directory (#60)
 * Convert README.md to ReStructuredText (#58)
@@ -45,8 +79,8 @@ readit v0.1 - 2018-02-11
 
 * Initial release supports Python 2.7 and Python 3.6
 
-Added
-*****
+Updates
+*******
 * Bookmark multiple URLs at a time
 * Bookmark URL with respective Tags
 * Search and display Bookmarks by TAG
