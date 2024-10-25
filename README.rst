@@ -6,11 +6,6 @@ Readit - Command Line Tool
 
 |Python| |Licence| |Build Status| |docs passing|
 
-.. image:: https://raw.githubusercontent.com/pythonpune/readit/master/docs/readit-demo.png
-    :alt: asciicast
-    :scale: 50%
-    :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
-
 
 Introduction
 ************
