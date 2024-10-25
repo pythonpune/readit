@@ -1,6 +1,7 @@
 name: Publish readit to PyPI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
