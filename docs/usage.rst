@@ -1,30 +1,30 @@
 Usage
 =====
 
-Cmdline options
-***************
-
+Command line options
+********************
 .. code-block:: bash
 
-        Usage: readit [OPTIONS] [INSERT]...
+    Usage: readit [OPTIONS] [INSERT]...
 
-          Readit - Command-line bookmark manager tool.
-
-        Options:
-        -a, --add TEXT...     Add URLs with space-separated
-        -t, --tag TEXT...     Add Tag with space-separated URL
-        -d, --delete TEXT     Remove a URL of particular ID
-        -c, --clear TEXT...   Clear bookmarks
-        -u, --update TEXT...  Update a URL for specific ID
-        -s, --search TEXT     Search all bookmarks by Tag
-        -v, --view TEXT...    Show bookmarks
-        -o, --openurl TEXT    Open URL in Browser
-        -e, --export TEXT...  Export URLs to csv file
-        -tl, --taglist TEXT   Show all Tags available in database
-        -V, --version         Check latest version
-        --help                Show this message and exit.
-
-
+        Readit - Command-line bookmark manager tool.
+    Options:
+    -a, --add TEXT          Add urls --> readit -a <url1> <url2>
+    -t, --tag TEXT          Use to tag url --> readit -a <url1> -t <tag1>
+    -d, --delete TEXT       Remove a URL of particular ID --> readit -d <url_id>
+    -c, --clear TEXT        Clear bookmarks --> readit -c
+    -u, --update TEXT       Update a URL for specific ID --> readit -u
+                            <existing_id> <new_url>
+    -s, --search TEXT       Search for bookmarks using either a tag or a
+                            substring of the URL --> readit -s <tag> or
+                            <substring>
+    -v, --view TEXT...      Show bookmarks --> readit -v
+    -o, --openurl TEXT      Open a URL in your browser by entering a part of the
+                            URL. --> readit -o <url_substring>
+    -V, --version           Check latest version --> readit -V
+    -e, --export TEXT...    Export URLs in csv file --> readit -e
+    -tl, --taglist TEXT...  Show all Tags --> readit -tl
+    --help                  Show this message and exit.
 
 
 Examples
@@ -33,84 +33,78 @@ Examples
 
 .. code-block:: bash
 
-        $ readit url1 url2 ...
-        or
-        $ readit --add url1 url2 ...
-        or
-        $ readit -a url1 url2 ...
+    $ readit <url1> <url2> ...
+    or
+    $ readit --add <url1> <url2> ...
+    or
+    $ readit -a <url1> <url2> ...
+
+2. **Bookmark** urls and tags at the same time
+
+.. code-block:: bash
+
+    $ readit -a <url1> -t <tag1>
 
 2. **View** all available bookmarks:
 
 .. code-block:: bash
 
-        $ readit -v
-        or
-        $ readit --view
+    $ readit -v
+    or
+    $ readit --view
 
 3. **Update** a bookmark using its ID:
 
 .. code-block:: bash
 
-        $ readit -u url_id url
-        or
-        $ readit --update url_id url
-
+    $ readit -u <url_id> <url>
+    or
+    $ readit --update <url_id> <url>
 
 4. **Delete** a bookmarked URL using its ID:
 
 .. code-block:: bash
 
-        $ readit -d url_id
-        or
-        $ readit --delete url_id
+    $ readit -d <url_id>
+    or
+    $ readit --delete <url_id>
 
 5. **Clear** all the bookmarks:
 
 .. code-block:: bash
 
-        $ readit -c
-        or
-        $ readit --clear
+    $ readit -c
+    or
+    $ readit --clear
 
-6. **Bookmark** URL along with TAG:
-
-.. code-block:: bash
-
-        $ readit -t tag_name url
-        or
-        $ readit --tag tag_name url
-
-
-7. **Search** and **Display** all bookmarks using the TAG:
+6. **Search** and **Display** all bookmarks using the TAG or URL's substring:
 
 .. code-block:: bash
 
-        $ readit -s tag_name
-        or
-        $ readit --search tag_name
+    $ readit -s <tag_name> or <url_substring>
+    or
+    $ readit --search <tag_name> or <url_substring>
 
-
-8. **Open URL** in the Browser using specific ID:
-
-.. code-block:: bash
-
-        $ readit -o urlid
-        or
-        $ readit --openurl urlid
-
-9. **Export** URLs to CSV file:
+7. Open URL in the Browser using URL's substring:
 
 .. code-block:: bash
 
-        $ readit -e
-        or
-        $ readit --export
+    $ readit -o <url_substring>
+    or
+    $ readit --openurl <url_substring>
 
-
-10. **Show** all Tags available in the database:
+8. **Export** bookmarks into the CSV file:
 
 .. code-block:: bash
 
-        $ readit -tl
-        or
-        $ readit --taglist
+    $ readit --export
+    or
+    $ readit -e
+
+9. Show all Tags available in the database
+
+.. code-block:: bash
+
+    $ readit -tl
+    or
+    $ readit --taglist
