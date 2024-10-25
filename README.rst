@@ -41,7 +41,7 @@ Dependencies
 
 Installation
 ************
-Readit is available on PyPI and can be installed with pip3:
+Readit is available on `PyPI <https://pypi.org/project/readit/>`_ and can be installed with pip3:
 
 .. code-block:: bash
 
