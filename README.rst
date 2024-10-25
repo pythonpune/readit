@@ -45,7 +45,7 @@ Readit is available on `PyPI <https://pypi.org/project/readit/>`_ and can be ins
 
 .. code-block:: bash
 
-    pip3 install --user readit
+    pip3 install readit
 
 Command line options
 ********************
