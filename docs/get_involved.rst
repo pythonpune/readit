@@ -8,7 +8,7 @@ How to Contribute
 
 .. code-block:: bash
 
-        $ git clone https://github.com/projectreadit/readit.git
+        $ git clone https://github.com/pythonpune/readit.git
 
 * We recommend to create and activate a virtualenv first:
 
