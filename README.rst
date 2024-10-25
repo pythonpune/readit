@@ -6,8 +6,7 @@ Readit - Command Line Tool
 
 |Python| |Licence| |Build Status| |docs passing|
 
-
-.. image:: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k.png
+.. image:: https://raw.githubusercontent.com/pythonpune/readit/master/docs/readit-demo.png
     :alt: asciicast
     :scale: 50%
     :target: https://asciinema.org/a/XHY1hKrgOry69OeWG04iucT1k?t=1
@@ -40,8 +39,8 @@ Dependencies
 =============================================      ==================
 ``Scripting Language``                              Python 3.0+
 ``HTTP(S)``                                         requests
-``Command-Line Option and argument parsing``        click
-``Database Used``                                   SQLite3
+``Command-line parsing``                            click
+``Database``                                        SQLite3
 ``Display Bookmarks in Table``                      beautifultable
 =============================================      ==================
 
@@ -204,7 +203,7 @@ Readit - Command line tool is licensed under `GNU General Public License v3.0. <
     :target: https://github.com/pythonpune/readit/blob/master/LICENSE
 
 .. |Build Status| image:: https://travis-ci.org/pythonpune/readit.svg?branch=master
-    :target: https://travis-ci.org/projectreadit/readit
+    :target: https://travis-ci.org/pythonpune/readit
 
 .. |docs passing| image:: https://readthedocs.org/projects/readit/badge/?version=latest
     :target: http://readittool.readthedocs.io/en/latest/?badge=latest
