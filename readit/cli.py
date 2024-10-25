@@ -144,7 +144,7 @@ def main(
     elif taglist:
         output.print_all_tags(database_connection.list_all_tags())
     elif version:
-        print("\033[92m\nreadit v1.0.0 \033[0m")
+        print("\033[92m\nreadit v1.0.3 \033[0m")
     elif export:
         path = database_connection.export_urls()
         if path:
