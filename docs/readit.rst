@@ -16,15 +16,14 @@ Readit is command line bookmark manager. It is a command line utility to add, de
 Features
 ********
 * Bookmark multiple URLs at a time
-* Bookmark URL with respective Tags
-* Search and display Bookmarks by TAG
+* Bookmark URL with respective Tags at the same time [NEW]
+* Search and display Bookmarks by TAG and URL's substring
 * Display all Bookmarks in table format
-* Remove a Bookmarked URL
-* Remove all Bookmarked URLs
+* Remove single or all Bookmarked URL
 * Update a Bookmarked URL with a specific ID
 * URL validation
-* Open URL in the browser
-* Export bookmarks into the CSV file
+* Open multiple URLs in the browser
+* Choose specific folder and Export bookmarks into the CSV file [NEW]
 * Show all Tags available in the database
 * Bookmark URLs either online or offline
 
